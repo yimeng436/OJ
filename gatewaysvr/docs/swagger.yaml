@@ -1,0 +1,77 @@
+definitions:
+  common.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  request.UserLoginRequest:
+    properties:
+      userAccount:
+        type: string
+      userPassword:
+        type: string
+    type: object
+host: 127.0.0.1:8002
+info:
+  contact:
+    name: API Support
+    url: http://www.swagger.io/support
+  description: swaggo测试API文档
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: swaggo测试
+  version: "1.0"
+paths:
+  /test/{id}:
+    get:
+      description: 描述信息
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 测试接口
+  /user/getLoginUser:
+    get:
+      description: 获取登录用户
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 获取登录用户
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 用户登录
+swagger: "2.0"
