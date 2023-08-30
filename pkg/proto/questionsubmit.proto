@@ -14,3 +14,11 @@ message QuestionSubmitInfo {
   string updateTime = 9; // 更新时间
   int32 isDelete = 10; // 是否删除
 }
+
+
+// 提交结果信息
+message JudgeInfo{
+  string message = 1;   //提交结果
+  int64 time = 2;       //耗费时间
+  int64 memory = 3;     //耗费内存
+}

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/pkg/pb"
+	"gorm.io/gorm"
 	"usersvr/repository"
 )
 
@@ -20,7 +21,7 @@ func (UserService) UserLogin(ctx context.Context, request *pb.UserLoginRequest) 
 	}
 	user, err := repository.GetUserByUserName(userName)
 
-	if err != nil {
+	if err != nil && err != gorm.ErrRecordNotFound {
 		return &pb.UserVo{}, err
 	}
 

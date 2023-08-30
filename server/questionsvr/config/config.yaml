@@ -1,0 +1,33 @@
+svr_config:
+  name: "questionsvr"
+  host: "127.0.0.1"
+  port: "8002"
+
+
+redis:
+  host: "127.0.0.1"
+  password: "123456"
+  db: 0
+  port: 6379
+  PoolSize: 10
+
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  database: oj
+  username: root
+  password: 123456
+
+log:
+  level: "debug"
+  file_name: "question.log"
+  log_path: "../log/question/"
+  max_size: 200
+  max_age: 30
+  max_backups: 7
+
+consul:
+  host: "127.0.0.1"
+  port: 8500
+  tags:
+    - "questionsvr"

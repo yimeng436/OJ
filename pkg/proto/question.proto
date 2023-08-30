@@ -1,12 +1,13 @@
 syntax = "proto3";
 
 option go_package="../pb;pb";
+import "common.proto";
 
 message QuestionInfo {
   int64 id = 1; // id
   string title = 2; // 标题
   string content = 3; // 内容
-  string tags = 4; // 标签列表（json 数组）
+  repeated string tags = 4; // 标签列表（json 数组）
   string answer = 5; // 题目答案
   int32 submitNum = 6; // 题目提交数
   int32 acceptedNum = 7; // 题目通过数
@@ -18,4 +19,102 @@ message QuestionInfo {
   string createTime = 13; // 创建时间
   string updateTime = 14; // 更新时间
   int32 isDelete = 15; // 是否删除
+}
+
+message QuestionVo {
+  int64 id = 1; // id
+  string title = 2; // 标题
+  string content = 3; // 内容
+  repeated string tags = 4; // 标签列表（json 数组）
+  int32 submitNum = 6; // 题目提交数
+  int32 acceptedNum = 7; // 题目通过数
+  string judgeConfig = 9; // 判题配置（json 对象）
+  int32 thumbNum = 10; // 点赞数
+  int32 favourNum = 11; // 收藏数
+  int64 userId = 12; // 创建用户 id
+  string createTime = 13; // 创建时间
+  string updateTime = 14; // 更新时间
+}
+
+message JudgeCase{
+  string inputs = 1;    //用例输入
+  string outputs = 2;   //用例输出
+}
+
+message JudgeConfig{
+  int64 timeLimit = 1;    // 时间限制
+  int64 memoryLimit = 2;  //内存限制
+  int64 stackLimit = 3;   //堆栈限制
+}
+
+
+message QuestionAddRequest{
+  string title = 1;
+  string context = 2;
+  repeated string tags = 3;
+  string answer = 4;
+  repeated JudgeCase judgeCase = 5;
+  JudgeConfig judgeConfig = 6;
+}
+
+message QuestionEditRequest{
+  int64 id = 1;
+  string title = 2;
+  string context = 3;
+  repeated string tags = 4;
+  string answer = 5;
+  repeated JudgeCase judgeCase = 6;
+  JudgeConfig judgeConfig = 7;
+}
+
+
+message QuestionQueryRequests{
+  int64 id = 1;
+  string title = 2;
+  string context = 3;
+  repeated string tags = 4;
+  string answer = 5;
+  int64 userId = 6;
+}
+
+message QuestionUpdateRequest{
+  int64 id = 1;
+  string title = 2;
+  string context = 3;
+  repeated string tags = 4;
+  string answer = 5;
+  repeated JudgeCase judgeCase = 6;
+  JudgeConfig judgeConfig = 7;
+}
+message ValidQuestionRequest{
+    QuestionInfo questionInfo = 1;
+    bool add = 2;
+}
+
+
+message GetQuestionVoPageRequest{
+  Page page = 1;
+  QuestionInfo question = 2;
+}
+
+message GetQuestionVoResponse{
+  Page page = 1;
+  repeated QuestionInfo question = 2;
+}
+
+message BoolResponse{
+  bool res = 1;
+}
+message QuestionIdRequest{
+  int64 id = 1;
+}
+message Empty{}
+service QuestionService{
+  rpc ValidQuestion(ValidQuestionRequest) returns (Empty);
+  rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionVoResponse);
+  rpc AddQuestion(QuestionInfo) returns(BoolResponse);
+  rpc GetQuestionById(QuestionIdRequest) returns (QuestionInfo);
+  rpc DeleteQuestionById(QuestionIdRequest) returns(BoolResponse);
+  rpc UpdateQuestionById(QuestionIdRequest) returns (BoolResponse);
+  rpc GetQuestionVo(QuestionInfo) returns (QuestionVo);
 }

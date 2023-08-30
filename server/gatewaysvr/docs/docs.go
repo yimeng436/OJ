@@ -83,7 +83,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserLoginRequest"
+                            "$ref": "#/definitions/pb.UserLoginRequest"
                         }
                     }
                 ],
@@ -111,13 +111,15 @@ const docTemplate = `{
                 }
             }
         },
-        "request.UserLoginRequest": {
+        "pb.UserLoginRequest": {
             "type": "object",
             "properties": {
-                "userAccount": {
+                "userName": {
+                    "description": "用户昵称",
                     "type": "string"
                 },
                 "userPassword": {
+                    "description": "密码",
                     "type": "string"
                 }
             }
@@ -128,7 +130,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "127.0.0.1:8002",
+	Host:             "127.0.0.1:8000",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "swaggo测试",

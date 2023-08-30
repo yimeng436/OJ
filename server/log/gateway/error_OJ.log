@@ -6,3 +6,7 @@
 2023-08-30T15:00:20.571+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = copy destination must be non-nil and addressable
 2023-08-30T15:01:49.239+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
 2023-08-30T15:03:50.541+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-08-30T15:04:38.849+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-08-30T15:05:27.732+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-08-30T15:05:42.481+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = 账号密码错误
+2023-08-30T15:24:25.924+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = record not found
