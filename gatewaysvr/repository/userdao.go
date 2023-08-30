@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"OJ/common/model/entity"
-	"OJ/gatewaysvr/middleware/db"
+	"gatewaysvr/middleware/db"
+	"github.com/yimeng436/OJ/common/model/entity"
 )
 
 func GetUserByUserAccount(userAccount string) (entity.User, error) {

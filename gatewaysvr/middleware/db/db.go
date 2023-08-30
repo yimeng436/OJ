@@ -1,9 +1,9 @@
 package db
 
 import (
-	"OJ/common/log"
-	"OJ/config"
 	"fmt"
+	"gatewaysvr/config"
+	"github.com/yimeng436/OJ/common/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"sync"

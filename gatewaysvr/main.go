@@ -1,10 +1,11 @@
 package main
 
 import (
-	"OJ/common/log"
-	"OJ/gatewaysvr/config"
-	controller2 "OJ/gatewaysvr/controller"
-	_ "OJ/gatewaysvr/docs"
+	"gatewaysvr/config"
+	"github.com/yimeng436/OJ/common/log"
+
+	controller2 "gatewaysvr/controller"
+	_ "gatewaysvr/docs"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"

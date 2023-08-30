@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"OJ/common"
-	"OJ/common/constant"
-	"OJ/common/log"
-	"OJ/common/model/request"
-	"OJ/serivice"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/yimeng436/OJ/common"
+	"github.com/yimeng436/OJ/common/constant"
+	"github.com/yimeng436/OJ/common/log"
+	"github.com/yimeng436/OJ/common/model/request"
+	"github.com/yimeng436/OJ/usersvr/serivice"
 )
 
 // @Summary		用户登录

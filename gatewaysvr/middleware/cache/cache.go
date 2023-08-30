@@ -1,10 +1,10 @@
 package cache
 
 import (
-	"OJ/common/log"
-	"OJ/config"
 	"fmt"
+	"gatewaysvr/config"
 	redis "github.com/redis/go-redis/v9"
+	"github.com/yimeng436/OJ/common/log"
 	"golang.org/x/net/context"
 	"sync"
 )

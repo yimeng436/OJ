@@ -1,10 +1,10 @@
 package serivice
 
 import (
-	"OJ/common/model/entity"
-	"OJ/common/model/vo"
-	"OJ/usersvr/repository"
 	"errors"
+	"gatewaysvr/repository"
+	"github.com/yimeng436/OJ/common/model/entity"
+	"github.com/yimeng436/OJ/common/model/vo"
 )
 
 func UserLogin(userAccount, password string) (*vo.UserVo, error) {

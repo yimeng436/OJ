@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"OJ/common"
 	"github.com/gin-gonic/gin"
+	"github.com/yimeng436/OJ/common"
 )
 
 // @Summary		测试接口
