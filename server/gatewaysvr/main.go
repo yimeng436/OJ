@@ -61,6 +61,11 @@ func InintRoute(r *gin.Engine) {
 		user.POST("/login", controller2.Login)
 		user.GET("/getLoginUser", controller2.GetLoginUser)
 	}
+
+	question := r.Group("/question")
+	{
+		question.GET("")
+	}
 }
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {

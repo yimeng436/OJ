@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	uuid "github.com/satori/go.uuid"
+	"github.com/yimeng436/OJ/pkg/pb"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -12,7 +13,9 @@ import (
 	"os/signal"
 	"questionsvr/config"
 	"questionsvr/log"
+	"questionsvr/middleware/consul"
 	"questionsvr/middleware/db"
+	"questionsvr/service"
 	"syscall"
 )
 
@@ -45,9 +48,9 @@ func Run() error {
 	}
 
 	server := grpc.NewServer()
-	userserver := &service.UserService{}
+	questionserver := &service.QuestionService{}
 
-	pb.RegisterUserServiceServer(server, userserver)
+	pb.RegisterQuestionServiceServer(server, questionserver)
 
 	grpc_health_v1.RegisterHealthServer(server, health.NewServer())
 
