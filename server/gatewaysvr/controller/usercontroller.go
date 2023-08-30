@@ -1,38 +1,36 @@
 package controller
 
 import (
-	"gatewaysvr/serivice"
+	"gatewaysvr/log"
+	"gatewaysvr/rpcservice"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/yimeng436/OJ/common"
 	"github.com/yimeng436/OJ/common/constant"
-	"github.com/yimeng436/OJ/common/log"
-	"github.com/yimeng436/OJ/common/model/request"
+	"github.com/yimeng436/OJ/pkg/pb"
 )
 
 // @Summary		用户登录
 // @Description	用户登录
 // @Accept json
-// @Param user body request.UserLoginRequest true "user"
+// @Param user body pb.UserLoginRequest true "user"
 // @Produce  json
 // @Success		200	{object}	common.Response
 // @Router			/user/login  [post]
 func Login(ctx *gin.Context) {
-
-	var loginuser request.UserLoginRequest
-	if err := ctx.ShouldBind(&loginuser); err != nil {
+	var loginUser *pb.UserLoginRequest
+	if err := ctx.ShouldBind(loginUser); err != nil {
 		log.Fatal(err)
 		common.Fail(ctx, "参数错误")
 		return
 	}
-
-	userVo, err := serivice.UserLogin(loginuser.UserAccount, loginuser.UserPassword)
+	userServiceClient := rpcservice.GetUserServiceClient()
+	userVo, err := userServiceClient.UserLogin(ctx, loginUser)
 	if err != nil {
 		log.Fatal(err)
 		common.Fail(ctx, err.Error())
 		return
 	}
-
 	common.Success(ctx, userVo, "success")
 }
 

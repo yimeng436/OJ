@@ -1,7 +1,8 @@
 svr_config:
-  name: "ojsvr"
+  name: "gatewaysvr"
   host: "127.0.0.1"
-  port: "8002"
+  port: "8000"
+  user_svr_name: "usersvr"
 
 
 redis:
@@ -21,7 +22,7 @@ mysql:
 log:
   level: "debug"
   file_name: "OJ.log"
-  log_path: "../log/OJ/"
+  log_path: "../log/gateway/"
   max_size: 200
   max_age: 30
   max_backups: 7
@@ -30,4 +31,4 @@ consul:
   host: "127.0.0.1"
   port: 8500
   tags:
-    - "commentsvr"
+    - "gatewaysvr"

@@ -2,7 +2,7 @@ package main
 
 import (
 	"gatewaysvr/config"
-	"github.com/yimeng436/OJ/common/log"
+	"gatewaysvr/log"
 
 	controller2 "gatewaysvr/controller"
 	_ "gatewaysvr/docs"
