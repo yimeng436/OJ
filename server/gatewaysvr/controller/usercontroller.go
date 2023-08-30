@@ -18,11 +18,16 @@ import (
 // @Success		200	{object}	common.Response
 // @Router			/user/login  [post]
 func Login(ctx *gin.Context) {
-	var loginUser *pb.UserLoginRequest
-	if err := ctx.ShouldBind(loginUser); err != nil {
+	var request pb.UserLoginRequest
+
+	if err := ctx.ShouldBind(&request); err != nil {
 		log.Fatal(err)
 		common.Fail(ctx, "参数错误")
 		return
+	}
+	loginUser := &pb.UserLoginRequest{
+		UserName:     request.UserName,
+		UserPassword: request.UserPassword,
 	}
 	userServiceClient := rpcservice.GetUserServiceClient()
 	userVo, err := userServiceClient.UserLogin(ctx, loginUser)

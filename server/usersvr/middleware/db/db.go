@@ -2,8 +2,9 @@ package db
 
 import (
 	"fmt"
-	"gatewaysvr/config"
-	"gatewaysvr/log"
+	"gorm.io/gorm/logger"
+	"usersvr/config"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"sync"
@@ -12,35 +13,35 @@ import (
 
 var (
 	db     *gorm.DB
-	dbOnce sync.Once
+	dbonce sync.Once
 )
 
-// openDB 连接db
-func openDB() {
+func OpenDb() {
 	dbConfig := config.GetGlobalConfig().DbConfig
+
 	connArgs := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", dbConfig.Username,
 		dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.Database)
-	log.Info("mdb addr:" + connArgs)
+	var er error
+	db, er = gorm.Open(mysql.Open(connArgs), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 
-	var err error
-	db, err = gorm.Open(mysql.Open(connArgs), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
+	if er != nil {
+		fmt.Println("数据库连接失败")
 	}
-
 	sqlDB, err := db.DB()
 	if err != nil {
 		panic("fetch db connection err:" + err.Error())
 	}
-
+	// _ = db.AutoMigrate(&repository.User{})
 	sqlDB.SetMaxIdleConns(dbConfig.MaxIdleConn)                                        // 设置最大空闲连接
 	sqlDB.SetMaxOpenConns(dbConfig.MaxOpenConn)                                        // 设置最大打开的连接
 	sqlDB.SetConnMaxLifetime(time.Duration(dbConfig.MaxIdleTime * int64(time.Second))) // 设置空闲时间为(s)
+	return
 }
 
-// GetDB 获取数据库连接
 func GetDB() *gorm.DB {
-	dbOnce.Do(openDB)
+	dbonce.Do(OpenDb)
 	return db
 }
 
@@ -49,7 +50,7 @@ func CloseDB() {
 	if db != nil {
 		sqlDB, err := db.DB()
 		if err != nil {
-			log.Errorf("close db err:%v", err)
+			panic("fetch db connection err:" + err.Error())
 		}
 		sqlDB.Close()
 	}

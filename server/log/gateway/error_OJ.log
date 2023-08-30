@@ -1,0 +1,8 @@
+2023-08-30T14:18:22.197+0800	[31mERROR[0m	controller/usercontroller.go:23	json: Unmarshal(nil *pb.UserLoginRequest)
+2023-08-30T14:21:25.405+0800	[31mERROR[0m	controller/usercontroller.go:23	json: Unmarshal(nil *pb.UserLoginRequest)
+2023-08-30T14:27:43.317+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-08-30T14:28:06.723+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-08-30T14:44:29.967+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = copy destination must be non-nil and addressable
+2023-08-30T15:00:20.571+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = copy destination must be non-nil and addressable
+2023-08-30T15:01:49.239+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-08-30T15:03:50.541+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil

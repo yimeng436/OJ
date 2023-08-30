@@ -1,0 +1,24 @@
+2023-08-30T14:06:06.639+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-08-30T14:06:06.668+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-08-30T14:06:06.676+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-08-30T14:06:14.298+0800	[34mINFO[0m	usersvr/main.go:88	注销成功
+2023-08-30T14:06:23.161+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-08-30T14:06:23.176+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-08-30T14:06:23.176+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-08-30T14:28:50.504+0800	[34mINFO[0m	usersvr/main.go:88	注销成功
+2023-08-30T14:29:27.083+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-08-30T14:29:27.097+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-08-30T14:29:27.098+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-08-30T14:29:48.724+0800	[34mINFO[0m	usersvr/main.go:88	注销成功
+2023-08-30T14:41:52.729+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-08-30T14:41:52.743+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-08-30T14:41:52.743+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-08-30T14:44:29.990+0800	[34mINFO[0m	usersvr/main.go:88	注销成功
+2023-08-30T14:59:21.080+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-08-30T14:59:21.094+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-08-30T14:59:21.096+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-08-30T15:00:20.607+0800	[34mINFO[0m	usersvr/main.go:88	注销成功
+2023-08-30T15:00:26.559+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-08-30T15:00:26.576+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-08-30T15:00:26.576+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-08-30T15:05:24.472+0800	[34mINFO[0m	usersvr/main.go:88	注销成功

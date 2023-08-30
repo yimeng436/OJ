@@ -3,6 +3,7 @@ package main
 import (
 	"gatewaysvr/config"
 	"gatewaysvr/log"
+	"gatewaysvr/rpcservice"
 
 	controller2 "gatewaysvr/controller"
 	_ "gatewaysvr/docs"
@@ -30,6 +31,7 @@ import (
 func main() {
 	r := gin.Default()
 	InitConfig()
+	rpcservice.InitSvrConn()
 	InintRoute(r)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
