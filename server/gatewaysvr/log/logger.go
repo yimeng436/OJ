@@ -1,7 +1,7 @@
 package log
 
 import (
-	"OJ/gatewaysvr/config"
+	"gatewaysvr/config"
 	"os"
 
 	"go.uber.org/zap"

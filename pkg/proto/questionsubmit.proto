@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package="../pb;pb";
+
+message QuestionSubmitInfo {
+  int64 id = 1; // id
+  string language = 2; // 编程语言
+  string code = 3; // 用户代码
+  string judgeInfo = 4; // 判题信息（json 对象）
+  int32 status = 5; // 判题状态（0 - 待判题、1 - 判题中、2 - 成功、3 - 失败）
+  int64 questionId = 6; // 题目 id
+  int64 userId = 7; // 创建用户 id
+  string createTime = 8; // 创建时间
+  string updateTime = 9; // 更新时间
+  int32 isDelete = 10; // 是否删除
+}

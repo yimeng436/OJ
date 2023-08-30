@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option go_package="../pb;pb";
+
+message Empty{}
+
+message UserInfo {
+  string userName = 1; // 用户昵称
+  int64 id = 2; // id
+  string userAccount = 3; // 账号
+  string avatarUrl = 4; // 用户头像
+  int32 gender = 5; // 性别
+  string userPassword = 6; // 密码
+  string phone = 7; // 电话
+  string email = 8; // 邮箱
+  int32 userStatus = 9; // 状态 0 - 正常
+  string createTime = 10; // 创建时间
+  string updateTime = 11;
+  int32 isDelete = 12; // 是否删除
+  int32 userRole = 13; // 用户角色 0 - 普通用户 1 - 管理员
+}
+
+message UserLoginRequest{
+  string userName = 1; // 用户昵称
+  string userPassword = 2; // 密码
+}
+
+message UserVo{
+  string userName = 1; // 用户昵称
+  int64 id = 2; // id
+  string userAccount = 3; // 账号
+  string avatarUrl = 4; // 用户头像
+  int32 gender = 5; // 性别
+  string phone = 7; // 电话
+  string email = 8; // 邮箱
+  int32 userRole = 13; // 用户角色 0 - 普通用户 1 - 管理员
+}
+
+service UserService{
+  rpc UserLogin(UserLoginRequest) returns (UserVo);
+  rpc GetLoginUser(Empty) returns (UserVo);
+}
