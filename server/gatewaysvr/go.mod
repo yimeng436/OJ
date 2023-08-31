@@ -12,7 +12,7 @@ require (
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.1
-	github.com/yimeng436/OJ v0.0.7
+	github.com/yimeng436/OJ v0.0.8
 	go.uber.org/zap v1.24.0
 	golang.org/x/net v0.10.0
 	google.golang.org/grpc v1.57.0

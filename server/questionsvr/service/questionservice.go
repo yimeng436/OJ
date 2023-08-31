@@ -68,7 +68,5 @@ func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionIn
 		return nil, err
 	}
 
-	tags := request.Tags
-
-	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVo not implemented")
+	return nil, nil
 }
