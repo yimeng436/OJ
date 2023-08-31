@@ -2,9 +2,11 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/pkg/pb"
+	"google.golang.org/protobuf/encoding/protojson"
 	"gorm.io/gorm"
 	"usersvr/repository"
 )
@@ -40,4 +42,25 @@ func (UserService) UserLogin(ctx context.Context, request *pb.UserLoginRequest) 
 func (UserService) GetLoginUser(ctx context.Context, request *pb.Empty) (*pb.UserVo, error) {
 
 	return nil, nil
+}
+
+func Question2Vo(question *pb.QuestionInfo) (*pb.QuestionVo, error) {
+	questionVo := new(pb.QuestionVo)
+	copier.Copy(questionVo, question)
+	judeConfig := new(pb.JudgeConfig)
+	var err error
+
+	err = protojson.Unmarshal([]byte(question.JudgeConfig), judeConfig)
+	if err != nil {
+		return nil, err
+	}
+	questionVo.JudgeConfig = judeConfig
+	var tags []string
+	err = json.Unmarshal([]byte(question.Tags), &tags)
+	if err != nil {
+		return nil, err
+	}
+	questionVo.Tags = tags
+	return questionVo, nil
+
 }

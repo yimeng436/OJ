@@ -6,3 +6,9 @@ message Page{
   int64 page = 1;
   int64 pageSize = 2;
 }
+
+message Empty{}
+
+message BoolResponse{
+  bool res = 1;
+}

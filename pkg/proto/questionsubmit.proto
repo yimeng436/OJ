@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option go_package="../pb;pb";
-
+import "common.proto";
 message QuestionSubmitInfo {
   int64 id = 1; // id
   string language = 2; // 编程语言
@@ -21,4 +21,16 @@ message JudgeInfo{
   string message = 1;   //提交结果
   int64 time = 2;       //耗费时间
   int64 memory = 3;     //耗费内存
+}
+
+message QuestionSubmitAddRequest{
+  string language = 1;
+  string code = 2;
+  int64 questionId = 3;
+}
+
+
+
+service QuestionSubmitService{
+  rpc DoQuestionSubmit(QuestionSubmitAddRequest) returns (BoolResponse);
 }
