@@ -112,7 +112,7 @@ message QuestionIdRequest{
 service QuestionService{
   rpc ValidQuestion(ValidQuestionRequest) returns (Empty);
   rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionVoResponse);
-  rpc AddQuestion(QuestionInfo) returns(BoolResponse);
+  rpc AddQuestion(QuestionAddRequest) returns(BoolResponse);
   rpc GetQuestionById(QuestionIdRequest) returns (QuestionInfo);
   rpc DeleteQuestionById(QuestionIdRequest) returns(BoolResponse);
   rpc UpdateQuestionById(QuestionIdRequest) returns (BoolResponse);

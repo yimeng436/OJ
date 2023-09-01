@@ -5,7 +5,7 @@ import (
 	"gatewaysvr/log"
 	"gatewaysvr/rpcservice"
 
-	controller2 "gatewaysvr/controller"
+	controller "gatewaysvr/controller"
 	_ "gatewaysvr/docs"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -53,19 +53,21 @@ func InintRoute(r *gin.Engine) {
 	store := cookie.NewStore([]byte("userSecret")) // 设置 session 的加密密钥
 	r.Use(Cors()).Use(sessions.Sessions("UserSession", store))
 
-	r.GET("/test/:id", controller2.Test)
+	r.GET("/test/:id", controller.Test)
 
 	user := r.Group("/user")
 	{
 
-		user.POST("/login", controller2.Login)
-		user.GET("/getLoginUser", controller2.GetLoginUser)
+		user.POST("/login", controller.Login)
+		user.GET("/getLoginUser", controller.GetLoginUser)
 	}
 
 	question := r.Group("/question")
 	{
-		question.GET("")
+		question.POST("/add")
+		question.GET("/get/:id")
 	}
+
 }
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {

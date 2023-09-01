@@ -1,8 +1,8 @@
 svr_config:
-  name: "gatewaysvr"
+  name: "questionsvr"
   host: "127.0.0.1"
-  port: "8000"
-  user_svr_name: "usersvr"
+  port: "8002"
+  user_svr_name : "usersvr"
   question_svr_name : "questionsvr"
 
 
@@ -22,8 +22,8 @@ mysql:
 
 log:
   level: "debug"
-  file_name: "OJ.log"
-  log_path: "../log/gateway/"
+  file_name: "question.log"
+  log_path: "../log/question/"
   max_size: 200
   max_age: 30
   max_backups: 7
@@ -32,4 +32,4 @@ consul:
   host: "127.0.0.1"
   port: 8500
   tags:
-    - "gatewaysvr"
+    - "questionsvr"

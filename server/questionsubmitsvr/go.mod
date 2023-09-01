@@ -1,11 +1,10 @@
-module questionsvr
+module questionsubmitsvr
 
 go 1.20
 
 require (
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/hashicorp/consul/api v1.24.0
-	github.com/jinzhu/copier v0.4.0
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.16.0

@@ -3,12 +3,10 @@ package rpcservice
 import (
 	"context"
 	"fmt"
-	"gatewaysvr/config"
-	"gatewaysvr/log"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/grpc"
-	// 必须要导入这个包，否则grpc会报错
-	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
+	"questionsubmitsvr/config"
+	"questionsubmitsvr/log"
 	"time"
 )
 
@@ -21,13 +19,6 @@ func InitSvrConn() {
 	UserSvrClient = NewUserSvrClient(config.GetGlobalConfig().SvrConfig.UserSvrName)
 	QuestionSvrClient = NewQuestionSvrClient(config.GetGlobalConfig().SvrConfig.QuestionSvrName)
 }
-func NewQuestionSvrClient(svrName string) pb.QuestionServiceClient {
-	conn, err := NewSvrConn(svrName)
-	if err != nil {
-		return nil
-	}
-	return pb.NewQuestionServiceClient(conn)
-}
 func NewUserSvrClient(svrName string) pb.UserServiceClient {
 	conn, err := NewSvrConn(svrName)
 	if err != nil {
@@ -35,6 +26,15 @@ func NewUserSvrClient(svrName string) pb.UserServiceClient {
 	}
 	return pb.NewUserServiceClient(conn)
 }
+
+func NewQuestionSvrClient(svrName string) pb.QuestionServiceClient {
+	conn, err := NewSvrConn(svrName)
+	if err != nil {
+		return nil
+	}
+	return pb.NewQuestionServiceClient(conn)
+}
+
 func NewSvrConn(svrName string) (*grpc.ClientConn, error) {
 	consulInfo := config.GetGlobalConfig().ConsulConfig
 	fmt.Println(consulInfo)
@@ -59,6 +59,6 @@ func GetUserServiceClient() pb.UserServiceClient {
 	return UserSvrClient
 }
 
-func GetQuestionServiceClient() pb.QuestionServiceClient {
+func GetQuestionSvrClient() pb.QuestionServiceClient {
 	return QuestionSvrClient
 }
