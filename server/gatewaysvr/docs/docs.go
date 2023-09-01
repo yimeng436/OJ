@@ -23,6 +23,63 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/question/add": {
+            "post": {
+                "description": "添加问题",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "添加问题",
+                "parameters": [
+                    {
+                        "description": "question",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pb.QuestionAddRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/get/{id}": {
+            "get": {
+                "description": "根据id获取题目",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据id获取题目",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Question ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/test/{id}": {
             "get": {
                 "description": "描述信息",
@@ -107,6 +164,65 @@ const docTemplate = `{
                 },
                 "data": {},
                 "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "pb.JudgeCase": {
+            "type": "object",
+            "properties": {
+                "inputs": {
+                    "description": "用例输入",
+                    "type": "string"
+                },
+                "outputs": {
+                    "description": "用例输出",
+                    "type": "string"
+                }
+            }
+        },
+        "pb.JudgeConfig": {
+            "type": "object",
+            "properties": {
+                "memoryLimit": {
+                    "description": "内存限制",
+                    "type": "integer"
+                },
+                "stackLimit": {
+                    "description": "堆栈限制",
+                    "type": "integer"
+                },
+                "timeLimit": {
+                    "description": "时间限制",
+                    "type": "integer"
+                }
+            }
+        },
+        "pb.QuestionAddRequest": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "context": {
+                    "type": "string"
+                },
+                "judgeCase": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.JudgeCase"
+                    }
+                },
+                "judgeConfig": {
+                    "$ref": "#/definitions/pb.JudgeConfig"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
                     "type": "string"
                 }
             }

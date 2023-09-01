@@ -7,6 +7,46 @@ definitions:
       msg:
         type: string
     type: object
+  pb.JudgeCase:
+    properties:
+      inputs:
+        description: 用例输入
+        type: string
+      outputs:
+        description: 用例输出
+        type: string
+    type: object
+  pb.JudgeConfig:
+    properties:
+      memoryLimit:
+        description: 内存限制
+        type: integer
+      stackLimit:
+        description: 堆栈限制
+        type: integer
+      timeLimit:
+        description: 时间限制
+        type: integer
+    type: object
+  pb.QuestionAddRequest:
+    properties:
+      answer:
+        type: string
+      context:
+        type: string
+      judgeCase:
+        items:
+          $ref: '#/definitions/pb.JudgeCase'
+        type: array
+      judgeConfig:
+        $ref: '#/definitions/pb.JudgeConfig'
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    type: object
   pb.UserLoginRequest:
     properties:
       userName:
@@ -28,6 +68,43 @@ info:
   title: swaggo测试
   version: "1.0"
 paths:
+  /question/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加问题
+      parameters:
+      - description: question
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.QuestionAddRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 添加问题
+  /question/get/{id}:
+    get:
+      description: 根据id获取题目
+      parameters:
+      - description: Question ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 根据id获取题目
   /test/{id}:
     get:
       description: 描述信息

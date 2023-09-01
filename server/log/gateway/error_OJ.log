@@ -10,3 +10,14 @@
 2023-08-30T15:05:27.732+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
 2023-08-30T15:05:42.481+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = 账号密码错误
 2023-08-30T15:24:25.924+0800	[31mERROR[0m	controller/usercontroller.go:35	rpc error: code = Unknown desc = record not found
+2023-09-01T16:26:47.180+0800	[31mERROR[0m	controller/questioncontroller.go:30	AddQuestion rpc服务器调用异常：rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:4859->127.0.0.1:8002: wsarecv: An existing connection was forcibly closed by the remote host.
+2023-09-01T16:27:55.961+0800	[31mERROR[0m	controller/questioncontroller.go:30	AddQuestion rpc服务器调用异常：rpc error: code = Unimplemented desc = unknown service QuestionService
+2023-09-01T16:29:51.058+0800	[31mERROR[0m	controller/questioncontroller.go:30	AddQuestion rpc服务器调用异常：rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:5530->127.0.0.1:8002: wsarecv: An existing connection was forcibly closed by the remote host.
+2023-09-01T16:34:39.345+0800	[31mERROR[0m	controller/questioncontroller.go:30	AddQuestion rpc服务器调用异常：rpc error: code = Unimplemented desc = unknown service QuestionService
+2023-09-01T16:52:53.012+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Unknown desc = Error 1146 (42S02): Table 'oj.question_infos' doesn't exist
+2023-09-01T16:53:20.767+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Unimplemented desc = unknown service QuestionService
+2023-09-01T16:53:42.246+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Unimplemented desc = unknown service QuestionService
+2023-09-01T16:56:29.816+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Unknown desc = Error 1146 (42S02): Table 'oj.question_infos' doesn't exist
+2023-09-01T17:02:20.404+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Unknown desc = Error 1146 (42S02): Table 'oj.question_infos' doesn't exist
+2023-09-01T17:08:43.074+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Internal desc = grpc: error while marshaling: proto: Marshal called with nil
+2023-09-01T17:16:19.632+0800	[31mERROR[0m	controller/questioncontroller.go:67	GetQuestionById rpc服务器调用异常：rpc error: code = Unimplemented desc = unknown service QuestionService

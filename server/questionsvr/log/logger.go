@@ -2,7 +2,7 @@ package log
 
 import (
 	"os"
-	"usersvr/config"
+	"questionsvr/config"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

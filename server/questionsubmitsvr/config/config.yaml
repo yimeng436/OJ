@@ -1,7 +1,7 @@
 svr_config:
   name: "questionsvr"
   host: "127.0.0.1"
-  port: "8002"
+  port: "8003"
   user_svr_name : "usersvr"
   question_svr_name : "questionsvr"
 

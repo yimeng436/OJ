@@ -64,8 +64,8 @@ func InintRoute(r *gin.Engine) {
 
 	question := r.Group("/question")
 	{
-		question.POST("/add")
-		question.GET("/get/:id")
+		question.POST("/add", controller.AddQuestion)
+		question.GET("/get/:id", controller.GetQuestion)
 	}
 
 }

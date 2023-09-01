@@ -90,7 +90,9 @@ func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddR
 	question.Tags = string(questionTags)
 	question.JudgeCase = string(questionjudgeCase)
 	question.JudgeConfig = string(questionjudgeconfig)
-	_, err = repository.CreateQuestion(question)
+	q := new(repository.Question)
+	copier.Copy(q, question)
+	_, err = repository.CreateQuestion(q)
 	if err != nil {
 		return &pb.BoolResponse{Res: false}, errors.New("添加失败")
 	}
@@ -105,7 +107,16 @@ func (QuestionService) GetQuestionById(ctx context.Context, request *pb.Question
 	if err != nil {
 		return nil, err
 	}
-	questionVo, err := questionService.GetQuestionVo(ctx, questionInfo)
+	quetionTem := new(pb.QuestionInfo)
+	copier.Copy(quetionTem, questionInfo)
+	questionVo, err := questionService.GetQuestionVo(ctx, quetionTem)
+	questionVo.CreateTime = questionInfo.CreateTime.String()
+	questionVo.UpdateTime = questionInfo.UpdateTime.String()
+	err = json.Unmarshal([]byte(questionInfo.Tags), &questionVo.Tags)
+	err = json.Unmarshal([]byte(questionInfo.JudgeConfig), questionVo.JudgeConfig)
+	if err != nil {
+		return nil, err
+	}
 	return questionVo, nil
 }
 func (QuestionService) DeleteQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.BoolResponse, error) {
@@ -121,7 +132,7 @@ func (QuestionService) UpdateQuestionById(ctx context.Context, request *pb.Quest
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionById not implemented")
 }
 func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionInfo) (*pb.QuestionVo, error) {
-	var questionVo *pb.QuestionVo
+	questionVo := new(pb.QuestionVo)
 	var err error
 	err = copier.Copy(questionVo, request)
 	if err != nil {
