@@ -26,12 +26,20 @@ func AddQuestion(ctx *gin.Context) {
 	}
 	questionClient := rpcservice.NewQuestionSvrClient(config.GetGlobalConfig().SvrConfig.QuestionSvrName)
 	if questionClient == nil {
-		log.Fatal("QuestionSvrClient rpc服务异常")
+		log.Fatal("QuestionSvrClient rpc服务初始化异常")
 		common.Fail(ctx, "系统错误")
 		return
 	}
 
-	questionClient.AddQuestion(ctx)
+	res, err := questionClient.AddQuestion(ctx, addRequest)
+	if err != nil {
+		log.Fatal("AddQuestion rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	if res == nil || !res.Res {
+		log.Fatal()
+	}
 }
 
 // @Summary		根据id获取题目

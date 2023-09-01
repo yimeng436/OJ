@@ -35,7 +35,7 @@ type QuestionServiceClient interface {
 	ValidQuestion(ctx context.Context, in *ValidQuestionRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionVoResponse, error)
 	AddQuestion(ctx context.Context, in *QuestionAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
-	GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionInfo, error)
+	GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionVo, error)
 	DeleteQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error)
 	UpdateQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error)
 	GetQuestionVo(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*QuestionVo, error)
@@ -76,8 +76,8 @@ func (c *questionServiceClient) AddQuestion(ctx context.Context, in *QuestionAdd
 	return out, nil
 }
 
-func (c *questionServiceClient) GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionInfo, error) {
-	out := new(QuestionInfo)
+func (c *questionServiceClient) GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionVo, error) {
+	out := new(QuestionVo)
 	err := c.cc.Invoke(ctx, QuestionService_GetQuestionById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -119,7 +119,7 @@ type QuestionServiceServer interface {
 	ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error)
 	GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionVoResponse, error)
 	AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error)
-	GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionInfo, error)
+	GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionVo, error)
 	DeleteQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error)
 	UpdateQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error)
 	GetQuestionVo(context.Context, *QuestionInfo) (*QuestionVo, error)
@@ -139,7 +139,7 @@ func (UnimplementedQuestionServiceServer) GetQuestionVoPage(context.Context, *Ge
 func (UnimplementedQuestionServiceServer) AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddQuestion not implemented")
 }
-func (UnimplementedQuestionServiceServer) GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionInfo, error) {
+func (UnimplementedQuestionServiceServer) GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionVo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionById not implemented")
 }
 func (UnimplementedQuestionServiceServer) DeleteQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error) {

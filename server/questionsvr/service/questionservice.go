@@ -2,13 +2,17 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"questionsvr/repository"
 	"questionsvr/utils"
 )
+
+var questionService QuestionService
 
 type QuestionService struct {
 	pb.UnimplementedQuestionServiceServer
@@ -48,14 +52,70 @@ func (QuestionService) ValidQuestion(ctx context.Context, request *pb.ValidQuest
 func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQuestionVoPageRequest) (*pb.GetQuestionVoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVoPage not implemented")
 }
-func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionInfo) (*pb.BoolResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddQuestion not implemented")
+func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddRequest) (*pb.BoolResponse, error) {
+	c := request.Context
+	title := request.Title
+	answer := request.Answer
+	if utils.IsAnyBlank(c, answer, title) {
+		return &pb.BoolResponse{Res: false}, errors.New("context、title、answer 不能为空")
+	}
+	tags := request.Tags
+	judgeCase := request.JudgeCase
+	judgeconfig := request.JudgeConfig
+	if tags == nil {
+		return &pb.BoolResponse{Res: false}, errors.New("tags 不能为空")
+	}
+	if judgeCase == nil {
+		return &pb.BoolResponse{Res: false}, errors.New("judgeCase 不能为空")
+	}
+
+	if judgeconfig == nil {
+		return &pb.BoolResponse{Res: false}, errors.New("judgeconfig 不能为空")
+	}
+	question := new(pb.QuestionInfo)
+	copier.Copy(question, request)
+	questionTags, err := json.Marshal(tags)
+	if err != nil {
+		return &pb.BoolResponse{Res: false}, errors.New("tags 参数异常")
+	}
+	questionjudgeCase, err := json.Marshal(judgeCase)
+	if err != nil {
+		return &pb.BoolResponse{Res: false}, errors.New("tags 参数异常")
+	}
+	questionjudgeconfig, err := json.Marshal(judgeconfig)
+	if err != nil {
+		return &pb.BoolResponse{Res: false}, errors.New("tags 参数异常")
+	}
+
+	question.Tags = string(questionTags)
+	question.JudgeCase = string(questionjudgeCase)
+	question.JudgeConfig = string(questionjudgeconfig)
+	_, err = repository.CreateQuestion(question)
+	if err != nil {
+		return &pb.BoolResponse{Res: false}, errors.New("添加失败")
+	}
+	return &pb.BoolResponse{Res: true}, nil
+
 }
-func (QuestionService) GetQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionInfo, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionById not implemented")
+func (QuestionService) GetQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionVo, error) {
+	if request.Id == 0 {
+		return nil, errors.New("id 不能为空")
+	}
+	questionInfo, err := repository.GetQuestionById(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	questionVo, err := questionService.GetQuestionVo(ctx, questionInfo)
+	return questionVo, nil
 }
 func (QuestionService) DeleteQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.BoolResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuestionById not implemented")
+	if request.Id == 0 {
+		return nil, errors.New("id 不能为空")
+	}
+	if err := repository.DeleteQuestionById(request.Id); err != nil {
+		return &pb.BoolResponse{Res: false}, errors.New("删除失败")
+	}
+	return &pb.BoolResponse{Res: true}, nil
 }
 func (QuestionService) UpdateQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.BoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionById not implemented")
@@ -67,6 +127,5 @@ func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionIn
 	if err != nil {
 		return nil, err
 	}
-
-	return nil, nil
+	return questionVo, nil
 }
