@@ -3,7 +3,9 @@ package service
 import (
 	"context"
 	"errors"
+	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/pkg/pb"
+	"google.golang.org/protobuf/encoding/protojson"
 	"questionsubmitsvr/enum"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
@@ -56,4 +58,34 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		return nil, err
 	}
 	return &pb.BoolResponse{Res: true}, nil
+}
+
+func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, request *pb.QuestionSubmitQueryRequest) (*pb.QuestionSubmitQueryResponse, error) {
+	questionSubmitList, err := repository.ListQuestionSubmitByPage(request)
+	if err != nil {
+		return nil, err
+	}
+	userClient := rpcservice.GetUserServiceClient()
+	loginUser, err := userClient.GetLoginUser(ctx, &pb.Empty{})
+	if err != nil {
+		return nil, err
+	}
+	voList := make([]*pb.QuestionSubmitVo, 0)
+	for _, v := range questionSubmitList {
+		vo := toVo(v)
+		if vo.UserId != loginUser.Id && loginUser.UserRole != 0 {
+			vo.Code = ""
+		}
+		voList = append(voList, vo)
+	}
+	return voList, nil
+}
+
+func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
+	var vo *pb.QuestionSubmitVo
+	copier.Copy(vo, obj)
+	if obj.JudgeInfo != "" {
+		protojson.Unmarshal([]byte(obj.JudgeInfo), vo.JudgeInfo)
+	}
+	return vo
 }

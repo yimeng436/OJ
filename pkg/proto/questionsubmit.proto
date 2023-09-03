@@ -32,6 +32,7 @@ message QuestionSubmitAddRequest{
 }
 
 message QuestionSubmitQueryRequest{
+  Page page = 5;
   string language = 1;
   int64 status = 2;
   int64 questionId = 3;
@@ -41,16 +42,21 @@ message QuestionSubmitQueryRequest{
 
 
 message QuestionSubmitQueryResponse{
+  repeated QuestionVo questionVO = 1;
+}
+
+message QuestionSubmitVo{
   string language = 1;
   string code = 2;
   JudgeInfo judgeInfo = 3;
-  int64 status = 4;
+  int32 status = 4;
   int64 questionId = 5;
   int64 userId = 6;
   string createTime = 7;
   string updateTime = 8;
   UserVo submitUser = 9;
   QuestionVo questionVo = 10;
+
 }
 
 service QuestionSubmitService{

@@ -1,6 +1,10 @@
 package repository
 
-import "questionsubmitsvr/middleware/db"
+import (
+	"github.com/yimeng436/OJ/pkg/pb"
+	"gorm.io/gorm"
+	"questionsubmitsvr/middleware/db"
+)
 
 func Create(submit *QuestionSubmit) error {
 	db := db.GetDB()
@@ -9,4 +13,36 @@ func Create(submit *QuestionSubmit) error {
 		return err
 	}
 	return nil
+}
+
+func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*QuestionSubmit, error) {
+	page := 0
+	pageSize := 2
+	db := db.GetDB()
+	query := buildCondition(db, request)
+	var questionSubmit []*QuestionSubmit
+	err := query.Limit(pageSize).Offset(page).Find(&questionSubmit).Error
+	if err != nil {
+		return nil, err
+	}
+	return questionSubmit, nil
+}
+
+func buildCondition(db *gorm.DB, request *pb.QuestionSubmitQueryRequest) *gorm.DB {
+	query := db.Model(QuestionSubmit{})
+	language := request.Language
+	questionId := request.QuestionId
+	userId := request.UserId
+	status := request.Status
+	if request.Language != "" {
+		query = query.Where("language = ?", language)
+	}
+	if request.QuestionId != 0 {
+		query = query.Where("questionId = ?", questionId)
+	}
+	if request.UserId != 0 {
+		query = query.Where("userId = ?", userId)
+	}
+	query = query.Where("status = ?", status)
+	return query
 }

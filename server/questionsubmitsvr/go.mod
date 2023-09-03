@@ -5,17 +5,17 @@ go 1.20
 require (
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/hashicorp/consul/api v1.24.0
+	github.com/jinzhu/copier v0.4.0
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.16.0
+	github.com/yimeng436/OJ v0.1.6
 	go.uber.org/zap v1.25.0
 	google.golang.org/grpc v1.57.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.4
 )
-
-require github.com/yimeng436/OJ v0.1.5
 
 require (
 	github.com/armon/go-metrics v0.4.1 // indirect
