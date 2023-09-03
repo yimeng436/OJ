@@ -5,6 +5,7 @@ import (
 	"gatewaysvr/rpcservice"
 	"github.com/gin-gonic/gin"
 	"github.com/yimeng436/OJ/common"
+	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"strconv"
 )
@@ -148,12 +149,12 @@ func DoSubmit(ctx *gin.Context) {
 		common.Fail(ctx, "请求参数错误")
 		return
 	}
-	_, exists := ctx.Get("loginUser")
+	loginUser, exists := ctx.Get("loginUser")
 	if !exists {
 		common.Fail(ctx, "未登录")
 		return
 	}
-
+	request.Ctx.Ctx[constant.UserLoginState] = loginUser
 	questionSubmitClient := rpcservice.GetQuestionSubmitServiceClient()
 	resp, err := questionSubmitClient.DoQuestionSubmit(ctx, request)
 	if err != nil {
