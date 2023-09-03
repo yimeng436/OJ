@@ -7,6 +7,13 @@ definitions:
       msg:
         type: string
     type: object
+  pb.GetQuestionVoPageRequest:
+    properties:
+      page:
+        $ref: '#/definitions/pb.Page'
+      question:
+        $ref: '#/definitions/pb.QuestionInfo'
+    type: object
   pb.JudgeCase:
     properties:
       inputs:
@@ -28,11 +35,18 @@ definitions:
         description: 时间限制
         type: integer
     type: object
+  pb.Page:
+    properties:
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
   pb.QuestionAddRequest:
     properties:
       answer:
         type: string
-      context:
+      content:
         type: string
       judgeCase:
         items:
@@ -46,6 +60,54 @@ definitions:
         type: array
       title:
         type: string
+    type: object
+  pb.QuestionInfo:
+    properties:
+      acceptedNum:
+        description: 题目通过数
+        type: integer
+      answer:
+        description: 题目答案
+        type: string
+      content:
+        description: 内容
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      favourNum:
+        description: 收藏数
+        type: integer
+      id:
+        description: id
+        type: integer
+      isDelete:
+        description: 是否删除
+        type: integer
+      judgeCase:
+        description: 判题用例（json 数组）
+        type: string
+      judgeConfig:
+        description: 判题配置（json 对象）
+        type: string
+      submitNum:
+        description: 题目提交数
+        type: integer
+      tags:
+        description: 标签列表（json 数组）
+        type: string
+      thumbNum:
+        description: 点赞数
+        type: integer
+      title:
+        description: 标题
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+      userId:
+        description: 创建用户 id
+        type: integer
     type: object
   pb.UserLoginRequest:
     properties:
@@ -105,6 +167,26 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: 根据id获取题目
+  /question/list:
+    post:
+      consumes:
+      - application/json
+      description: 分页查询问题
+      parameters:
+      - description: QuestionVoPage
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.GetQuestionVoPageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 分页查询问题
   /test/{id}:
     get:
       description: 描述信息

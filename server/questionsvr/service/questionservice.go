@@ -8,6 +8,7 @@ import (
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/encoding/protojson"
 	"questionsvr/repository"
 	"questionsvr/utils"
 )
@@ -49,7 +50,7 @@ func (QuestionService) ValidQuestion(ctx context.Context, request *pb.ValidQuest
 
 	return &pb.Empty{}, nil
 }
-func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQuestionVoPageRequest) (*pb.GetQuestionVoResponse, error) {
+func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQuestionVoPageRequest) (*pb.GetQuestionPageVoResponse, error) {
 	page := request.Page
 	questionInfo := request.Question
 
@@ -59,7 +60,17 @@ func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQue
 	if err != nil {
 		return nil, err
 	}
+	resp := new(pb.GetQuestionPageVoResponse)
+	for _, q := range questionList {
+		copier.Copy(questionInfo, q)
+		vo, err := questionService.GetQuestionVo(ctx, questionInfo)
+		if err != nil {
+			return nil, err
+		}
+		resp.QuestionVo = append(resp.QuestionVo, vo)
+	}
 
+	return resp, nil
 }
 func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddRequest) (*pb.BoolResponse, error) {
 	c := request.Content
@@ -146,6 +157,12 @@ func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionIn
 	err = copier.Copy(questionVo, request)
 	if err != nil {
 		return nil, err
+	}
+	if request.JudgeConfig != "" {
+		protojson.Unmarshal([]byte(request.JudgeConfig), questionVo.JudgeConfig)
+	}
+	if request.Tags != "" {
+		json.Unmarshal([]byte(request.Tags), &questionVo.Tags)
 	}
 	return questionVo, nil
 }

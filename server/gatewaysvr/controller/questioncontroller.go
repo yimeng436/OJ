@@ -70,3 +70,35 @@ func GetQuestion(ctx *gin.Context) {
 	}
 	common.Success(ctx, question, "success")
 }
+
+// @Summary		分页查询问题
+// @Description	分页查询问题
+// @Accept json
+// @Param user body pb.GetQuestionVoPageRequest true "QuestionVoPage"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/list  [post]
+func ListQuestion(ctx *gin.Context) {
+	request := new(pb.GetQuestionVoPageRequest)
+
+	if err := ctx.ShouldBind(&request); err != nil {
+		log.Fatal("参数错误")
+		common.Fail(ctx, "请求参数错误")
+		return
+	}
+
+	if request.Page.Page <= 0 {
+		request.Page.Page = 0
+	}
+	if request.Page.PageSize <= 0 {
+		request.Page.Page = 5
+	}
+	questionClient := rpcservice.GetQuestionServiceClient()
+	resp, err := questionClient.GetQuestionVoPage(ctx, request)
+	if err != nil {
+		log.Fatal("GetQuestionVoPage rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, resp, "success")
+}

@@ -80,6 +80,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/question/list": {
+            "post": {
+                "description": "分页查询问题",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "分页查询问题",
+                "parameters": [
+                    {
+                        "description": "QuestionVoPage",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pb.GetQuestionVoPageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/test/{id}": {
             "get": {
                 "description": "描述信息",
@@ -168,6 +199,17 @@ const docTemplate = `{
                 }
             }
         },
+        "pb.GetQuestionVoPageRequest": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "$ref": "#/definitions/pb.Page"
+                },
+                "question": {
+                    "$ref": "#/definitions/pb.QuestionInfo"
+                }
+            }
+        },
         "pb.JudgeCase": {
             "type": "object",
             "properties": {
@@ -198,13 +240,24 @@ const docTemplate = `{
                 }
             }
         },
+        "pb.Page": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                }
+            }
+        },
         "pb.QuestionAddRequest": {
             "type": "object",
             "properties": {
                 "answer": {
                     "type": "string"
                 },
-                "context": {
+                "content": {
                     "type": "string"
                 },
                 "judgeCase": {
@@ -224,6 +277,71 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "pb.QuestionInfo": {
+            "type": "object",
+            "properties": {
+                "acceptedNum": {
+                    "description": "题目通过数",
+                    "type": "integer"
+                },
+                "answer": {
+                    "description": "题目答案",
+                    "type": "string"
+                },
+                "content": {
+                    "description": "内容",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "favourNum": {
+                    "description": "收藏数",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "description": "是否删除",
+                    "type": "integer"
+                },
+                "judgeCase": {
+                    "description": "判题用例（json 数组）",
+                    "type": "string"
+                },
+                "judgeConfig": {
+                    "description": "判题配置（json 对象）",
+                    "type": "string"
+                },
+                "submitNum": {
+                    "description": "题目提交数",
+                    "type": "integer"
+                },
+                "tags": {
+                    "description": "标签列表（json 数组）",
+                    "type": "string"
+                },
+                "thumbNum": {
+                    "description": "点赞数",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "标题",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "创建用户 id",
+                    "type": "integer"
                 }
             }
         },

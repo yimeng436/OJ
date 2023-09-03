@@ -1,5 +1,5 @@
 svr_config:
-  name: "questionsvr"
+  name: "questionsubmitsvr"
   host: "127.0.0.1"
   port: "8003"
   user_svr_name : "usersvr"

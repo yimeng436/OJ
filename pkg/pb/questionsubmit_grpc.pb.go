@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	QuestionSubmitService_DoQuestionSubmit_FullMethodName = "/QuestionSubmitService/DoQuestionSubmit"
+	QuestionSubmitService_DoQuestionSubmit_FullMethodName         = "/QuestionSubmitService/DoQuestionSubmit"
+	QuestionSubmitService_ListQuestionSubmitByPage_FullMethodName = "/QuestionSubmitService/ListQuestionSubmitByPage"
 )
 
 // QuestionSubmitServiceClient is the client API for QuestionSubmitService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionSubmitServiceClient interface {
 	DoQuestionSubmit(ctx context.Context, in *QuestionSubmitAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
+	ListQuestionSubmitByPage(ctx context.Context, in *QuestionSubmitQueryRequest, opts ...grpc.CallOption) (*QuestionSubmitQueryResponse, error)
 }
 
 type questionSubmitServiceClient struct {
@@ -46,11 +48,21 @@ func (c *questionSubmitServiceClient) DoQuestionSubmit(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *questionSubmitServiceClient) ListQuestionSubmitByPage(ctx context.Context, in *QuestionSubmitQueryRequest, opts ...grpc.CallOption) (*QuestionSubmitQueryResponse, error) {
+	out := new(QuestionSubmitQueryResponse)
+	err := c.cc.Invoke(ctx, QuestionSubmitService_ListQuestionSubmitByPage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionSubmitServiceServer is the server API for QuestionSubmitService service.
 // All implementations must embed UnimplementedQuestionSubmitServiceServer
 // for forward compatibility
 type QuestionSubmitServiceServer interface {
 	DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*BoolResponse, error)
+	ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error)
 	mustEmbedUnimplementedQuestionSubmitServiceServer()
 }
 
@@ -60,6 +72,9 @@ type UnimplementedQuestionSubmitServiceServer struct {
 
 func (UnimplementedQuestionSubmitServiceServer) DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*BoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DoQuestionSubmit not implemented")
+}
+func (UnimplementedQuestionSubmitServiceServer) ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListQuestionSubmitByPage not implemented")
 }
 func (UnimplementedQuestionSubmitServiceServer) mustEmbedUnimplementedQuestionSubmitServiceServer() {}
 
@@ -92,6 +107,24 @@ func _QuestionSubmitService_DoQuestionSubmit_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionSubmitService_ListQuestionSubmitByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuestionSubmitQueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionSubmitServiceServer).ListQuestionSubmitByPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionSubmitService_ListQuestionSubmitByPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionSubmitServiceServer).ListQuestionSubmitByPage(ctx, req.(*QuestionSubmitQueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionSubmitService_ServiceDesc is the grpc.ServiceDesc for QuestionSubmitService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +135,10 @@ var QuestionSubmitService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DoQuestionSubmit",
 			Handler:    _QuestionSubmitService_DoQuestionSubmit_Handler,
+		},
+		{
+			MethodName: "ListQuestionSubmitByPage",
+			Handler:    _QuestionSubmitService_ListQuestionSubmitByPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

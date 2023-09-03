@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option go_package="../pb;pb";
 import "common.proto";
+import "user.proto";
+import "question.proto";
 message QuestionSubmitInfo {
   int64 id = 1; // id
   string language = 2; // 编程语言
@@ -29,8 +31,29 @@ message QuestionSubmitAddRequest{
   int64 questionId = 3;
 }
 
+message QuestionSubmitQueryRequest{
+  string language = 1;
+  int64 status = 2;
+  int64 questionId = 3;
+  int64 userId = 4;
+}
 
+
+
+message QuestionSubmitQueryResponse{
+  string language = 1;
+  string code = 2;
+  JudgeInfo judgeInfo = 3;
+  int64 status = 4;
+  int64 questionId = 5;
+  int64 userId = 6;
+  string createTime = 7;
+  string updateTime = 8;
+  UserVo submitUser = 9;
+  QuestionVo questionVo = 10;
+}
 
 service QuestionSubmitService{
   rpc DoQuestionSubmit(QuestionSubmitAddRequest) returns (BoolResponse);
+  rpc ListQuestionSubmitByPage(QuestionSubmitQueryRequest) returns (QuestionSubmitQueryResponse);
 }
