@@ -9,6 +9,7 @@ require (
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.16.0
+	github.com/yimeng436/OJ v0.1.7
 	go.uber.org/zap v1.25.0
 	google.golang.org/grpc v1.57.0
 	google.golang.org/protobuf v1.30.0
@@ -16,8 +17,6 @@ require (
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.4
 )
-
-require github.com/yimeng436/OJ v0.1.6
 
 require (
 	github.com/armon/go-metrics v0.4.1 // indirect

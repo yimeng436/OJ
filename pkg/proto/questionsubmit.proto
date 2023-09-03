@@ -42,7 +42,7 @@ message QuestionSubmitQueryRequest{
 
 
 message QuestionSubmitQueryResponse{
-  repeated QuestionVo questionVO = 1;
+  repeated QuestionSubmitVo questionVO = 1;
 }
 
 message QuestionSubmitVo{

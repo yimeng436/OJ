@@ -16,8 +16,8 @@ func Create(submit *QuestionSubmit) error {
 }
 
 func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*QuestionSubmit, error) {
-	page := 0
-	pageSize := 2
+	page := int(request.Page.Page)
+	pageSize := int(request.Page.PageSize)
 	db := db.GetDB()
 	query := buildCondition(db, request)
 	var questionSubmit []*QuestionSubmit

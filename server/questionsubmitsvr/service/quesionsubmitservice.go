@@ -78,6 +78,8 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 		}
 		voList = append(voList, vo)
 	}
+	resp := new(pb.GetQuestionPageVoResponse)
+	resp.QuestionVo = voList
 	return voList, nil
 }
 
