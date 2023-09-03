@@ -701,6 +701,7 @@ github.com/yeya24/promlinter v0.2.0 h1:xFKDQ82orCU5jQujdaD8stOHiv8UN68BSdn2a8u8Y
 github.com/yeya24/promlinter v0.2.0/go.mod h1:u54lkmBOZrpEbQQ6gox2zWKKLKu2SGe+2KOiextY+IA=
 github.com/yimeng436/OJ v0.1.2 h1:37e+OkuGIWN2P7yM5nKHAUT8StyR11deeY+ZvWEkx3o=
 github.com/yimeng436/OJ v0.1.2/go.mod h1:32UOQehwOShMsH3ZUS7FdT3tLGNqcUjypaNz5X1geEU=
+github.com/yimeng436/OJ v0.1.3/go.mod h1:32UOQehwOShMsH3ZUS7FdT3tLGNqcUjypaNz5X1geEU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

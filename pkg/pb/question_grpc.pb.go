@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionServiceClient interface {
 	ValidQuestion(ctx context.Context, in *ValidQuestionRequest, opts ...grpc.CallOption) (*Empty, error)
-	GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionVoResponse, error)
+	GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionPageVoResponse, error)
 	AddQuestion(ctx context.Context, in *QuestionAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
 	GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionVo, error)
 	DeleteQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error)
@@ -58,8 +58,8 @@ func (c *questionServiceClient) ValidQuestion(ctx context.Context, in *ValidQues
 	return out, nil
 }
 
-func (c *questionServiceClient) GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionVoResponse, error) {
-	out := new(GetQuestionVoResponse)
+func (c *questionServiceClient) GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionPageVoResponse, error) {
+	out := new(GetQuestionPageVoResponse)
 	err := c.cc.Invoke(ctx, QuestionService_GetQuestionVoPage_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -117,7 +117,7 @@ func (c *questionServiceClient) GetQuestionVo(ctx context.Context, in *QuestionI
 // for forward compatibility
 type QuestionServiceServer interface {
 	ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error)
-	GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionVoResponse, error)
+	GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionPageVoResponse, error)
 	AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error)
 	GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionVo, error)
 	DeleteQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error)
@@ -133,7 +133,7 @@ type UnimplementedQuestionServiceServer struct {
 func (UnimplementedQuestionServiceServer) ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidQuestion not implemented")
 }
-func (UnimplementedQuestionServiceServer) GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionVoResponse, error) {
+func (UnimplementedQuestionServiceServer) GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionPageVoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVoPage not implemented")
 }
 func (UnimplementedQuestionServiceServer) AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error) {

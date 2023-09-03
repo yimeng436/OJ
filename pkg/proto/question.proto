@@ -99,9 +99,8 @@ message GetQuestionVoPageRequest{
   QuestionInfo question = 2;
 }
 
-message GetQuestionVoResponse{
-  Page page = 1;
-  repeated QuestionInfo question = 2;
+message GetQuestionPageVoResponse{
+  repeated QuestionVo questionVo = 1;
 }
 
 
@@ -111,7 +110,7 @@ message QuestionIdRequest{
 
 service QuestionService{
   rpc ValidQuestion(ValidQuestionRequest) returns (Empty);
-  rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionVoResponse);
+  rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionPageVoResponse);
   rpc AddQuestion(QuestionAddRequest) returns(BoolResponse);
   rpc GetQuestionById(QuestionIdRequest) returns (QuestionVo);
   rpc DeleteQuestionById(QuestionIdRequest) returns(BoolResponse);

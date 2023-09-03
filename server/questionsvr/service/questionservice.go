@@ -50,10 +50,19 @@ func (QuestionService) ValidQuestion(ctx context.Context, request *pb.ValidQuest
 	return &pb.Empty{}, nil
 }
 func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQuestionVoPageRequest) (*pb.GetQuestionVoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVoPage not implemented")
+	page := request.Page
+	questionInfo := request.Question
+
+	question := new(repository.Question)
+	copier.Copy(question, questionInfo)
+	questionList, err := repository.GetQuestionList(question, int(page.Page), int(page.PageSize))
+	if err != nil {
+		return nil, err
+	}
+
 }
 func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddRequest) (*pb.BoolResponse, error) {
-	c := request.Context
+	c := request.Content
 	title := request.Title
 	answer := request.Answer
 	if utils.IsAnyBlank(c, answer, title) {

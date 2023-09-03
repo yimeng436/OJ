@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"encoding/json"
+	"gorm.io/gorm"
 	"questionsvr/middleware/db"
 )
 
@@ -27,4 +29,49 @@ func DeleteQuestionById(id int64) error {
 	db := db.GetDB()
 	err := db.Delete(Question{}, id).Error
 	return err
+}
+
+func GetQuestionList(question *Question, page, pageSize int) ([]*Question, error) {
+	db := db.GetDB()
+	query := buildSearchCondition(db, question)
+	var questions []*Question
+	err := query.Limit(pageSize).Offset(page - 1).Find(&questions).Error
+	if err != nil {
+		return nil, err
+	}
+	return questions, nil
+}
+
+func buildSearchCondition(db *gorm.DB, question *Question) (tx *gorm.DB) {
+	query := db.Model(Question{})
+	id := question.Id
+	content := question.Content
+	tags := question.Tags
+	title := question.Title
+	userId := question.UserId
+
+	if content != "" {
+		query = query.Or("content LIKE ?", "%"+content+"%")
+	}
+	if title != "" {
+		query = query.Or("title LIKE ?", "%"+title+"%")
+	}
+	if userId != 0 {
+		query = query.Or("userId = ?", userId)
+	}
+	if id != 0 {
+		query = query.Or("id = ?", id)
+	}
+	if tags != "" {
+		var targetTag []string
+		err := json.Unmarshal([]byte(tags), targetTag)
+		if err != nil {
+			return
+		}
+
+		for _, tag := range targetTag {
+			query = query.Or("tag LIKE ?", "%"+tag+"%")
+		}
+	}
+	return query
 }
