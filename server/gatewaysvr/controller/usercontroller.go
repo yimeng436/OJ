@@ -36,6 +36,9 @@ func Login(ctx *gin.Context) {
 		common.Fail(ctx, err.Error())
 		return
 	}
+	session := sessions.Default(ctx)
+	session.Set(constant.UserLoginState, userVo)
+	err = session.Save()
 	common.Success(ctx, userVo, "success")
 }
 
@@ -45,11 +48,18 @@ func Login(ctx *gin.Context) {
 // @Success		200	{object}	common.Response
 // @Router			/user/getLoginUser  [get]
 func GetLoginUser(ctx *gin.Context) {
+	CheckLogin(ctx)
+	loginUser, _ := ctx.Get("loginUser")
+	common.Success(ctx, loginUser, "success")
+}
+
+func CheckLogin(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	loginUser := session.Get(constant.UserLoginState)
 	if loginUser == nil {
 		common.Fail(ctx, "未登录")
-		return
+		ctx.Abort()
 	}
-	common.Success(ctx, loginUser, "success")
+	ctx.Set("loginUser", loginUser)
+	ctx.Next()
 }

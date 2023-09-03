@@ -111,6 +111,68 @@ const docTemplate = `{
                 }
             }
         },
+        "/question/submit/do": {
+            "post": {
+                "description": "提交问题",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "提交问题",
+                "parameters": [
+                    {
+                        "description": "QuestionSubmitAddRequest",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pb.QuestionSubmitAddRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/submit/query": {
+            "post": {
+                "description": "查询问题提交信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "查询问题提交信息",
+                "parameters": [
+                    {
+                        "description": "QuestionSubmit",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pb.QuestionSubmitQueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/test/{id}": {
             "get": {
                 "description": "描述信息",
@@ -341,6 +403,40 @@ const docTemplate = `{
                 },
                 "userId": {
                     "description": "创建用户 id",
+                    "type": "integer"
+                }
+            }
+        },
+        "pb.QuestionSubmitAddRequest": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "questionId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "pb.QuestionSubmitQueryRequest": {
+            "type": "object",
+            "properties": {
+                "language": {
+                    "type": "string"
+                },
+                "page": {
+                    "$ref": "#/definitions/pb.Page"
+                },
+                "questionId": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "userId": {
                     "type": "integer"
                 }
             }

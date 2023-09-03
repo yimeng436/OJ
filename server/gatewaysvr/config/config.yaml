@@ -4,6 +4,7 @@ svr_config:
   port: "8000"
   user_svr_name: "usersvr"
   question_svr_name : "questionsvr"
+  questionsubmit_svr_name : "questionsubmitsvr"
 
 
 redis:

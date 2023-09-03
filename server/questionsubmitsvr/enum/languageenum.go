@@ -18,7 +18,7 @@ func init() {
 
 func GetLanguage(language string) (string, error) {
 	res, err := languageMap[language]
-	if err {
+	if !err {
 		return "不支持该语言", errors.New("不支持该语言")
 	}
 	return res, nil

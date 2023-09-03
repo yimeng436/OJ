@@ -4,11 +4,15 @@ import (
 	"context"
 	"errors"
 	"github.com/jinzhu/copier"
+	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
 	"questionsubmitsvr/enum"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
+
+	// 必须要导入这个包，否则grpc会报错
+	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
 )
 
 type QuestionSubmitService struct {
@@ -22,10 +26,8 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		return nil, err2
 	}
 
-	userServiceClient := rpcservice.GetUserServiceClient()
 	var err error
-	var loginUser *pb.UserVo
-	loginUser, err = userServiceClient.GetLoginUser(ctx, &pb.Empty{})
+	loginUser := ctx.Value(constant.UserLoginState)
 	if err != nil {
 		return nil, err
 	}
@@ -42,14 +44,11 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	if question == nil {
 		return nil, errors.New("题目不存在")
 	}
-	if loginUser == nil {
-		return nil, errors.New("未登录")
-	}
 	questionSubmit := new(repository.QuestionSubmit)
 	questionSubmit.QuestionId = request.QuestionId
 	questionSubmit.Code = request.Code
 	questionSubmit.Language = request.Language
-	questionSubmit.UserId = loginUser.Id
+	//questionSubmit.UserId = loginUser.Id
 	questionSubmit.Status = enum.Waiting
 	questionSubmit.JudgeInfo = "{}"
 
@@ -78,9 +77,10 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 		}
 		voList = append(voList, vo)
 	}
-	resp := new(pb.GetQuestionPageVoResponse)
-	resp.QuestionVo = voList
-	return voList, nil
+	resp := new(pb.QuestionSubmitQueryResponse)
+
+	resp.QuestionVO = voList
+	return resp, nil
 }
 
 func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {

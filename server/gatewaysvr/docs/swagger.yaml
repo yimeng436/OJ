@@ -109,6 +109,28 @@ definitions:
         description: 创建用户 id
         type: integer
     type: object
+  pb.QuestionSubmitAddRequest:
+    properties:
+      code:
+        type: string
+      language:
+        type: string
+      questionId:
+        type: integer
+    type: object
+  pb.QuestionSubmitQueryRequest:
+    properties:
+      language:
+        type: string
+      page:
+        $ref: '#/definitions/pb.Page'
+      questionId:
+        type: integer
+      status:
+        type: integer
+      userId:
+        type: integer
+    type: object
   pb.UserLoginRequest:
     properties:
       userName:
@@ -187,6 +209,46 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: 分页查询问题
+  /question/submit/do:
+    post:
+      consumes:
+      - application/json
+      description: 提交问题
+      parameters:
+      - description: QuestionSubmitAddRequest
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.QuestionSubmitAddRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 提交问题
+  /question/submit/query:
+    post:
+      consumes:
+      - application/json
+      description: 查询问题提交信息
+      parameters:
+      - description: QuestionSubmit
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.QuestionSubmitQueryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 查询问题提交信息
   /test/{id}:
     get:
       description: 描述信息

@@ -29,6 +29,7 @@ message QuestionSubmitAddRequest{
   string language = 1;
   string code = 2;
   int64 questionId = 3;
+  Context ctx = 4;
 }
 
 message QuestionSubmitQueryRequest{

@@ -15,12 +15,14 @@ import (
 	"questionsubmitsvr/log"
 	"questionsubmitsvr/middleware/consul"
 	"questionsubmitsvr/middleware/db"
+	"questionsubmitsvr/rpcservice"
 	"questionsubmitsvr/service"
 	"syscall"
 )
 
 func main() {
 	Init()
+	rpcservice.InitSvrConn()
 	defer log.Sync()
 	defer db.CloseDB()
 	if err := Run(); err != nil {

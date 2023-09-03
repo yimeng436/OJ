@@ -67,6 +67,8 @@ func InintRoute(r *gin.Engine) {
 		question.POST("/add", controller.AddQuestion)
 		question.GET("/get/:id", controller.GetQuestion)
 		question.POST("/list", controller.ListQuestion)
+		question.POST("/submit/do", controller.CheckLogin, controller.DoSubmit)
+		question.POST("/submit/query", controller.CheckLogin, controller.QueryQuestionSubmit)
 	}
 
 }

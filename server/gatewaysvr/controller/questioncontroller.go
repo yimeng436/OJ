@@ -102,3 +102,64 @@ func ListQuestion(ctx *gin.Context) {
 	}
 	common.Success(ctx, resp, "success")
 }
+
+// @Summary		查询问题提交信息
+// @Description	查询问题提交信息
+// @Accept json
+// @Param user body pb.QuestionSubmitQueryRequest true "QuestionSubmit"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/submit/query [post]
+func QueryQuestionSubmit(ctx *gin.Context) {
+	request := new(pb.QuestionSubmitQueryRequest)
+
+	if err := ctx.ShouldBind(&request); err != nil {
+		log.Fatal("参数错误")
+		common.Fail(ctx, "请求参数错误")
+		return
+	}
+	_, exists := ctx.Get("loginUser")
+	if !exists {
+		common.Fail(ctx, "未登录")
+		return
+	}
+	questionSubmitClient := rpcservice.GetQuestionSubmitServiceClient()
+	resp, err := questionSubmitClient.ListQuestionSubmitByPage(ctx, request)
+	if err != nil {
+		log.Fatal("ListQuestionSubmitByPage rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, resp, "success")
+}
+
+// @Summary		提交问题
+// @Description	提交问题
+// @Accept json
+// @Param user body pb.QuestionSubmitAddRequest true "QuestionSubmitAddRequest"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/submit/do [post]
+func DoSubmit(ctx *gin.Context) {
+	request := new(pb.QuestionSubmitAddRequest)
+
+	if err := ctx.ShouldBind(&request); err != nil {
+		log.Fatal("参数错误")
+		common.Fail(ctx, "请求参数错误")
+		return
+	}
+	_, exists := ctx.Get("loginUser")
+	if !exists {
+		common.Fail(ctx, "未登录")
+		return
+	}
+
+	questionSubmitClient := rpcservice.GetQuestionSubmitServiceClient()
+	resp, err := questionSubmitClient.DoQuestionSubmit(ctx, request)
+	if err != nil {
+		log.Fatal("DoQuestionSubmit rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, resp, "success")
+}

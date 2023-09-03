@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option go_package="../pb;pb";
-
+import "google/protobuf/any.proto";
 message Page{
   int64 page = 1;
   int64 pageSize = 2;
@@ -11,4 +11,7 @@ message Empty{}
 
 message BoolResponse{
   bool res = 1;
+}
+message Context{
+  map<string, google.protobuf.Any> ctx = 1;
 }
