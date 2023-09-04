@@ -1,17 +1,18 @@
 package main
 
 import (
+	"encoding/gob"
 	"gatewaysvr/config"
-	"gatewaysvr/log"
-	"gatewaysvr/rpcservice"
-
 	controller "gatewaysvr/controller"
 	_ "gatewaysvr/docs"
+	"gatewaysvr/log"
+	"gatewaysvr/rpcservice"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/yimeng436/OJ/pkg/pb"
 	"net/http"
 	"strconv"
 )
@@ -29,6 +30,7 @@ import (
 // @host	127.0.0.1:8000
 // @BasePath
 func main() {
+	gob.Register(pb.UserVo{})
 	r := gin.Default()
 	InitConfig()
 	rpcservice.InitSvrConn()

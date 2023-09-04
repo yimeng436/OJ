@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"gatewaysvr/log"
 	"gatewaysvr/rpcservice"
 	"github.com/gin-gonic/gin"
@@ -119,7 +120,7 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 		common.Fail(ctx, "请求参数错误")
 		return
 	}
-	_, exists := ctx.Get("loginUser")
+	userState, exists := ctx.Get("loginUser")
 	if !exists {
 		common.Fail(ctx, "未登录")
 		return
@@ -154,7 +155,19 @@ func DoSubmit(ctx *gin.Context) {
 		common.Fail(ctx, "未登录")
 		return
 	}
-	request.Ctx.Ctx[constant.UserLoginState] = loginUser
+	vo := loginUser.(pb.UserVo)
+	serisedVo, err := json.Marshal(vo)
+	if err != nil {
+		log.Fatal("序列化异常")
+		common.Fail(ctx, err.Error())
+		return
+	}
+	if request.Ctx == nil {
+		c := new(pb.Context)
+		c.Ctx = make(map[string]string)
+		request.Ctx = c
+	}
+	request.Ctx.Ctx[constant.UserLoginState] = string(serisedVo)
 	questionSubmitClient := rpcservice.GetQuestionSubmitServiceClient()
 	resp, err := questionSubmitClient.DoQuestionSubmit(ctx, request)
 	if err != nil {

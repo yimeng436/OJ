@@ -2,7 +2,9 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
@@ -27,15 +29,16 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	}
 
 	var err error
-	loginUser := ctx.Value(constant.UserLoginState)
+	userState := request.Ctx.Ctx[constant.UserLoginState]
 	if err != nil {
 		return nil, err
 	}
 
-	if loginUser == nil {
+	if userState == "" {
 		return nil, errors.New("请先登录")
 	}
-
+	loginUser := new(pb.UserVo)
+	json.Unmarshal([]byte(userState), loginUser)
 	questionSvrClient := rpcservice.GetQuestionSvrClient()
 	question, err := questionSvrClient.GetQuestionById(ctx, &pb.QuestionIdRequest{Id: request.QuestionId})
 	if err != nil {
@@ -48,7 +51,7 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	questionSubmit.QuestionId = request.QuestionId
 	questionSubmit.Code = request.Code
 	questionSubmit.Language = request.Language
-	//questionSubmit.UserId = loginUser.Id
+	questionSubmit.UserId = loginUser.Id
 	questionSubmit.Status = enum.Waiting
 	questionSubmit.JudgeInfo = "{}"
 
@@ -64,11 +67,12 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	userClient := rpcservice.GetUserServiceClient()
-	loginUser, err := userClient.GetLoginUser(ctx, &pb.Empty{})
-	if err != nil {
-		return nil, err
+	g := ctx.(*gin.Context)
+	userState, exists := g.Get("loginUser")
+	if !exists {
+		return nil, errors.New("未登录")
 	}
+	loginUser := userState.(pb.UserVo)
 	voList := make([]*pb.QuestionSubmitVo, 0)
 	for _, v := range questionSubmitList {
 		vo := toVo(v)

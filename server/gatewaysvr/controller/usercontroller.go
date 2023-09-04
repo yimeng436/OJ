@@ -60,6 +60,7 @@ func CheckLogin(ctx *gin.Context) {
 		common.Fail(ctx, "未登录")
 		ctx.Abort()
 	}
-	ctx.Set("loginUser", loginUser)
+	vo := loginUser.(pb.UserVo)
+	ctx.Set("loginUser", vo)
 	ctx.Next()
 }

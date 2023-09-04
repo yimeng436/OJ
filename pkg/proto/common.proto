@@ -12,5 +12,5 @@ message BoolResponse{
   bool res = 1;
 }
 message Context{
-  map<string, string> ctx = 1;
+  map<string, string> context = 1;
 }

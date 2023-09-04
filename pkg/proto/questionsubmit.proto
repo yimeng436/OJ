@@ -33,11 +33,13 @@ message QuestionSubmitAddRequest{
 }
 
 message QuestionSubmitQueryRequest{
-  Page page = 5;
+
   string language = 1;
   int64 status = 2;
   int64 questionId = 3;
   int64 userId = 4;
+  Page page = 5;
+  Context ctx = 6;
 }
 
 
