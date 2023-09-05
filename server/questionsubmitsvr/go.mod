@@ -17,9 +17,10 @@ require (
 	gorm.io/gorm v1.25.4
 )
 
-require github.com/yimeng436/OJ v0.2.2
-
-require github.com/mbobakov/grpc-consul-resolver v1.5.2
+require (
+	github.com/mbobakov/grpc-consul-resolver v1.5.2
+	github.com/yimeng436/OJ v0.2.3
+)
 
 require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect

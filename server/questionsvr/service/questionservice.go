@@ -64,8 +64,9 @@ func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQue
 	}
 	resp := new(pb.GetQuestionPageVoResponse)
 	for _, q := range questionList {
-		copier.Copy(question, q)
-		resp.QuestionVo = append(resp.QuestionVo, question)
+		resQuestion := new(pb.QuestionInfo)
+		copier.Copy(resQuestion, q)
+		resp.Question = append(resp.Question, resQuestion)
 	}
 
 	return resp, nil

@@ -112,7 +112,8 @@ service QuestionService{
   rpc ValidQuestion(ValidQuestionRequest) returns (Empty);
   rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionPageVoResponse);
   rpc AddQuestion(QuestionAddRequest) returns(BoolResponse);
-  rpc GetQuestionById(QuestionIdRequest) returns (QuestionVo);
+  rpc GetQuestionVoById(QuestionIdRequest) returns (QuestionVo);
+  rpc GetQuestionById(QuestionIdRequest) returns (QuestionInfo);
   rpc DeleteQuestionById(QuestionIdRequest) returns(BoolResponse);
   rpc UpdateQuestionById(QuestionIdRequest) returns (BoolResponse);
   rpc GetQuestionVo(QuestionInfo) returns (QuestionVo);
