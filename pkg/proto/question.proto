@@ -106,6 +106,7 @@ message GetQuestionPageVoResponse{
 
 message QuestionIdRequest{
   int64 id = 1;
+  Context ctx = 2;
 }
 
 service QuestionService{

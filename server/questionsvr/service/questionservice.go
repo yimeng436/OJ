@@ -118,7 +118,7 @@ func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddR
 	return &pb.BoolResponse{Res: true}, nil
 
 }
-func (QuestionService) GetQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionVo, error) {
+func (QuestionService) GetQuestionVoById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionVo, error) {
 	if request.Id == 0 {
 		return nil, errors.New("id 不能为空")
 	}
@@ -164,4 +164,8 @@ func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionIn
 		json.Unmarshal([]byte(request.Tags), &questionVo.Tags)
 	}
 	return questionVo, nil
+}
+func (QuestionService) GetQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionInfo, error) {
+
+	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionById not implemented")
 }
