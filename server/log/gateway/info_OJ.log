@@ -154,3 +154,27 @@
 2023-09-06T04:15:49.840+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
 2023-09-06T04:15:49.841+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
 2023-09-06T04:15:49.842+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T04:42:38.488+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-06T04:42:38.503+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T04:42:38.503+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T04:42:38.503+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:52:03.598+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-06T05:52:03.613+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:52:03.614+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:52:03.614+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:55:17.593+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-06T05:55:17.605+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:55:17.606+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:55:17.607+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:57:17.201+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-06T05:57:17.213+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:57:17.213+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T05:57:17.213+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T06:00:58.956+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-06T06:00:58.969+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T06:00:58.970+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T06:00:58.970+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T06:07:43.640+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-06T06:07:43.654+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T06:07:43.654+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-06T06:07:43.654+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success

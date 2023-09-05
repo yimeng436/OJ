@@ -630,8 +630,8 @@ github.com/yagipy/maintidx v1.0.0 h1:h5NvIsCz+nRDapQ0exNv4aJ0yXSI0420omVANTv3GJM
 github.com/yagipy/maintidx v1.0.0/go.mod h1:0qNf/I/CCZXSMhsRsrEPDZ+DkekpKLXAJfsTACwgXLk=
 github.com/yeya24/promlinter v0.2.0 h1:xFKDQ82orCU5jQujdaD8stOHiv8UN68BSdn2a8u8Y3o=
 github.com/yeya24/promlinter v0.2.0/go.mod h1:u54lkmBOZrpEbQQ6gox2zWKKLKu2SGe+2KOiextY+IA=
-github.com/yimeng436/OJ v0.2.4 h1:I7x0e5teSxXs9Jjw2hs3TnDk6GIFuATCjBOBf9kVsN0=
-github.com/yimeng436/OJ v0.2.4/go.mod h1:32UOQehwOShMsH3ZUS7FdT3tLGNqcUjypaNz5X1geEU=
+github.com/yimeng436/OJ v0.2.5 h1:UUeClWzED/FN6MuZq7RrsE+XN0YR+mWnoJp745U8ZVI=
+github.com/yimeng436/OJ v0.2.5/go.mod h1:32UOQehwOShMsH3ZUS7FdT3tLGNqcUjypaNz5X1geEU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

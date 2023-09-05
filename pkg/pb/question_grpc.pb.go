@@ -25,7 +25,7 @@ const (
 	QuestionService_GetQuestionVoById_FullMethodName  = "/QuestionService/GetQuestionVoById"
 	QuestionService_GetQuestionById_FullMethodName    = "/QuestionService/GetQuestionById"
 	QuestionService_DeleteQuestionById_FullMethodName = "/QuestionService/DeleteQuestionById"
-	QuestionService_UpdateQuestionById_FullMethodName = "/QuestionService/UpdateQuestionById"
+	QuestionService_UpdateQuestion_FullMethodName     = "/QuestionService/UpdateQuestion"
 	QuestionService_GetQuestionVo_FullMethodName      = "/QuestionService/GetQuestionVo"
 )
 
@@ -39,7 +39,7 @@ type QuestionServiceClient interface {
 	GetQuestionVoById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionVo, error)
 	GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionInfo, error)
 	DeleteQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error)
-	UpdateQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error)
+	UpdateQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*BoolResponse, error)
 	GetQuestionVo(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*QuestionVo, error)
 }
 
@@ -105,9 +105,9 @@ func (c *questionServiceClient) DeleteQuestionById(ctx context.Context, in *Ques
 	return out, nil
 }
 
-func (c *questionServiceClient) UpdateQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error) {
+func (c *questionServiceClient) UpdateQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*BoolResponse, error) {
 	out := new(BoolResponse)
-	err := c.cc.Invoke(ctx, QuestionService_UpdateQuestionById_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, QuestionService_UpdateQuestion_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ type QuestionServiceServer interface {
 	GetQuestionVoById(context.Context, *QuestionIdRequest) (*QuestionVo, error)
 	GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionInfo, error)
 	DeleteQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error)
-	UpdateQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error)
+	UpdateQuestion(context.Context, *QuestionInfo) (*BoolResponse, error)
 	GetQuestionVo(context.Context, *QuestionInfo) (*QuestionVo, error)
 	mustEmbedUnimplementedQuestionServiceServer()
 }
@@ -160,8 +160,8 @@ func (UnimplementedQuestionServiceServer) GetQuestionById(context.Context, *Ques
 func (UnimplementedQuestionServiceServer) DeleteQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuestionById not implemented")
 }
-func (UnimplementedQuestionServiceServer) UpdateQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionById not implemented")
+func (UnimplementedQuestionServiceServer) UpdateQuestion(context.Context, *QuestionInfo) (*BoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestion not implemented")
 }
 func (UnimplementedQuestionServiceServer) GetQuestionVo(context.Context, *QuestionInfo) (*QuestionVo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVo not implemented")
@@ -287,20 +287,20 @@ func _QuestionService_DeleteQuestionById_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _QuestionService_UpdateQuestionById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QuestionIdRequest)
+func _QuestionService_UpdateQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuestionInfo)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QuestionServiceServer).UpdateQuestionById(ctx, in)
+		return srv.(QuestionServiceServer).UpdateQuestion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: QuestionService_UpdateQuestionById_FullMethodName,
+		FullMethod: QuestionService_UpdateQuestion_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuestionServiceServer).UpdateQuestionById(ctx, req.(*QuestionIdRequest))
+		return srv.(QuestionServiceServer).UpdateQuestion(ctx, req.(*QuestionInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -355,8 +355,8 @@ var QuestionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _QuestionService_DeleteQuestionById_Handler,
 		},
 		{
-			MethodName: "UpdateQuestionById",
-			Handler:    _QuestionService_UpdateQuestionById_Handler,
+			MethodName: "UpdateQuestion",
+			Handler:    _QuestionService_UpdateQuestion_Handler,
 		},
 		{
 			MethodName: "GetQuestionVo",

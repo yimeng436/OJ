@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/jinzhu/copier"
+	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -148,6 +149,7 @@ func (QuestionService) DeleteQuestionById(ctx context.Context, request *pb.Quest
 	return &pb.BoolResponse{Res: true}, nil
 }
 func (QuestionService) UpdateQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.BoolResponse, error) {
+
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionById not implemented")
 }
 func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionInfo) (*pb.QuestionVo, error) {
@@ -166,6 +168,21 @@ func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionIn
 	return questionVo, nil
 }
 func (QuestionService) GetQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionInfo, error) {
+	userState := request.Ctx.Context[constant.UserLoginState]
+	if userState == "" {
+		return nil, errors.New("请先登录")
+	}
+	loginUser := new(pb.UserVo)
+	json.Unmarshal([]byte(userState), loginUser)
+	questionInfo, err := repository.GetQuestionById(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	if questionInfo.UserId != loginUser.Id && loginUser.Id != 1 {
+		return nil, errors.New("没有权限")
+	}
+	resp := new(pb.QuestionInfo)
+	copier.Copy(resp, questionInfo)
+	return resp, nil
 
-	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionById not implemented")
 }

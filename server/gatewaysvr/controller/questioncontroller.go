@@ -48,7 +48,7 @@ func AddQuestion(ctx *gin.Context) {
 // @Produce  json
 // @Success		200	{object}	common.Response
 // @Router			/question/get/{id} [get]
-func GetQuestion(ctx *gin.Context) {
+func GetQuestionByPathId(ctx *gin.Context) {
 	request := new(pb.QuestionIdRequest)
 	param := ctx.Param("id")
 	if param == "" {
@@ -171,7 +171,7 @@ func DoSubmit(ctx *gin.Context) {
 		common.Fail(ctx, "未登录")
 		return
 	}
-	vo := loginUser.(pb.UserVo)
+	vo := loginUser.(*pb.UserVo)
 	serisedVo, err := json.Marshal(vo)
 	if err != nil {
 		log.Fatal("序列化异常")
@@ -192,4 +192,54 @@ func DoSubmit(ctx *gin.Context) {
 		return
 	}
 	common.Success(ctx, resp, "success")
+}
+
+// @Summary id获取完整题目内容
+// @Description id获取完整题目内容
+// @Accept json
+// @Produce  json
+// @Param id query int true "数据的ID"
+// @Success		200	{object}	common.Response
+// @Router			/question/get [get]
+func GetQuestion(ctx *gin.Context) {
+	request := new(pb.QuestionIdRequest)
+	param := ctx.Query("id")
+	if param == "" {
+		common.Fail(ctx, "id不能为空")
+		return
+	}
+	var err error
+	request.Id, err = strconv.ParseInt(param, 10, 64)
+	if err != nil {
+		log.Fatal("id 错误")
+		common.Fail(ctx, err.Error())
+		return
+	}
+
+	userState, exists := ctx.Get("loginUser")
+	if !exists {
+		common.Fail(ctx, "未登录")
+		return
+	}
+	vo := userState.(*pb.UserVo)
+	serisedVo, err := json.Marshal(vo)
+	if err != nil {
+		log.Fatal("序列化异常")
+		common.Fail(ctx, err.Error())
+		return
+	}
+	if request.Ctx == nil {
+		c := new(pb.Context)
+		c.Context = make(map[string]string)
+		request.Ctx = c
+	}
+	request.Ctx.Context[constant.UserLoginState] = string(serisedVo)
+	questionServiceClient := rpcservice.GetQuestionServiceClient()
+	question, err := questionServiceClient.GetQuestionById(ctx, request)
+	if err != nil {
+		log.Fatal("GetQuestionById rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, question, "success")
 }

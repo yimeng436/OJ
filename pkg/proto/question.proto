@@ -116,6 +116,6 @@ service QuestionService{
   rpc GetQuestionVoById(QuestionIdRequest) returns (QuestionVo);
   rpc GetQuestionById(QuestionIdRequest) returns (QuestionInfo);
   rpc DeleteQuestionById(QuestionIdRequest) returns(BoolResponse);
-  rpc UpdateQuestionById(QuestionIdRequest) returns (BoolResponse);
+  rpc UpdateQuestion(QuestionInfo) returns (BoolResponse);
   rpc GetQuestionVo(QuestionInfo) returns (QuestionVo);
 }

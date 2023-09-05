@@ -7,6 +7,13 @@ definitions:
       msg:
         type: string
     type: object
+  pb.Context:
+    properties:
+      context:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
   pb.GetQuestionVoPageRequest:
     properties:
       page:
@@ -113,6 +120,8 @@ definitions:
     properties:
       code:
         type: string
+      ctx:
+        $ref: '#/definitions/pb.Context'
       language:
         type: string
       questionId:
@@ -120,6 +129,8 @@ definitions:
     type: object
   pb.QuestionSubmitQueryRequest:
     properties:
+      ctx:
+        $ref: '#/definitions/pb.Context'
       language:
         type: string
       page:
@@ -172,6 +183,25 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: 添加问题
+  /question/get:
+    get:
+      consumes:
+      - application/json
+      description: id获取完整题目内容
+      parameters:
+      - description: 数据的ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: id获取完整题目内容
   /question/get/{id}:
     get:
       description: 根据id获取题目

@@ -54,6 +54,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/question/get": {
+            "get": {
+                "description": "id获取完整题目内容",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "id获取完整题目内容",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "数据的ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/question/get/{id}": {
             "get": {
                 "description": "根据id获取题目",
@@ -261,6 +290,17 @@ const docTemplate = `{
                 }
             }
         },
+        "pb.Context": {
+            "type": "object",
+            "properties": {
+                "context": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "pb.GetQuestionVoPageRequest": {
             "type": "object",
             "properties": {
@@ -413,6 +453,9 @@ const docTemplate = `{
                 "code": {
                     "type": "string"
                 },
+                "ctx": {
+                    "$ref": "#/definitions/pb.Context"
+                },
                 "language": {
                     "type": "string"
                 },
@@ -424,6 +467,9 @@ const docTemplate = `{
         "pb.QuestionSubmitQueryRequest": {
             "type": "object",
             "properties": {
+                "ctx": {
+                    "$ref": "#/definitions/pb.Context"
+                },
                 "language": {
                     "type": "string"
                 },

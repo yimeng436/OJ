@@ -31,6 +31,12 @@ func DeleteQuestionById(id int64) error {
 	return err
 }
 
+func UpdateQuestionById(question Question) error {
+	db := db.GetDB()
+	err := db.Save(question).Error
+	return err
+}
+
 func GetQuestionList(question *Question, page, pageSize int) ([]*Question, error) {
 	db := db.GetDB()
 	query := buildSearchCondition(db, question)
