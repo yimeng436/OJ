@@ -100,7 +100,7 @@ message GetQuestionVoPageRequest{
 }
 
 message GetQuestionPageVoResponse{
-  repeated QuestionVo questionVo = 1;
+  repeated QuestionInfo question = 1;
 }
 
 

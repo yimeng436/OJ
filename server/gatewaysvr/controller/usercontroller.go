@@ -1,12 +1,11 @@
 package controller
 
 import (
+	"encoding/json"
 	"gatewaysvr/log"
 	"gatewaysvr/rpcservice"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/yimeng436/OJ/common"
-	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
 )
 
@@ -36,9 +35,12 @@ func Login(ctx *gin.Context) {
 		common.Fail(ctx, err.Error())
 		return
 	}
-	session := sessions.Default(ctx)
-	session.Set(constant.UserLoginState, userVo)
-	err = session.Save()
+	// 前端一致请求不会携带 cookie,换成用简单版的token实现的
+	//session := sessions.Default(ctx)
+	//session.Set(constant.UserLoginState, userVo)
+	//err = session.Save()
+	//userState, err := json.Marshal(userVo)
+	//ctx.SetCookie(constant.UserLoginState, string(userState), 3600, "/", "localhost", false, true)
 	common.Success(ctx, userVo, "success")
 }
 
@@ -49,18 +51,34 @@ func Login(ctx *gin.Context) {
 // @Router			/user/getLoginUser  [get]
 func GetLoginUser(ctx *gin.Context) {
 	CheckLogin(ctx)
-	loginUser, _ := ctx.Get("loginUser")
+	loginUser, e := ctx.Get("loginUser")
+	if !e {
+		common.Fail(ctx, "未登录")
+		ctx.Abort()
+		return
+	}
 	common.Success(ctx, loginUser, "success")
 }
 
 func CheckLogin(ctx *gin.Context) {
-	session := sessions.Default(ctx)
-	loginUser := session.Get(constant.UserLoginState)
-	if loginUser == nil {
-		common.Fail(ctx, "未登录")
+
+	token := ctx.Request.Header.Get("Authorization")
+
+	if token == "" {
 		ctx.Abort()
+		return
 	}
-	vo := loginUser.(pb.UserVo)
-	ctx.Set("loginUser", vo)
+	token = token[7:]
+	loginUser := &pb.UserVo{}
+	err := json.Unmarshal([]byte(token), loginUser)
+	if err != nil {
+		ctx.Abort()
+		return
+	}
+	if loginUser.Id == 0 {
+		ctx.Abort()
+		return
+	}
+	ctx.Set("loginUser", loginUser)
 	ctx.Next()
 }

@@ -95,6 +95,9 @@ func ListQuestion(ctx *gin.Context) {
 	if request.Page.PageSize <= 0 {
 		request.Page.Page = 5
 	}
+	if request.Question == nil {
+		request.Question = new(pb.QuestionInfo)
+	}
 	questionClient := rpcservice.GetQuestionServiceClient()
 	resp, err := questionClient.GetQuestionVoPage(ctx, request)
 	if err != nil {
@@ -125,6 +128,19 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 		common.Fail(ctx, "未登录")
 		return
 	}
+	vo := userState.(pb.UserVo)
+	serisedVo, err := json.Marshal(vo)
+	if err != nil {
+		log.Fatal("序列化异常")
+		common.Fail(ctx, err.Error())
+		return
+	}
+	if request.Ctx == nil {
+		c := new(pb.Context)
+		c.Context = make(map[string]string)
+		request.Ctx = c
+	}
+	request.Ctx.Context[constant.UserLoginState] = string(serisedVo)
 	questionSubmitClient := rpcservice.GetQuestionSubmitServiceClient()
 	resp, err := questionSubmitClient.ListQuestionSubmitByPage(ctx, request)
 	if err != nil {
@@ -164,10 +180,10 @@ func DoSubmit(ctx *gin.Context) {
 	}
 	if request.Ctx == nil {
 		c := new(pb.Context)
-		c.Ctx = make(map[string]string)
+		c.Context = make(map[string]string)
 		request.Ctx = c
 	}
-	request.Ctx.Ctx[constant.UserLoginState] = string(serisedVo)
+	request.Ctx.Context[constant.UserLoginState] = string(serisedVo)
 	questionSubmitClient := rpcservice.GetQuestionSubmitServiceClient()
 	resp, err := questionSubmitClient.DoQuestionSubmit(ctx, request)
 	if err != nil {

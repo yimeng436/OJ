@@ -55,7 +55,9 @@ func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQue
 	questionInfo := request.Question
 
 	question := new(repository.Question)
-	copier.Copy(question, questionInfo)
+	if questionInfo != nil {
+		copier.Copy(question, questionInfo)
+	}
 	questionList, err := repository.GetQuestionList(question, int(page.Page), int(page.PageSize))
 	if err != nil {
 		return nil, err

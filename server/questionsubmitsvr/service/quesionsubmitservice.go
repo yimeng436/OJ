@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
@@ -29,11 +28,7 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	}
 
 	var err error
-	userState := request.Ctx.Ctx[constant.UserLoginState]
-	if err != nil {
-		return nil, err
-	}
-
+	userState := request.Ctx.Context[constant.UserLoginState]
 	if userState == "" {
 		return nil, errors.New("请先登录")
 	}
@@ -67,16 +62,17 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	g := ctx.(*gin.Context)
-	userState, exists := g.Get("loginUser")
-	if !exists {
-		return nil, errors.New("未登录")
+	userState := request.Ctx.Context[constant.UserLoginState]
+	if userState == "" {
+		return nil, errors.New("请先登录")
 	}
-	loginUser := userState.(pb.UserVo)
+	loginUser := new(pb.UserVo)
+	json.Unmarshal([]byte(userState), loginUser)
+
 	voList := make([]*pb.QuestionSubmitVo, 0)
 	for _, v := range questionSubmitList {
 		vo := toVo(v)
-		if vo.UserId != loginUser.Id && loginUser.UserRole != 0 {
+		if vo.UserId != loginUser.Id && loginUser.UserRole != 1 {
 			vo.Code = ""
 		}
 		voList = append(voList, vo)
@@ -88,7 +84,7 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 }
 
 func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
-	var vo *pb.QuestionSubmitVo
+	vo := new(pb.QuestionSubmitVo)
 	copier.Copy(vo, obj)
 	if obj.JudgeInfo != "" {
 		protojson.Unmarshal([]byte(obj.JudgeInfo), vo.JudgeInfo)

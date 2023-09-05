@@ -143,3 +143,48 @@
 2023-09-04T13:52:54.654+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
 2023-09-04T13:52:54.662+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
 2023-09-04T13:52:54.662+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-04T13:53:33.150+0800	[34mINFO[0m	questionsubmitsvr/main.go:39	config loadding success
+2023-09-04T13:53:33.162+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T13:53:33.162+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T13:53:33.167+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
+2023-09-04T13:53:33.167+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-04T14:06:17.379+0800	[34mINFO[0m	questionsubmitsvr/main.go:39	config loadding success
+2023-09-04T14:06:17.400+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T14:06:17.400+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T14:06:17.405+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
+2023-09-04T14:06:17.405+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-04T14:11:48.126+0800	[34mINFO[0m	questionsubmitsvr/main.go:39	config loadding success
+2023-09-04T14:11:48.138+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T14:11:48.139+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T14:11:48.145+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
+2023-09-04T14:11:48.145+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-04T14:12:48.952+0800	[34mINFO[0m	questionsubmitsvr/main.go:39	config loadding success
+2023-09-04T14:12:48.963+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T14:12:48.963+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-04T14:12:48.970+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
+2023-09-04T14:12:48.970+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-04T17:34:09.352+0800	[34mINFO[0m	questionsubmitsvr/main.go:90	注销成功
+2023-09-04T17:34:09.355+0800	[34mINFO[0m	questionsvr/main.go:88	注销成功
+2023-09-05T14:36:35.454+0800	[34mINFO[0m	questionsubmitsvr/main.go:39	config loadding success
+2023-09-05T14:36:35.484+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-05T14:36:35.485+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-05T14:36:35.496+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
+2023-09-05T14:36:35.497+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-05T14:36:40.487+0800	[34mINFO[0m	questionsvr/main.go:37	config loadding success
+2023-09-05T14:36:40.504+0800	[34mINFO[0m	questionsvr/main.go:66	Init Consul Register success
+2023-09-05T14:36:40.504+0800	[34mINFO[0m	questionsvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8002
+2023-09-05T19:50:46.649+0800	[34mINFO[0m	questionsubmitsvr/main.go:90	注销成功
+2023-09-05T19:50:46.650+0800	[34mINFO[0m	questionsvr/main.go:88	注销成功
+2023-09-06T03:57:52.782+0800	[34mINFO[0m	questionsubmitsvr/main.go:39	config loadding success
+2023-09-06T03:57:52.795+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-06T03:57:52.796+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-09-06T03:57:52.804+0800	[34mINFO[0m	questionsubmitsvr/main.go:68	Init Consul Register success
+2023-09-06T03:57:52.804+0800	[34mINFO[0m	questionsubmitsvr/main.go:70	TikTokLite.user_svr listening on 127.0.0.1:8003
+2023-09-06T03:57:57.143+0800	[34mINFO[0m	questionsvr/main.go:37	config loadding success
+2023-09-06T03:57:57.159+0800	[34mINFO[0m	questionsvr/main.go:66	Init Consul Register success
+2023-09-06T03:57:57.159+0800	[34mINFO[0m	questionsvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8002
+2023-09-06T04:10:57.667+0800	[34mINFO[0m	questionsvr/main.go:88	注销成功
+2023-09-06T04:11:04.586+0800	[34mINFO[0m	questionsvr/main.go:37	config loadding success
+2023-09-06T04:11:04.599+0800	[34mINFO[0m	questionsvr/main.go:66	Init Consul Register success
+2023-09-06T04:11:04.602+0800	[34mINFO[0m	questionsvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8002
+2023-09-06T04:14:03.113+0800	[34mINFO[0m	questionsvr/main.go:88	注销成功
