@@ -27,6 +27,15 @@ func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*Questi
 	}
 	return questionSubmit, nil
 }
+func GetTotal() (int64, error) {
+	db := db.GetDB()
+	var total int64
+	err := db.Model(QuestionSubmit{}).Count(&total).Error
+	if err != nil {
+		return 0, err
+	}
+	return total, nil
+}
 
 func buildCondition(db *gorm.DB, request *pb.QuestionSubmitQueryRequest) *gorm.DB {
 	query := db.Model(QuestionSubmit{})

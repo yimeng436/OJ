@@ -154,7 +154,15 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 		common.Fail(ctx, err.Error())
 		return
 	}
-	common.Success(ctx, resp, "success")
+
+	totalResp, err := questionSubmitClient.GetQuestionSubmitTotal(ctx, &pb.Empty{})
+	if err != nil {
+		log.Fatal("GetQuestionSubmitTotal rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+
+	common.SuccessWithPage(ctx, resp, "success", int(totalResp.Total))
 }
 
 // @Summary		提交问题

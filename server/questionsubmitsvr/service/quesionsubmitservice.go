@@ -82,7 +82,13 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 	resp.QuestionVO = voList
 	return resp, nil
 }
-
+func (QuestionSubmitService) GetQuestionSubmitTotal(context.Context, *pb.Empty) (*pb.TotalResponse, error) {
+	total, err := repository.GetTotal()
+	if err != nil {
+		return nil, err
+	}
+	return &pb.TotalResponse{Total: total}, nil
+}
 func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
 	vo := new(pb.QuestionSubmitVo)
 	copier.Copy(vo, obj)
