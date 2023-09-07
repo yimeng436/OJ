@@ -93,7 +93,7 @@ func ListQuestion(ctx *gin.Context) {
 		request.Page.Page = 0
 	}
 	if request.Page.PageSize <= 0 {
-		request.Page.Page = 5
+		request.Page.PageSize = 5
 	}
 	if request.Question == nil {
 		request.Question = new(pb.QuestionInfo)

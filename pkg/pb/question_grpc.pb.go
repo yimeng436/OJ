@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	QuestionService_ValidQuestion_FullMethodName      = "/QuestionService/ValidQuestion"
-	QuestionService_GetQuestionVoPage_FullMethodName  = "/QuestionService/GetQuestionVoPage"
+	QuestionService_ListQuestionPage_FullMethodName   = "/QuestionService/ListQuestionPage"
 	QuestionService_AddQuestion_FullMethodName        = "/QuestionService/AddQuestion"
 	QuestionService_GetQuestionVoById_FullMethodName  = "/QuestionService/GetQuestionVoById"
 	QuestionService_GetQuestionById_FullMethodName    = "/QuestionService/GetQuestionById"
@@ -28,6 +28,7 @@ const (
 	QuestionService_UpdateQuestion_FullMethodName     = "/QuestionService/UpdateQuestion"
 	QuestionService_GetQuestionVo_FullMethodName      = "/QuestionService/GetQuestionVo"
 	QuestionService_GetQuestionTotal_FullMethodName   = "/QuestionService/GetQuestionTotal"
+	QuestionService_ListQuestionVoPage_FullMethodName = "/QuestionService/ListQuestionVoPage"
 )
 
 // QuestionServiceClient is the client API for QuestionService service.
@@ -35,7 +36,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionServiceClient interface {
 	ValidQuestion(ctx context.Context, in *ValidQuestionRequest, opts ...grpc.CallOption) (*Empty, error)
-	GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionPageVoResponse, error)
+	ListQuestionPage(ctx context.Context, in *GetQuestionPageRequest, opts ...grpc.CallOption) (*GetQuestionPageResponse, error)
 	AddQuestion(ctx context.Context, in *QuestionAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
 	GetQuestionVoById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionVo, error)
 	GetQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionInfo, error)
@@ -43,6 +44,7 @@ type QuestionServiceClient interface {
 	UpdateQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*BoolResponse, error)
 	GetQuestionVo(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*QuestionVo, error)
 	GetQuestionTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error)
+	ListQuestionVoPage(ctx context.Context, in *GetQuestionPageRequest, opts ...grpc.CallOption) (*ListQuestionPageVoResponse, error)
 }
 
 type questionServiceClient struct {
@@ -62,9 +64,9 @@ func (c *questionServiceClient) ValidQuestion(ctx context.Context, in *ValidQues
 	return out, nil
 }
 
-func (c *questionServiceClient) GetQuestionVoPage(ctx context.Context, in *GetQuestionVoPageRequest, opts ...grpc.CallOption) (*GetQuestionPageVoResponse, error) {
-	out := new(GetQuestionPageVoResponse)
-	err := c.cc.Invoke(ctx, QuestionService_GetQuestionVoPage_FullMethodName, in, out, opts...)
+func (c *questionServiceClient) ListQuestionPage(ctx context.Context, in *GetQuestionPageRequest, opts ...grpc.CallOption) (*GetQuestionPageResponse, error) {
+	out := new(GetQuestionPageResponse)
+	err := c.cc.Invoke(ctx, QuestionService_ListQuestionPage_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,12 +136,21 @@ func (c *questionServiceClient) GetQuestionTotal(ctx context.Context, in *Empty,
 	return out, nil
 }
 
+func (c *questionServiceClient) ListQuestionVoPage(ctx context.Context, in *GetQuestionPageRequest, opts ...grpc.CallOption) (*ListQuestionPageVoResponse, error) {
+	out := new(ListQuestionPageVoResponse)
+	err := c.cc.Invoke(ctx, QuestionService_ListQuestionVoPage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionServiceServer is the server API for QuestionService service.
 // All implementations must embed UnimplementedQuestionServiceServer
 // for forward compatibility
 type QuestionServiceServer interface {
 	ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error)
-	GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionPageVoResponse, error)
+	ListQuestionPage(context.Context, *GetQuestionPageRequest) (*GetQuestionPageResponse, error)
 	AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error)
 	GetQuestionVoById(context.Context, *QuestionIdRequest) (*QuestionVo, error)
 	GetQuestionById(context.Context, *QuestionIdRequest) (*QuestionInfo, error)
@@ -147,6 +158,7 @@ type QuestionServiceServer interface {
 	UpdateQuestion(context.Context, *QuestionInfo) (*BoolResponse, error)
 	GetQuestionVo(context.Context, *QuestionInfo) (*QuestionVo, error)
 	GetQuestionTotal(context.Context, *Empty) (*TotalResponse, error)
+	ListQuestionVoPage(context.Context, *GetQuestionPageRequest) (*ListQuestionPageVoResponse, error)
 	mustEmbedUnimplementedQuestionServiceServer()
 }
 
@@ -157,8 +169,8 @@ type UnimplementedQuestionServiceServer struct {
 func (UnimplementedQuestionServiceServer) ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidQuestion not implemented")
 }
-func (UnimplementedQuestionServiceServer) GetQuestionVoPage(context.Context, *GetQuestionVoPageRequest) (*GetQuestionPageVoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVoPage not implemented")
+func (UnimplementedQuestionServiceServer) ListQuestionPage(context.Context, *GetQuestionPageRequest) (*GetQuestionPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListQuestionPage not implemented")
 }
 func (UnimplementedQuestionServiceServer) AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddQuestion not implemented")
@@ -180,6 +192,9 @@ func (UnimplementedQuestionServiceServer) GetQuestionVo(context.Context, *Questi
 }
 func (UnimplementedQuestionServiceServer) GetQuestionTotal(context.Context, *Empty) (*TotalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionTotal not implemented")
+}
+func (UnimplementedQuestionServiceServer) ListQuestionVoPage(context.Context, *GetQuestionPageRequest) (*ListQuestionPageVoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListQuestionVoPage not implemented")
 }
 func (UnimplementedQuestionServiceServer) mustEmbedUnimplementedQuestionServiceServer() {}
 
@@ -212,20 +227,20 @@ func _QuestionService_ValidQuestion_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _QuestionService_GetQuestionVoPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetQuestionVoPageRequest)
+func _QuestionService_ListQuestionPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetQuestionPageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QuestionServiceServer).GetQuestionVoPage(ctx, in)
+		return srv.(QuestionServiceServer).ListQuestionPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: QuestionService_GetQuestionVoPage_FullMethodName,
+		FullMethod: QuestionService_ListQuestionPage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuestionServiceServer).GetQuestionVoPage(ctx, req.(*GetQuestionVoPageRequest))
+		return srv.(QuestionServiceServer).ListQuestionPage(ctx, req.(*GetQuestionPageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -356,6 +371,24 @@ func _QuestionService_GetQuestionTotal_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionService_ListQuestionVoPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetQuestionPageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionServiceServer).ListQuestionVoPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionService_ListQuestionVoPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionServiceServer).ListQuestionVoPage(ctx, req.(*GetQuestionPageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionService_ServiceDesc is the grpc.ServiceDesc for QuestionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -368,8 +401,8 @@ var QuestionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _QuestionService_ValidQuestion_Handler,
 		},
 		{
-			MethodName: "GetQuestionVoPage",
-			Handler:    _QuestionService_GetQuestionVoPage_Handler,
+			MethodName: "ListQuestionPage",
+			Handler:    _QuestionService_ListQuestionPage_Handler,
 		},
 		{
 			MethodName: "AddQuestion",
@@ -398,6 +431,10 @@ var QuestionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQuestionTotal",
 			Handler:    _QuestionService_GetQuestionTotal_Handler,
+		},
+		{
+			MethodName: "ListQuestionVoPage",
+			Handler:    _QuestionService_ListQuestionVoPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

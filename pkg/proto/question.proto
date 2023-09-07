@@ -94,12 +94,12 @@ message ValidQuestionRequest{
 }
 
 
-message GetQuestionVoPageRequest{
+message GetQuestionPageRequest{
   Page page = 1;
   QuestionInfo question = 2;
 }
 
-message GetQuestionPageVoResponse{
+message GetQuestionPageResponse{
   repeated QuestionInfo question = 1;
 }
 
@@ -109,11 +109,13 @@ message QuestionIdRequest{
   Context ctx = 2;
 }
 
-
+message ListQuestionPageVoResponse{
+  repeated QuestionVo questionVoList = 1;
+}
 
 service QuestionService{
   rpc ValidQuestion(ValidQuestionRequest) returns (Empty);
-  rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionPageVoResponse);
+  rpc ListQuestionPage(GetQuestionPageRequest) returns (GetQuestionPageResponse);
   rpc AddQuestion(QuestionAddRequest) returns(BoolResponse);
   rpc GetQuestionVoById(QuestionIdRequest) returns (QuestionVo);
   rpc GetQuestionById(QuestionIdRequest) returns (QuestionInfo);
@@ -121,4 +123,5 @@ service QuestionService{
   rpc UpdateQuestion(QuestionInfo) returns (BoolResponse);
   rpc GetQuestionVo(QuestionInfo) returns (QuestionVo);
   rpc GetQuestionTotal(Empty) returns (TotalResponse);
+  rpc ListQuestionVoPage(GetQuestionPageRequest) returns (ListQuestionPageVoResponse);
 }

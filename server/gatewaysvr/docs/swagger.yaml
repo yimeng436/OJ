@@ -6,6 +6,8 @@ definitions:
       data: {}
       msg:
         type: string
+      total:
+        type: integer
     type: object
   pb.Context:
     properties:

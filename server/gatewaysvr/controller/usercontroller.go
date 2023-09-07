@@ -51,6 +51,7 @@ func Login(ctx *gin.Context) {
 // @Router			/user/getLoginUser  [get]
 func GetLoginUser(ctx *gin.Context) {
 	CheckLogin(ctx)
+
 	loginUser, e := ctx.Get("loginUser")
 	if !e {
 		common.Fail(ctx, "未登录")
@@ -61,7 +62,6 @@ func GetLoginUser(ctx *gin.Context) {
 }
 
 func CheckLogin(ctx *gin.Context) {
-
 	token := ctx.Request.Header.Get("Authorization")
 
 	if token == "" {

@@ -336,6 +336,9 @@
                 "data": {},
                 "msg": {
                     "type": "string"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },

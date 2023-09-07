@@ -66,3 +66,6 @@
 2023-09-07T14:22:39.338+0800	[31mERROR[0m	controller/questioncontroller.go:240	GetQuestionById rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses
 2023-09-07T14:23:10.566+0800	[31mERROR[0m	controller/questioncontroller.go:266	AddQuestion rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses
 2023-09-07T14:23:44.978+0800	[31mERROR[0m	controller/questioncontroller.go:266	AddQuestion rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses
+2023-09-07T16:15:31.749+0800	[31mERROR[0m	controller/questioncontroller.go:87	参数错误
+2023-09-07T16:15:31.749+0800	[31mERROR[0m	controller/questioncontroller.go:87	参数错误
+2023-09-07T16:15:31.750+0800	[31mERROR[0m	controller/questioncontroller.go:87	参数错误

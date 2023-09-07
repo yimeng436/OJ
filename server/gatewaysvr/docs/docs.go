@@ -344,6 +344,9 @@ const docTemplate = `{
                 "data": {},
                 "msg": {
                     "type": "string"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
