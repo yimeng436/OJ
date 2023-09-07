@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	QuestionSubmitService_DoQuestionSubmit_FullMethodName         = "/QuestionSubmitService/DoQuestionSubmit"
 	QuestionSubmitService_ListQuestionSubmitByPage_FullMethodName = "/QuestionSubmitService/ListQuestionSubmitByPage"
+	QuestionSubmitService_GetQuestionSubmitTotal_FullMethodName   = "/QuestionSubmitService/GetQuestionSubmitTotal"
 )
 
 // QuestionSubmitServiceClient is the client API for QuestionSubmitService service.
@@ -29,6 +30,7 @@ const (
 type QuestionSubmitServiceClient interface {
 	DoQuestionSubmit(ctx context.Context, in *QuestionSubmitAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
 	ListQuestionSubmitByPage(ctx context.Context, in *QuestionSubmitQueryRequest, opts ...grpc.CallOption) (*QuestionSubmitQueryResponse, error)
+	GetQuestionSubmitTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error)
 }
 
 type questionSubmitServiceClient struct {
@@ -57,12 +59,22 @@ func (c *questionSubmitServiceClient) ListQuestionSubmitByPage(ctx context.Conte
 	return out, nil
 }
 
+func (c *questionSubmitServiceClient) GetQuestionSubmitTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error) {
+	out := new(TotalResponse)
+	err := c.cc.Invoke(ctx, QuestionSubmitService_GetQuestionSubmitTotal_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionSubmitServiceServer is the server API for QuestionSubmitService service.
 // All implementations must embed UnimplementedQuestionSubmitServiceServer
 // for forward compatibility
 type QuestionSubmitServiceServer interface {
 	DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*BoolResponse, error)
 	ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error)
+	GetQuestionSubmitTotal(context.Context, *Empty) (*TotalResponse, error)
 	mustEmbedUnimplementedQuestionSubmitServiceServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedQuestionSubmitServiceServer) DoQuestionSubmit(context.Context
 }
 func (UnimplementedQuestionSubmitServiceServer) ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListQuestionSubmitByPage not implemented")
+}
+func (UnimplementedQuestionSubmitServiceServer) GetQuestionSubmitTotal(context.Context, *Empty) (*TotalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionSubmitTotal not implemented")
 }
 func (UnimplementedQuestionSubmitServiceServer) mustEmbedUnimplementedQuestionSubmitServiceServer() {}
 
@@ -125,6 +140,24 @@ func _QuestionSubmitService_ListQuestionSubmitByPage_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionSubmitService_GetQuestionSubmitTotal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionSubmitServiceServer).GetQuestionSubmitTotal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionSubmitService_GetQuestionSubmitTotal_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionSubmitServiceServer).GetQuestionSubmitTotal(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionSubmitService_ServiceDesc is the grpc.ServiceDesc for QuestionSubmitService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var QuestionSubmitService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListQuestionSubmitByPage",
 			Handler:    _QuestionSubmitService_ListQuestionSubmitByPage_Handler,
+		},
+		{
+			MethodName: "GetQuestionSubmitTotal",
+			Handler:    _QuestionSubmitService_GetQuestionSubmitTotal_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

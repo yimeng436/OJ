@@ -189,3 +189,12 @@ func (QuestionService) GetQuestionById(ctx context.Context, request *pb.Question
 	return resp, nil
 
 }
+func (QuestionService) GetQuestionTotal(ctx context.Context, request *pb.Empty) (*pb.TotalResponse, error) {
+
+	total, err := repository.GetTotal()
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.TotalResponse{Total: total}, nil
+}

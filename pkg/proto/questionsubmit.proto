@@ -65,4 +65,5 @@ message QuestionSubmitVo{
 service QuestionSubmitService{
   rpc DoQuestionSubmit(QuestionSubmitAddRequest) returns (BoolResponse);
   rpc ListQuestionSubmitByPage(QuestionSubmitQueryRequest) returns (QuestionSubmitQueryResponse);
+  rpc GetQuestionSubmitTotal(Empty) returns (TotalResponse);
 }

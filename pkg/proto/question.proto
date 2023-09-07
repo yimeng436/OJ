@@ -109,9 +109,7 @@ message QuestionIdRequest{
   Context ctx = 2;
 }
 
-message TotalResponse{
-  int64 total = 1;
-}
+
 
 service QuestionService{
   rpc ValidQuestion(ValidQuestionRequest) returns (Empty);

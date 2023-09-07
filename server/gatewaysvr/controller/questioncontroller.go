@@ -105,7 +105,13 @@ func ListQuestion(ctx *gin.Context) {
 		common.Fail(ctx, err.Error())
 		return
 	}
-	common.Success(ctx, resp, "success")
+	totalResp, err := questionClient.GetQuestionTotal(ctx, &pb.Empty{})
+	if err != nil {
+		log.Fatal("GetQuestionTotal rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.SuccessWithPage(ctx, resp, "success", int(totalResp.Total))
 }
 
 // @Summary		查询问题提交信息

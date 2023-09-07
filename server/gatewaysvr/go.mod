@@ -12,7 +12,6 @@ require (
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.1
-	github.com/yimeng436/OJ v0.2.7
 	go.uber.org/zap v1.24.0
 	golang.org/x/net v0.10.0
 	google.golang.org/grpc v1.57.0
@@ -20,6 +19,8 @@ require (
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.4
 )
+
+require github.com/yimeng436/OJ v0.2.8
 
 require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect

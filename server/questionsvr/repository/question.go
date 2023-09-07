@@ -81,3 +81,13 @@ func buildSearchCondition(db *gorm.DB, question *Question) (tx *gorm.DB) {
 	}
 	return query
 }
+
+func GetTotal() (int64, error) {
+	db := db.GetDB()
+	var total int64
+	err := db.Model(Question{}).Count(&total).Error
+	if err != nil {
+		return 0, err
+	}
+	return total, nil
+}
