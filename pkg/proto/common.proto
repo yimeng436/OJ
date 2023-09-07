@@ -15,12 +15,3 @@ message Context{
   map<string, string> context = 1;
 }
 
-message GetTotalRequest{
-  string searchName = 1;
-}
-message TotalResponse{
-  int64 total = 1;
-}
-service CommentService{
-  rpc GetTotal(GetTotalRequest) returns(TotalResponse);
-}

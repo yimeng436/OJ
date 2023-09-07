@@ -109,6 +109,10 @@ message QuestionIdRequest{
   Context ctx = 2;
 }
 
+message TotalResponse{
+  int64 total = 1;
+}
+
 service QuestionService{
   rpc ValidQuestion(ValidQuestionRequest) returns (Empty);
   rpc GetQuestionVoPage(GetQuestionVoPageRequest) returns (GetQuestionPageVoResponse);
@@ -118,4 +122,5 @@ service QuestionService{
   rpc DeleteQuestionById(QuestionIdRequest) returns(BoolResponse);
   rpc UpdateQuestion(QuestionInfo) returns (BoolResponse);
   rpc GetQuestionVo(QuestionInfo) returns (QuestionVo);
+  rpc GetQuestionTotal(Empty) returns (TotalResponse);
 }

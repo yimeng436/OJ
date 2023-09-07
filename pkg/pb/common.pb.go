@@ -207,100 +207,6 @@ func (x *Context) GetContext() map[string]string {
 	return nil
 }
 
-type GetTotalRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	SearchName string `protobuf:"bytes,1,opt,name=searchName,proto3" json:"searchName,omitempty"`
-}
-
-func (x *GetTotalRequest) Reset() {
-	*x = GetTotalRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_common_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetTotalRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTotalRequest) ProtoMessage() {}
-
-func (x *GetTotalRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_common_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTotalRequest.ProtoReflect.Descriptor instead.
-func (*GetTotalRequest) Descriptor() ([]byte, []int) {
-	return file_common_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *GetTotalRequest) GetSearchName() string {
-	if x != nil {
-		return x.SearchName
-	}
-	return ""
-}
-
-type TotalResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Total int64 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
-}
-
-func (x *TotalResponse) Reset() {
-	*x = TotalResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_common_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TotalResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TotalResponse) ProtoMessage() {}
-
-func (x *TotalResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_common_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TotalResponse.ProtoReflect.Descriptor instead.
-func (*TotalResponse) Descriptor() ([]byte, []int) {
-	return file_common_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *TotalResponse) GetTotal() int64 {
-	if x != nil {
-		return x.Total
-	}
-	return 0
-}
-
 var File_common_proto protoreflect.FileDescriptor
 
 var file_common_proto_rawDesc = []byte{
@@ -318,18 +224,8 @@ var file_common_proto_rawDesc = []byte{
 	0x0c, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a,
 	0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
 	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x31, 0x0a, 0x0f, 0x47, 0x65, 0x74,
-	0x54, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a,
-	0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0a, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x25, 0x0a, 0x0d,
-	0x54, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a,
-	0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f,
-	0x74, 0x61, 0x6c, 0x32, 0x3e, 0x0a, 0x0e, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x2c, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61,
-	0x6c, 0x12, 0x10, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x0e, 0x2e, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x2e, 0x2f, 0x70, 0x62, 0x3b, 0x70, 0x62, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x2e, 0x2f,
+	0x70, 0x62, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -344,22 +240,18 @@ func file_common_proto_rawDescGZIP() []byte {
 	return file_common_proto_rawDescData
 }
 
-var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_common_proto_goTypes = []interface{}{
-	(*Page)(nil),            // 0: Page
-	(*Empty)(nil),           // 1: Empty
-	(*BoolResponse)(nil),    // 2: BoolResponse
-	(*Context)(nil),         // 3: Context
-	(*GetTotalRequest)(nil), // 4: GetTotalRequest
-	(*TotalResponse)(nil),   // 5: TotalResponse
-	nil,                     // 6: Context.ContextEntry
+	(*Page)(nil),         // 0: Page
+	(*Empty)(nil),        // 1: Empty
+	(*BoolResponse)(nil), // 2: BoolResponse
+	(*Context)(nil),      // 3: Context
+	nil,                  // 4: Context.ContextEntry
 }
 var file_common_proto_depIdxs = []int32{
-	6, // 0: Context.context:type_name -> Context.ContextEntry
-	4, // 1: CommentService.GetTotal:input_type -> GetTotalRequest
-	5, // 2: CommentService.GetTotal:output_type -> TotalResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	4, // 0: Context.context:type_name -> Context.ContextEntry
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -419,30 +311,6 @@ func file_common_proto_init() {
 				return nil
 			}
 		}
-		file_common_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetTotalRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_common_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TotalResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -450,9 +318,9 @@ func file_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_common_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   5,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
 		GoTypes:           file_common_proto_goTypes,
 		DependencyIndexes: file_common_proto_depIdxs,

@@ -27,6 +27,7 @@ const (
 	QuestionService_DeleteQuestionById_FullMethodName = "/QuestionService/DeleteQuestionById"
 	QuestionService_UpdateQuestion_FullMethodName     = "/QuestionService/UpdateQuestion"
 	QuestionService_GetQuestionVo_FullMethodName      = "/QuestionService/GetQuestionVo"
+	QuestionService_GetQuestionTotal_FullMethodName   = "/QuestionService/GetQuestionTotal"
 )
 
 // QuestionServiceClient is the client API for QuestionService service.
@@ -41,6 +42,7 @@ type QuestionServiceClient interface {
 	DeleteQuestionById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*BoolResponse, error)
 	UpdateQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*BoolResponse, error)
 	GetQuestionVo(ctx context.Context, in *QuestionInfo, opts ...grpc.CallOption) (*QuestionVo, error)
+	GetQuestionTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error)
 }
 
 type questionServiceClient struct {
@@ -123,6 +125,15 @@ func (c *questionServiceClient) GetQuestionVo(ctx context.Context, in *QuestionI
 	return out, nil
 }
 
+func (c *questionServiceClient) GetQuestionTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error) {
+	out := new(TotalResponse)
+	err := c.cc.Invoke(ctx, QuestionService_GetQuestionTotal_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionServiceServer is the server API for QuestionService service.
 // All implementations must embed UnimplementedQuestionServiceServer
 // for forward compatibility
@@ -135,6 +146,7 @@ type QuestionServiceServer interface {
 	DeleteQuestionById(context.Context, *QuestionIdRequest) (*BoolResponse, error)
 	UpdateQuestion(context.Context, *QuestionInfo) (*BoolResponse, error)
 	GetQuestionVo(context.Context, *QuestionInfo) (*QuestionVo, error)
+	GetQuestionTotal(context.Context, *Empty) (*TotalResponse, error)
 	mustEmbedUnimplementedQuestionServiceServer()
 }
 
@@ -165,6 +177,9 @@ func (UnimplementedQuestionServiceServer) UpdateQuestion(context.Context, *Quest
 }
 func (UnimplementedQuestionServiceServer) GetQuestionVo(context.Context, *QuestionInfo) (*QuestionVo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionVo not implemented")
+}
+func (UnimplementedQuestionServiceServer) GetQuestionTotal(context.Context, *Empty) (*TotalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionTotal not implemented")
 }
 func (UnimplementedQuestionServiceServer) mustEmbedUnimplementedQuestionServiceServer() {}
 
@@ -323,6 +338,24 @@ func _QuestionService_GetQuestionVo_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionService_GetQuestionTotal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionServiceServer).GetQuestionTotal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionService_GetQuestionTotal_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionServiceServer).GetQuestionTotal(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionService_ServiceDesc is the grpc.ServiceDesc for QuestionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -361,6 +394,10 @@ var QuestionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQuestionVo",
 			Handler:    _QuestionService_GetQuestionVo_Handler,
+		},
+		{
+			MethodName: "GetQuestionTotal",
+			Handler:    _QuestionService_GetQuestionTotal_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
