@@ -46,6 +46,32 @@
                 }
             }
         },
+        "/question/delete/{id}": {
+            "get": {
+                "description": "删除题目",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "删除题目",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Question ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/question/get": {
             "get": {
                 "description": "id获取完整题目内容",
@@ -181,6 +207,37 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/pb.QuestionSubmitQueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/update": {
+            "post": {
+                "description": "修改问题",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "修改问题",
+                "parameters": [
+                    {
+                        "description": "question",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pb.QuestionInfo"
                         }
                     }
                 ],

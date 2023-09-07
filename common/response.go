@@ -11,9 +11,19 @@ const (
 )
 
 type Response struct {
-	Code int         `json:"code"`
-	Data interface{} `json:"data"`
-	Msg  string      `json:"msg"`
+	Code  int         `json:"code"`
+	Data  interface{} `json:"data"`
+	Msg   string      `json:"msg"`
+	Total int         `json:"total"`
+}
+
+func SuccessWithPage(ctx *gin.Context, data interface{}, msg string, total int) {
+	ctx.JSON(http.StatusOK, Response{
+		Code:  SuccessCode,
+		Data:  data,
+		Msg:   msg,
+		Total: total,
+	})
 }
 
 func Success(ctx *gin.Context, data interface{}, msg string) {

@@ -27,13 +27,13 @@ func GetQuestionById(id int64) (*Question, error) {
 
 func DeleteQuestionById(id int64) error {
 	db := db.GetDB()
-	err := db.Delete(Question{}, id).Error
+	err := db.Delete(&Question{}, id).Error
 	return err
 }
 
-func UpdateQuestionById(question Question) error {
+func UpdateQuestionById(question *Question) error {
 	db := db.GetDB()
-	err := db.Save(question).Error
+	err := db.Where("id = ?", question.Id).Updates(question).Error
 	return err
 }
 

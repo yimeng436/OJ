@@ -183,6 +183,23 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: 添加问题
+  /question/delete/{id}:
+    get:
+      description: 删除题目
+      parameters:
+      - description: Question ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 删除题目
   /question/get:
     get:
       consumes:
@@ -279,6 +296,26 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: 查询问题提交信息
+  /question/update:
+    post:
+      consumes:
+      - application/json
+      description: 修改问题
+      parameters:
+      - description: question
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.QuestionInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 修改问题
   /test/{id}:
     get:
       description: 描述信息

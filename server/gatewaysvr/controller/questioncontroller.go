@@ -243,3 +243,65 @@ func GetQuestion(ctx *gin.Context) {
 	}
 	common.Success(ctx, question, "success")
 }
+
+// @Summary		修改问题
+// @Description	修改问题
+// @Accept json
+// @Param user body pb.QuestionInfo true "question"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/update  [post]
+func UpdateQuestion(ctx *gin.Context) {
+	var request = new(pb.QuestionInfo)
+
+	if err := ctx.ShouldBind(request); err != nil {
+		log.Fatal("参数错误")
+		common.Fail(ctx, "请求参数错误")
+		return
+	}
+	questionClient := rpcservice.GetQuestionServiceClient()
+
+	res, err := questionClient.UpdateQuestion(ctx, request)
+	if err != nil {
+		log.Fatal("AddQuestion rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	if res == nil || !res.Res {
+		log.Fatal("添加失败", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, res, "success")
+}
+
+// @Summary		删除题目
+// @Description	删除题目
+// @Param			id	path		int		true	"Question ID"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/delete/{id} [get]
+func DeleteQuestionById(ctx *gin.Context) {
+	request := new(pb.QuestionIdRequest)
+	param := ctx.Param("id")
+	if param == "" {
+		common.Fail(ctx, "id不能为空")
+		return
+	}
+	var err error
+	request.Id, err = strconv.ParseInt(param, 10, 64)
+	if err != nil {
+		log.Fatal("id 错误")
+		common.Fail(ctx, err.Error())
+		return
+	}
+
+	questionServiceClient := rpcservice.GetQuestionServiceClient()
+	resp, err := questionServiceClient.DeleteQuestionById(ctx, request)
+	if err != nil {
+		log.Fatal("DeleteQuestionById rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, resp, "success")
+}

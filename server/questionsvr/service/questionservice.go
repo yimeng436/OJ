@@ -7,8 +7,6 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/encoding/protojson"
 	"questionsvr/repository"
 	"questionsvr/utils"
@@ -148,9 +146,14 @@ func (QuestionService) DeleteQuestionById(ctx context.Context, request *pb.Quest
 	}
 	return &pb.BoolResponse{Res: true}, nil
 }
-func (QuestionService) UpdateQuestionById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.BoolResponse, error) {
-
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionById not implemented")
+func (QuestionService) UpdateQuestion(ctx context.Context, request *pb.QuestionInfo) (*pb.BoolResponse, error) {
+	question := new(repository.Question)
+	copier.Copy(question, request)
+	err := repository.UpdateQuestionById(question)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.BoolResponse{Res: true}, nil
 }
 func (QuestionService) GetQuestionVo(ctx context.Context, request *pb.QuestionInfo) (*pb.QuestionVo, error) {
 	questionVo := new(pb.QuestionVo)
