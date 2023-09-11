@@ -19,91 +19,91 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StreamGreeter_DoJudge_FullMethodName = "/StreamGreeter/DoJudge"
+	JudgeService_DoJudge_FullMethodName = "/JudgeService/DoJudge"
 )
 
-// StreamGreeterClient is the client API for StreamGreeter service.
+// JudgeServiceClient is the client API for JudgeService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type StreamGreeterClient interface {
+type JudgeServiceClient interface {
 	// 根据 判题id获取提交记录，调用沙箱
-	DoJudge(ctx context.Context, in *QuestionSubmitInfo, opts ...grpc.CallOption) (*DoJudgeRequest, error)
+	DoJudge(ctx context.Context, in *DoJudgeRequest, opts ...grpc.CallOption) (*QuestionSubmitInfo, error)
 }
 
-type streamGreeterClient struct {
+type judgeServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStreamGreeterClient(cc grpc.ClientConnInterface) StreamGreeterClient {
-	return &streamGreeterClient{cc}
+func NewJudgeServiceClient(cc grpc.ClientConnInterface) JudgeServiceClient {
+	return &judgeServiceClient{cc}
 }
 
-func (c *streamGreeterClient) DoJudge(ctx context.Context, in *QuestionSubmitInfo, opts ...grpc.CallOption) (*DoJudgeRequest, error) {
-	out := new(DoJudgeRequest)
-	err := c.cc.Invoke(ctx, StreamGreeter_DoJudge_FullMethodName, in, out, opts...)
+func (c *judgeServiceClient) DoJudge(ctx context.Context, in *DoJudgeRequest, opts ...grpc.CallOption) (*QuestionSubmitInfo, error) {
+	out := new(QuestionSubmitInfo)
+	err := c.cc.Invoke(ctx, JudgeService_DoJudge_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// StreamGreeterServer is the server API for StreamGreeter service.
-// All implementations must embed UnimplementedStreamGreeterServer
+// JudgeServiceServer is the server API for JudgeService service.
+// All implementations must embed UnimplementedJudgeServiceServer
 // for forward compatibility
-type StreamGreeterServer interface {
+type JudgeServiceServer interface {
 	// 根据 判题id获取提交记录，调用沙箱
-	DoJudge(context.Context, *QuestionSubmitInfo) (*DoJudgeRequest, error)
-	mustEmbedUnimplementedStreamGreeterServer()
+	DoJudge(context.Context, *DoJudgeRequest) (*QuestionSubmitInfo, error)
+	mustEmbedUnimplementedJudgeServiceServer()
 }
 
-// UnimplementedStreamGreeterServer must be embedded to have forward compatible implementations.
-type UnimplementedStreamGreeterServer struct {
+// UnimplementedJudgeServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedJudgeServiceServer struct {
 }
 
-func (UnimplementedStreamGreeterServer) DoJudge(context.Context, *QuestionSubmitInfo) (*DoJudgeRequest, error) {
+func (UnimplementedJudgeServiceServer) DoJudge(context.Context, *DoJudgeRequest) (*QuestionSubmitInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DoJudge not implemented")
 }
-func (UnimplementedStreamGreeterServer) mustEmbedUnimplementedStreamGreeterServer() {}
+func (UnimplementedJudgeServiceServer) mustEmbedUnimplementedJudgeServiceServer() {}
 
-// UnsafeStreamGreeterServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StreamGreeterServer will
+// UnsafeJudgeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to JudgeServiceServer will
 // result in compilation errors.
-type UnsafeStreamGreeterServer interface {
-	mustEmbedUnimplementedStreamGreeterServer()
+type UnsafeJudgeServiceServer interface {
+	mustEmbedUnimplementedJudgeServiceServer()
 }
 
-func RegisterStreamGreeterServer(s grpc.ServiceRegistrar, srv StreamGreeterServer) {
-	s.RegisterService(&StreamGreeter_ServiceDesc, srv)
+func RegisterJudgeServiceServer(s grpc.ServiceRegistrar, srv JudgeServiceServer) {
+	s.RegisterService(&JudgeService_ServiceDesc, srv)
 }
 
-func _StreamGreeter_DoJudge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QuestionSubmitInfo)
+func _JudgeService_DoJudge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DoJudgeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StreamGreeterServer).DoJudge(ctx, in)
+		return srv.(JudgeServiceServer).DoJudge(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StreamGreeter_DoJudge_FullMethodName,
+		FullMethod: JudgeService_DoJudge_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StreamGreeterServer).DoJudge(ctx, req.(*QuestionSubmitInfo))
+		return srv.(JudgeServiceServer).DoJudge(ctx, req.(*DoJudgeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// StreamGreeter_ServiceDesc is the grpc.ServiceDesc for StreamGreeter service.
+// JudgeService_ServiceDesc is the grpc.ServiceDesc for JudgeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var StreamGreeter_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "StreamGreeter",
-	HandlerType: (*StreamGreeterServer)(nil),
+var JudgeService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "JudgeService",
+	HandlerType: (*JudgeServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "DoJudge",
-			Handler:    _StreamGreeter_DoJudge_Handler,
+			Handler:    _JudgeService_DoJudge_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

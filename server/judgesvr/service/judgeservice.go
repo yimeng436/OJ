@@ -8,10 +8,13 @@ import (
 )
 
 type JudgeService struct {
-	pb.UnimplementedJudgeServiceServer
+	pb.UnimplementedStreamGreeterServer
 }
 
-func (JudgeService) DoJudge(ctx context.Context, request *pb.DoJudgeRequest) (*pb.QuestionSubmitInfo, error) {
+func (JudgeService) DoJudge() (*pb.QuestionSubmitInfo, error) {
 
 	return nil, status.Errorf(codes.Unimplemented, "method ExecuteCode not implemented")
+}
+func (JudgeService) DoJudge(context.Context, *QuestionSubmitInfo) (*DoJudgeRequest, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DoJudge not implemented")
 }

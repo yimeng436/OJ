@@ -8,7 +8,7 @@ message DoJudgeRequest {
 }
 
 
-service StreamGreeter {
+service JudgeService {
   // 根据 判题id获取提交记录，调用沙箱
-  rpc DoJudge(QuestionSubmitInfo) returns (DoJudgeRequest);
+  rpc DoJudge(DoJudgeRequest) returns (QuestionSubmitInfo);
 }

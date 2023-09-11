@@ -1,7 +1,6 @@
 package main
 
 import (
-	"/service"
 	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"github.com/yimeng436/OJ/pkg/pb"
