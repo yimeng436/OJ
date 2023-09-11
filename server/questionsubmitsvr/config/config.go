@@ -22,7 +22,8 @@ type SvrConfig struct {
 	Host            string `mapstructure:"host"` // 服务host
 	Port            int    `mapstructure:"port"`
 	UserSvrName     string `mapstructure:"user_svr_name"`     // 用户服务name
-	QuestionSvrName string `mapstructure:"question_svr_name"` // 用户服务name
+	QuestionSvrName string `mapstructure:"question_svr_name"` // 问题服务name
+	JudgeSvrName    string `mapstructure:"judgesvr"`          // 判题服务name
 }
 
 type ConsulConfig struct {

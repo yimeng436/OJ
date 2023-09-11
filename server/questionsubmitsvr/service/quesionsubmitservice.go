@@ -6,9 +6,10 @@ import (
 	"errors"
 	"github.com/jinzhu/copier"
 	"github.com/yimeng436/OJ/common/constant"
+	"github.com/yimeng436/OJ/common/enum"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
-	"questionsubmitsvr/enum"
+	"questionsubmitsvr/middleware/log"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
 
@@ -58,6 +59,18 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	if err != nil {
 		return nil, err
 	}
+	questionSubmitId := questionSubmit.Id
+	judgeServiceClient := rpcservice.GetJudgeServiceClient()
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				// 发生 panic，进行恢复处理
+				log.Fatal("Recovered from panic:", r)
+			}
+		}()
+		_, err = judgeServiceClient.DoJudge(ctx, &pb.DoJudgeRequest{Questionsubmitid: questionSubmitId})
+	}()
+
 	return &pb.BoolResponse{Res: true}, nil
 }
 

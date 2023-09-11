@@ -192,7 +192,6 @@ func (QuestionService) GetQuestionById(ctx context.Context, request *pb.Question
 	resp := new(pb.QuestionInfo)
 	copier.Copy(resp, questionInfo)
 	return resp, nil
-
 }
 func (QuestionService) GetQuestionTotal(ctx context.Context, request *pb.Empty) (*pb.TotalResponse, error) {
 

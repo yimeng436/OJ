@@ -13,12 +13,23 @@ import (
 var (
 	UserSvrClient     pb.UserServiceClient
 	QuestionSvrClient pb.QuestionServiceClient
+	JudgeSvrClient    pb.JudgeServiceClient
 )
 
 func InitSvrConn() {
 	UserSvrClient = NewUserSvrClient(config.GetGlobalConfig().SvrConfig.UserSvrName)
 	QuestionSvrClient = NewQuestionSvrClient(config.GetGlobalConfig().SvrConfig.QuestionSvrName)
+	JudgeSvrClient = NewJudgeSvrClient(config.GetGlobalConfig().SvrConfig.JudgeSvrName)
 }
+
+func NewJudgeSvrClient(svrName string) pb.JudgeServiceClient {
+	conn, err := NewSvrConn(svrName)
+	if err != nil {
+		return nil
+	}
+	return pb.NewJudgeServiceClient(conn)
+}
+
 func NewUserSvrClient(svrName string) pb.UserServiceClient {
 	conn, err := NewSvrConn(svrName)
 	if err != nil {
@@ -61,4 +72,8 @@ func GetUserServiceClient() pb.UserServiceClient {
 
 func GetQuestionSvrClient() pb.QuestionServiceClient {
 	return QuestionSvrClient
+}
+
+func GetJudgeServiceClient() pb.JudgeServiceClient {
+	return JudgeSvrClient
 }

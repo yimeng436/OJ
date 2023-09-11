@@ -11,14 +11,24 @@ import (
 )
 
 var (
-	UserSvrClient     pb.UserServiceClient
-	QuestionSvrClient pb.QuestionServiceClient
+	UserSvrClient        pb.UserServiceClient
+	QuestionSvrClient    pb.QuestionServiceClient
+	QuestionSubmitClient pb.QuestionSubmitServiceClient
 )
 
 func InitSvrConn() {
 	UserSvrClient = NewUserSvrClient(config.GetGlobalConfig().SvrConfig.UserSvrName)
 	QuestionSvrClient = NewQuestionSvrClient(config.GetGlobalConfig().SvrConfig.QuestionSvrName)
+	QuestionSubmitClient = NewQuestionSubmitClient(config.GetGlobalConfig().SvrConfig.QuestionSubmitName)
 }
+func NewQuestionSubmitClient(svrName string) pb.QuestionSubmitServiceClient {
+	conn, err := NewSvrConn(svrName)
+	if err != nil {
+		return nil
+	}
+	return pb.NewQuestionSubmitServiceClient(conn)
+}
+
 func NewUserSvrClient(svrName string) pb.UserServiceClient {
 	conn, err := NewSvrConn(svrName)
 	if err != nil {
@@ -61,4 +71,7 @@ func GetUserServiceClient() pb.UserServiceClient {
 
 func GetQuestionSvrClient() pb.QuestionServiceClient {
 	return QuestionSvrClient
+}
+func GetQuestionSubmitClient() pb.QuestionSubmitServiceClient {
+	return QuestionSubmitClient
 }

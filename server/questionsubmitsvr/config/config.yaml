@@ -4,6 +4,7 @@ svr_config:
   port: "8003"
   user_svr_name : "usersvr"
   question_svr_name : "questionsvr"
+  judge_svr_name: "judgesvr"
 
 
 redis:

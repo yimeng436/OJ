@@ -14,6 +14,12 @@ message BoolResponse{
 message Context{
   map<string, string> context = 1;
 }
+message IdReQuest{
+  int64 id = 1;
+}
+message IdResponse{
+  int64 id = 1;
+}
 
 message TotalResponse{
   int64 total = 1;

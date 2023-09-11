@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	QuestionService_GetById_FullMethodName            = "/QuestionService/GetById"
 	QuestionService_ValidQuestion_FullMethodName      = "/QuestionService/ValidQuestion"
 	QuestionService_ListQuestionPage_FullMethodName   = "/QuestionService/ListQuestionPage"
 	QuestionService_AddQuestion_FullMethodName        = "/QuestionService/AddQuestion"
@@ -35,6 +36,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionServiceClient interface {
+	GetById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionInfo, error)
 	ValidQuestion(ctx context.Context, in *ValidQuestionRequest, opts ...grpc.CallOption) (*Empty, error)
 	ListQuestionPage(ctx context.Context, in *GetQuestionPageRequest, opts ...grpc.CallOption) (*GetQuestionPageResponse, error)
 	AddQuestion(ctx context.Context, in *QuestionAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
@@ -53,6 +55,15 @@ type questionServiceClient struct {
 
 func NewQuestionServiceClient(cc grpc.ClientConnInterface) QuestionServiceClient {
 	return &questionServiceClient{cc}
+}
+
+func (c *questionServiceClient) GetById(ctx context.Context, in *QuestionIdRequest, opts ...grpc.CallOption) (*QuestionInfo, error) {
+	out := new(QuestionInfo)
+	err := c.cc.Invoke(ctx, QuestionService_GetById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *questionServiceClient) ValidQuestion(ctx context.Context, in *ValidQuestionRequest, opts ...grpc.CallOption) (*Empty, error) {
@@ -149,6 +160,7 @@ func (c *questionServiceClient) ListQuestionVoPage(ctx context.Context, in *GetQ
 // All implementations must embed UnimplementedQuestionServiceServer
 // for forward compatibility
 type QuestionServiceServer interface {
+	GetById(context.Context, *QuestionIdRequest) (*QuestionInfo, error)
 	ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error)
 	ListQuestionPage(context.Context, *GetQuestionPageRequest) (*GetQuestionPageResponse, error)
 	AddQuestion(context.Context, *QuestionAddRequest) (*BoolResponse, error)
@@ -166,6 +178,9 @@ type QuestionServiceServer interface {
 type UnimplementedQuestionServiceServer struct {
 }
 
+func (UnimplementedQuestionServiceServer) GetById(context.Context, *QuestionIdRequest) (*QuestionInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
+}
 func (UnimplementedQuestionServiceServer) ValidQuestion(context.Context, *ValidQuestionRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidQuestion not implemented")
 }
@@ -207,6 +222,24 @@ type UnsafeQuestionServiceServer interface {
 
 func RegisterQuestionServiceServer(s grpc.ServiceRegistrar, srv QuestionServiceServer) {
 	s.RegisterService(&QuestionService_ServiceDesc, srv)
+}
+
+func _QuestionService_GetById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuestionIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionServiceServer).GetById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionService_GetById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionServiceServer).GetById(ctx, req.(*QuestionIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _QuestionService_ValidQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -396,6 +429,10 @@ var QuestionService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "QuestionService",
 	HandlerType: (*QuestionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetById",
+			Handler:    _QuestionService_GetById_Handler,
+		},
 		{
 			MethodName: "ValidQuestion",
 			Handler:    _QuestionService_ValidQuestion_Handler,

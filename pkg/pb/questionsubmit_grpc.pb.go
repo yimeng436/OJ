@@ -22,15 +22,17 @@ const (
 	QuestionSubmitService_DoQuestionSubmit_FullMethodName         = "/QuestionSubmitService/DoQuestionSubmit"
 	QuestionSubmitService_ListQuestionSubmitByPage_FullMethodName = "/QuestionSubmitService/ListQuestionSubmitByPage"
 	QuestionSubmitService_GetQuestionSubmitTotal_FullMethodName   = "/QuestionSubmitService/GetQuestionSubmitTotal"
+	QuestionSubmitService_GetQuestionSubmitById_FullMethodName    = "/QuestionSubmitService/GetQuestionSubmitById"
 )
 
 // QuestionSubmitServiceClient is the client API for QuestionSubmitService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionSubmitServiceClient interface {
-	DoQuestionSubmit(ctx context.Context, in *QuestionSubmitAddRequest, opts ...grpc.CallOption) (*BoolResponse, error)
+	DoQuestionSubmit(ctx context.Context, in *QuestionSubmitAddRequest, opts ...grpc.CallOption) (*IdResponse, error)
 	ListQuestionSubmitByPage(ctx context.Context, in *QuestionSubmitQueryRequest, opts ...grpc.CallOption) (*QuestionSubmitQueryResponse, error)
 	GetQuestionSubmitTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error)
+	GetQuestionSubmitById(ctx context.Context, in *IdReQuest, opts ...grpc.CallOption) (*QuestionSubmitInfo, error)
 }
 
 type questionSubmitServiceClient struct {
@@ -41,8 +43,8 @@ func NewQuestionSubmitServiceClient(cc grpc.ClientConnInterface) QuestionSubmitS
 	return &questionSubmitServiceClient{cc}
 }
 
-func (c *questionSubmitServiceClient) DoQuestionSubmit(ctx context.Context, in *QuestionSubmitAddRequest, opts ...grpc.CallOption) (*BoolResponse, error) {
-	out := new(BoolResponse)
+func (c *questionSubmitServiceClient) DoQuestionSubmit(ctx context.Context, in *QuestionSubmitAddRequest, opts ...grpc.CallOption) (*IdResponse, error) {
+	out := new(IdResponse)
 	err := c.cc.Invoke(ctx, QuestionSubmitService_DoQuestionSubmit_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,13 +70,23 @@ func (c *questionSubmitServiceClient) GetQuestionSubmitTotal(ctx context.Context
 	return out, nil
 }
 
+func (c *questionSubmitServiceClient) GetQuestionSubmitById(ctx context.Context, in *IdReQuest, opts ...grpc.CallOption) (*QuestionSubmitInfo, error) {
+	out := new(QuestionSubmitInfo)
+	err := c.cc.Invoke(ctx, QuestionSubmitService_GetQuestionSubmitById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionSubmitServiceServer is the server API for QuestionSubmitService service.
 // All implementations must embed UnimplementedQuestionSubmitServiceServer
 // for forward compatibility
 type QuestionSubmitServiceServer interface {
-	DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*BoolResponse, error)
+	DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*IdResponse, error)
 	ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error)
 	GetQuestionSubmitTotal(context.Context, *Empty) (*TotalResponse, error)
+	GetQuestionSubmitById(context.Context, *IdReQuest) (*QuestionSubmitInfo, error)
 	mustEmbedUnimplementedQuestionSubmitServiceServer()
 }
 
@@ -82,7 +94,7 @@ type QuestionSubmitServiceServer interface {
 type UnimplementedQuestionSubmitServiceServer struct {
 }
 
-func (UnimplementedQuestionSubmitServiceServer) DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*BoolResponse, error) {
+func (UnimplementedQuestionSubmitServiceServer) DoQuestionSubmit(context.Context, *QuestionSubmitAddRequest) (*IdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DoQuestionSubmit not implemented")
 }
 func (UnimplementedQuestionSubmitServiceServer) ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error) {
@@ -90,6 +102,9 @@ func (UnimplementedQuestionSubmitServiceServer) ListQuestionSubmitByPage(context
 }
 func (UnimplementedQuestionSubmitServiceServer) GetQuestionSubmitTotal(context.Context, *Empty) (*TotalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionSubmitTotal not implemented")
+}
+func (UnimplementedQuestionSubmitServiceServer) GetQuestionSubmitById(context.Context, *IdReQuest) (*QuestionSubmitInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionSubmitById not implemented")
 }
 func (UnimplementedQuestionSubmitServiceServer) mustEmbedUnimplementedQuestionSubmitServiceServer() {}
 
@@ -158,6 +173,24 @@ func _QuestionSubmitService_GetQuestionSubmitTotal_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionSubmitService_GetQuestionSubmitById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdReQuest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionSubmitServiceServer).GetQuestionSubmitById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionSubmitService_GetQuestionSubmitById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionSubmitServiceServer).GetQuestionSubmitById(ctx, req.(*IdReQuest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionSubmitService_ServiceDesc is the grpc.ServiceDesc for QuestionSubmitService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var QuestionSubmitService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQuestionSubmitTotal",
 			Handler:    _QuestionSubmitService_GetQuestionSubmitTotal_Handler,
+		},
+		{
+			MethodName: "GetQuestionSubmitById",
+			Handler:    _QuestionSubmitService_GetQuestionSubmitById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
