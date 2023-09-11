@@ -1,0 +1,14 @@
+syntax = "proto3";
+option go_package="../pb;pb";
+
+import "questionsubmit.proto";
+
+message DoJudgeRequest {
+  int64 questionsubmitid = 1;
+}
+
+
+service StreamGreeter {
+  // 根据 判题id获取提交记录，调用沙箱
+  rpc DoJudge(QuestionSubmitInfo) returns (DoJudgeRequest);
+}
