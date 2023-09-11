@@ -35,7 +35,11 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	loginUser := new(pb.UserVo)
 	json.Unmarshal([]byte(userState), loginUser)
 	questionSvrClient := rpcservice.GetQuestionSvrClient()
-	question, err := questionSvrClient.GetQuestionById(ctx, &pb.QuestionIdRequest{Id: request.QuestionId})
+	questionIdRequest := &pb.QuestionIdRequest{
+		Id:  request.QuestionId,
+		Ctx: request.Ctx,
+	}
+	question, err := questionSvrClient.GetQuestionById(ctx, questionIdRequest)
 	if err != nil {
 		return nil, err
 	}

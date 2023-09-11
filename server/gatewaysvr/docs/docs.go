@@ -109,6 +109,32 @@ const docTemplate = `{
                 }
             }
         },
+        "/question/get/vo/{id}": {
+            "get": {
+                "description": "根据Id查询QuestionVO",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "根据Id查询QuestionVO",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Question ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/question/get/{id}": {
             "get": {
                 "description": "根据id获取题目",
@@ -137,14 +163,14 @@ const docTemplate = `{
         },
         "/question/list": {
             "post": {
-                "description": "分页查询问题",
+                "description": "分页查询问题（管理员）",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "分页查询问题",
+                "summary": "分页查询问题（管理员）",
                 "parameters": [
                     {
                         "description": "QuestionVoPage",
@@ -152,7 +178,38 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/pb.GetQuestionVoPageRequest"
+                            "$ref": "#/definitions/pb.GetQuestionPageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/question/list/vo": {
+            "post": {
+                "description": "分页查询问题（用户）",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "分页查询问题（用户）",
+                "parameters": [
+                    {
+                        "description": "QuestionVoPage",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pb.GetQuestionPageRequest"
                         }
                     }
                 ],
@@ -361,7 +418,7 @@ const docTemplate = `{
                 }
             }
         },
-        "pb.GetQuestionVoPageRequest": {
+        "pb.GetQuestionPageRequest": {
             "type": "object",
             "properties": {
                 "page": {

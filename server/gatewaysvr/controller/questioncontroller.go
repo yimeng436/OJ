@@ -73,15 +73,15 @@ func GetQuestionByPathId(ctx *gin.Context) {
 	common.Success(ctx, question, "success")
 }
 
-// @Summary		分页查询问题
-// @Description	分页查询问题
+// @Summary		分页查询问题（管理员）
+// @Description	分页查询问题（管理员）
 // @Accept json
-// @Param user body pb.GetQuestionVoPageRequest true "QuestionVoPage"
+// @Param user body pb.GetQuestionPageRequest true "QuestionVoPage"
 // @Produce  json
 // @Success		200	{object}	common.Response
 // @Router			/question/list  [post]
 func ListQuestion(ctx *gin.Context) {
-	request := new(pb.GetQuestionVoPageRequest)
+	request := new(pb.GetQuestionPageRequest)
 
 	if err := ctx.ShouldBind(&request); err != nil {
 		log.Fatal("参数错误")
@@ -99,9 +99,50 @@ func ListQuestion(ctx *gin.Context) {
 		request.Question = new(pb.QuestionInfo)
 	}
 	questionClient := rpcservice.GetQuestionServiceClient()
-	resp, err := questionClient.GetQuestionVoPage(ctx, request)
+	resp, err := questionClient.ListQuestionPage(ctx, request)
 	if err != nil {
-		log.Fatal("GetQuestionVoPage rpc服务器调用异常：", err.Error())
+		log.Fatal("ListQuestionPage rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	totalResp, err := questionClient.GetQuestionTotal(ctx, &pb.Empty{})
+	if err != nil {
+		log.Fatal("GetQuestionTotal rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.SuccessWithPage(ctx, resp, "success", int(totalResp.Total))
+}
+
+// @Summary		分页查询问题（用户）
+// @Description	分页查询问题（用户）
+// @Accept json
+// @Param user body pb.GetQuestionPageRequest true "QuestionVoPage"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/list/vo  [post]
+func ListQuestionVo(ctx *gin.Context) {
+	request := new(pb.GetQuestionPageRequest)
+
+	if err := ctx.ShouldBind(&request); err != nil {
+		log.Fatal("参数错误")
+		common.Fail(ctx, "请求参数错误")
+		return
+	}
+
+	if request.Page.Page <= 0 {
+		request.Page.Page = 0
+	}
+	if request.Page.PageSize <= 0 {
+		request.Page.PageSize = 5
+	}
+	if request.Question == nil {
+		request.Question = new(pb.QuestionInfo)
+	}
+	questionClient := rpcservice.GetQuestionServiceClient()
+	resp, err := questionClient.ListQuestionVoPage(ctx, request)
+	if err != nil {
+		log.Fatal("ListQuestionVoPage rpc服务器调用异常：", err.Error())
 		common.Fail(ctx, err.Error())
 		return
 	}
@@ -314,6 +355,37 @@ func DeleteQuestionById(ctx *gin.Context) {
 	resp, err := questionServiceClient.DeleteQuestionById(ctx, request)
 	if err != nil {
 		log.Fatal("DeleteQuestionById rpc服务器调用异常：", err.Error())
+		common.Fail(ctx, err.Error())
+		return
+	}
+	common.Success(ctx, resp, "success")
+}
+
+// @Summary		根据Id查询QuestionVO
+// @Description	根据Id查询QuestionVO
+// @Param			id	path		int		true	"Question ID"
+// @Produce  json
+// @Success		200	{object}	common.Response
+// @Router			/question/get/vo/{id} [get]
+func GetQuestionVOById(ctx *gin.Context) {
+	request := new(pb.QuestionIdRequest)
+	param := ctx.Param("id")
+	if param == "" {
+		common.Fail(ctx, "id不能为空")
+		return
+	}
+	var err error
+	request.Id, err = strconv.ParseInt(param, 10, 64)
+	if err != nil {
+		log.Fatal("id 错误")
+		common.Fail(ctx, err.Error())
+		return
+	}
+
+	questionServiceClient := rpcservice.GetQuestionServiceClient()
+	resp, err := questionServiceClient.GetQuestionVoById(ctx, request)
+	if err != nil {
+		log.Fatal("GetQuestionVoById rpc服务器调用异常：", err.Error())
 		common.Fail(ctx, err.Error())
 		return
 	}

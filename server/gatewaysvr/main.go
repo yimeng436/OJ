@@ -70,10 +70,12 @@ func InintRoute(r *gin.Engine) {
 		question.GET("/get", controller.CheckLogin, controller.GetQuestion)
 		question.GET("/get/:id", controller.GetQuestionByPathId)
 		question.POST("/list", controller.ListQuestion)
+		question.POST("/list/vo", controller.ListQuestionVo)
 		question.POST("/submit/do", controller.CheckLogin, controller.DoSubmit)
 		question.POST("/submit/query", controller.CheckLogin, controller.QueryQuestionSubmit)
 		question.POST("/update", controller.UpdateQuestion)
 		question.GET("/delete/:id", controller.DeleteQuestionById)
+		question.GET("/get/vo/:id", controller.GetQuestionVOById)
 	}
 
 }

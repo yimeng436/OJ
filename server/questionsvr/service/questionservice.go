@@ -49,7 +49,7 @@ func (QuestionService) ValidQuestion(ctx context.Context, request *pb.ValidQuest
 
 	return &pb.Empty{}, nil
 }
-func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQuestionVoPageRequest) (*pb.GetQuestionPageVoResponse, error) {
+func (QuestionService) ListQuestionPage(ctx context.Context, request *pb.GetQuestionPageRequest) (*pb.GetQuestionPageResponse, error) {
 	page := request.Page
 	questionInfo := request.Question
 
@@ -61,7 +61,7 @@ func (QuestionService) GetQuestionVoPage(ctx context.Context, request *pb.GetQue
 	if err != nil {
 		return nil, err
 	}
-	resp := new(pb.GetQuestionPageVoResponse)
+	resp := new(pb.GetQuestionPageResponse)
 	for _, q := range questionList {
 		resQuestion := new(pb.QuestionInfo)
 		copier.Copy(resQuestion, q)
@@ -130,8 +130,13 @@ func (QuestionService) GetQuestionVoById(ctx context.Context, request *pb.Questi
 	questionVo, err := questionService.GetQuestionVo(ctx, quetionTem)
 	questionVo.CreateTime = questionInfo.CreateTime.String()
 	questionVo.UpdateTime = questionInfo.UpdateTime.String()
-	err = json.Unmarshal([]byte(questionInfo.Tags), &questionVo.Tags)
-	err = json.Unmarshal([]byte(questionInfo.JudgeConfig), questionVo.JudgeConfig)
+	if questionInfo.Tags != "" {
+		err = json.Unmarshal([]byte(questionInfo.Tags), &questionVo.Tags)
+
+	}
+	if questionInfo.JudgeConfig != "" {
+		err = json.Unmarshal([]byte(questionInfo.JudgeConfig), questionVo.JudgeConfig)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -197,4 +202,36 @@ func (QuestionService) GetQuestionTotal(ctx context.Context, request *pb.Empty) 
 	}
 
 	return &pb.TotalResponse{Total: total}, nil
+}
+
+func (QuestionService) ListQuestionVoPage(ctx context.Context, request *pb.GetQuestionPageRequest) (*pb.ListQuestionPageVoResponse, error) {
+	questionResp, err := questionService.ListQuestionPage(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+	questionList := questionResp.Question
+	questionVoList := make([]*pb.QuestionVo, 0)
+	for _, q := range questionList {
+		vo, err := toVo(q)
+		if err != nil {
+			return nil, err
+		}
+		questionVoList = append(questionVoList, vo)
+	}
+	return &pb.ListQuestionPageVoResponse{QuestionVoList: questionVoList}, nil
+}
+
+func toVo(question *pb.QuestionInfo) (*pb.QuestionVo, error) {
+	questionVo := new(pb.QuestionVo)
+	err := copier.Copy(questionVo, question)
+	if err != nil {
+		return nil, err
+	}
+	if question.Tags != "" {
+		json.Unmarshal([]byte(question.Tags), &questionVo.Tags)
+	}
+	if question.JudgeConfig != "" {
+		json.Unmarshal([]byte(question.JudgeConfig), &questionVo.JudgeConfig)
+	}
+	return questionVo, nil
 }

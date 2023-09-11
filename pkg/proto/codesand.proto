@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package="../pb;pb";
+
+import "questionsubmit.proto";
+
+message ExecuteCodeRequest{
+  repeated string inputs = 1;
+  string code = 2;
+  string language = 3;
+}
+
+message ExecuteCodeResponse{
+  repeated string outputs = 1;
+  string message = 2;
+  JudgeInfo judgeInfo = 3;
+  string status = 4;
+}
+
+service CodeSandService{
+  rpc executeCode(ExecuteCodeRequest) returns (ExecuteCodeResponse);
+}

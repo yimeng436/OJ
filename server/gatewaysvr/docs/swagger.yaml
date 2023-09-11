@@ -16,7 +16,7 @@ definitions:
           type: string
         type: object
     type: object
-  pb.GetQuestionVoPageRequest:
+  pb.GetQuestionPageRequest:
     properties:
       page:
         $ref: '#/definitions/pb.Page'
@@ -238,18 +238,15 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: 根据id获取题目
-  /question/list:
-    post:
-      consumes:
-      - application/json
-      description: 分页查询问题
+  /question/get/vo/{id}:
+    get:
+      description: 根据Id查询QuestionVO
       parameters:
-      - description: QuestionVoPage
-        in: body
-        name: user
+      - description: Question ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/pb.GetQuestionVoPageRequest'
+        type: integer
       produces:
       - application/json
       responses:
@@ -257,7 +254,47 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/common.Response'
-      summary: 分页查询问题
+      summary: 根据Id查询QuestionVO
+  /question/list:
+    post:
+      consumes:
+      - application/json
+      description: 分页查询问题（管理员）
+      parameters:
+      - description: QuestionVoPage
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.GetQuestionPageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 分页查询问题（管理员）
+  /question/list/vo:
+    post:
+      consumes:
+      - application/json
+      description: 分页查询问题（用户）
+      parameters:
+      - description: QuestionVoPage
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb.GetQuestionPageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 分页查询问题（用户）
   /question/submit/do:
     post:
       consumes:
