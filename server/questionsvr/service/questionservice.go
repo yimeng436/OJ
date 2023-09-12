@@ -18,6 +18,15 @@ type QuestionService struct {
 	pb.UnimplementedQuestionServiceServer
 }
 
+func (QuestionService) GetById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionInfo, error) {
+	questionInfo, err := repository.GetQuestionById(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	resp := new(pb.QuestionInfo)
+	copier.Copy(resp, questionInfo)
+	return resp, nil
+}
 func (QuestionService) ValidQuestion(ctx context.Context, request *pb.ValidQuestionRequest) (*pb.Empty, error) {
 	//用于判断是否为添加操作
 	add := request.Add
@@ -182,16 +191,14 @@ func (QuestionService) GetQuestionById(ctx context.Context, request *pb.Question
 	}
 	loginUser := new(pb.UserVo)
 	json.Unmarshal([]byte(userState), loginUser)
-	questionInfo, err := repository.GetQuestionById(request.Id)
+	questionInfo, err := questionService.GetById(ctx, request)
 	if err != nil {
 		return nil, err
 	}
 	if questionInfo.UserId != loginUser.Id && loginUser.Id != 1 {
 		return nil, errors.New("没有权限")
 	}
-	resp := new(pb.QuestionInfo)
-	copier.Copy(resp, questionInfo)
-	return resp, nil
+	return questionInfo, nil
 }
 func (QuestionService) GetQuestionTotal(ctx context.Context, request *pb.Empty) (*pb.TotalResponse, error) {
 

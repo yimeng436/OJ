@@ -54,10 +54,9 @@ func Run() error {
 	factory := service.CodeSandFactory{}
 	proxy := service.CodeSandProxy{}
 	codesandserivce := factory.CreateCodeSand(config.GetGlobalConfig().SvrConfig.ImplMethod)
-
-	pb.RegisterCodeSandServiceServer(server, codesandserivce)
-
 	proxy.CodeSandService = codesandserivce
+
+	pb.RegisterCodeSandServiceServer(server, proxy)
 
 	grpc_health_v1.RegisterHealthServer(server, health.NewServer())
 

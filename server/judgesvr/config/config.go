@@ -24,6 +24,7 @@ type SvrConfig struct {
 	UserSvrName        string `mapstructure:"user_svr_name"`           // 用户服务name
 	QuestionSvrName    string `mapstructure:"question_svr_name"`       // 问题服务name
 	QuestionSubmitName string `mapstructure:"questionsubmit_svr_name"` // 问题提交服务name
+	CodeSandsvrName    string `mapstructure:"codesand_svr_name"`       // 代码沙箱服务name
 	ImplMethod         string `mapstructure:"implmethod"`
 }
 

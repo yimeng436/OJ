@@ -21,6 +21,19 @@ type QuestionSubmitService struct {
 	pb.UnimplementedQuestionSubmitServiceServer
 }
 
+func (QuestionSubmitService) GetQuestionSubmitById(ctx context.Context, request *pb.IdReQuest) (*pb.QuestionSubmitInfo, error) {
+	questionSubmitId := request.Id
+	questionSubmit, err := repository.GetById(questionSubmitId)
+	if err != nil {
+		return nil, err
+	}
+	p := new(pb.QuestionSubmitInfo)
+	err = copier.Copy(p, questionSubmit)
+	if err != nil {
+		return nil, err
+	}
+	return p, nil
+}
 func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.QuestionSubmitAddRequest) (*pb.BoolResponse, error) {
 	language := request.Language
 	_, err2 := enum.GetLanguage(language)

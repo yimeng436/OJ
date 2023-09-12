@@ -37,6 +37,16 @@ func GetTotal() (int64, error) {
 	return total, nil
 }
 
+func GetById(id int64) (*QuestionSubmit, error) {
+	db := db.GetDB()
+	var questionSubmit *QuestionSubmit
+	err := db.Model(QuestionSubmit{}).Where("id = ?", id).Find(questionSubmit).Error
+	if err != nil {
+		return nil, err
+	}
+	return questionSubmit, nil
+}
+
 func buildCondition(db *gorm.DB, request *pb.QuestionSubmitQueryRequest) *gorm.DB {
 	query := db.Model(QuestionSubmit{})
 	language := request.Language

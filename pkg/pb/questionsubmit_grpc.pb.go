@@ -23,6 +23,7 @@ const (
 	QuestionSubmitService_ListQuestionSubmitByPage_FullMethodName = "/QuestionSubmitService/ListQuestionSubmitByPage"
 	QuestionSubmitService_GetQuestionSubmitTotal_FullMethodName   = "/QuestionSubmitService/GetQuestionSubmitTotal"
 	QuestionSubmitService_GetQuestionSubmitById_FullMethodName    = "/QuestionSubmitService/GetQuestionSubmitById"
+	QuestionSubmitService_UpdateQuestionStatusById_FullMethodName = "/QuestionSubmitService/UpdateQuestionStatusById"
 )
 
 // QuestionSubmitServiceClient is the client API for QuestionSubmitService service.
@@ -33,6 +34,7 @@ type QuestionSubmitServiceClient interface {
 	ListQuestionSubmitByPage(ctx context.Context, in *QuestionSubmitQueryRequest, opts ...grpc.CallOption) (*QuestionSubmitQueryResponse, error)
 	GetQuestionSubmitTotal(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TotalResponse, error)
 	GetQuestionSubmitById(ctx context.Context, in *IdReQuest, opts ...grpc.CallOption) (*QuestionSubmitInfo, error)
+	UpdateQuestionStatusById(ctx context.Context, in *QuestionSubmitInfo, opts ...grpc.CallOption) (*BoolResponse, error)
 }
 
 type questionSubmitServiceClient struct {
@@ -79,6 +81,15 @@ func (c *questionSubmitServiceClient) GetQuestionSubmitById(ctx context.Context,
 	return out, nil
 }
 
+func (c *questionSubmitServiceClient) UpdateQuestionStatusById(ctx context.Context, in *QuestionSubmitInfo, opts ...grpc.CallOption) (*BoolResponse, error) {
+	out := new(BoolResponse)
+	err := c.cc.Invoke(ctx, QuestionSubmitService_UpdateQuestionStatusById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionSubmitServiceServer is the server API for QuestionSubmitService service.
 // All implementations must embed UnimplementedQuestionSubmitServiceServer
 // for forward compatibility
@@ -87,6 +98,7 @@ type QuestionSubmitServiceServer interface {
 	ListQuestionSubmitByPage(context.Context, *QuestionSubmitQueryRequest) (*QuestionSubmitQueryResponse, error)
 	GetQuestionSubmitTotal(context.Context, *Empty) (*TotalResponse, error)
 	GetQuestionSubmitById(context.Context, *IdReQuest) (*QuestionSubmitInfo, error)
+	UpdateQuestionStatusById(context.Context, *QuestionSubmitInfo) (*BoolResponse, error)
 	mustEmbedUnimplementedQuestionSubmitServiceServer()
 }
 
@@ -105,6 +117,9 @@ func (UnimplementedQuestionSubmitServiceServer) GetQuestionSubmitTotal(context.C
 }
 func (UnimplementedQuestionSubmitServiceServer) GetQuestionSubmitById(context.Context, *IdReQuest) (*QuestionSubmitInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionSubmitById not implemented")
+}
+func (UnimplementedQuestionSubmitServiceServer) UpdateQuestionStatusById(context.Context, *QuestionSubmitInfo) (*BoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionStatusById not implemented")
 }
 func (UnimplementedQuestionSubmitServiceServer) mustEmbedUnimplementedQuestionSubmitServiceServer() {}
 
@@ -191,6 +206,24 @@ func _QuestionSubmitService_GetQuestionSubmitById_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionSubmitService_UpdateQuestionStatusById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuestionSubmitInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionSubmitServiceServer).UpdateQuestionStatusById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionSubmitService_UpdateQuestionStatusById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionSubmitServiceServer).UpdateQuestionStatusById(ctx, req.(*QuestionSubmitInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionSubmitService_ServiceDesc is the grpc.ServiceDesc for QuestionSubmitService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,6 +246,10 @@ var QuestionSubmitService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQuestionSubmitById",
 			Handler:    _QuestionSubmitService_GetQuestionSubmitById_Handler,
+		},
+		{
+			MethodName: "UpdateQuestionStatusById",
+			Handler:    _QuestionSubmitService_UpdateQuestionStatusById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,7 +19,7 @@ require (
 
 require (
 	github.com/mbobakov/grpc-consul-resolver v1.5.2
-	github.com/yimeng436/OJ v0.3.4
+	github.com/yimeng436/OJ v0.3.5
 
 )
 

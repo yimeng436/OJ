@@ -67,4 +67,5 @@ service QuestionSubmitService{
   rpc ListQuestionSubmitByPage(QuestionSubmitQueryRequest) returns (QuestionSubmitQueryResponse);
   rpc GetQuestionSubmitTotal(Empty) returns (TotalResponse);
   rpc GetQuestionSubmitById(IdReQuest) returns (QuestionSubmitInfo);
+  rpc UpdateQuestionStatusById(QuestionSubmitInfo) returns (BoolResponse);
 }
