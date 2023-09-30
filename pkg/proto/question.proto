@@ -107,6 +107,7 @@ message GetQuestionPageRequest{
 
 message GetQuestionPageResponse{
   repeated QuestionInfo question = 1;
+  int64 total = 2;
 }
 
 
@@ -117,6 +118,7 @@ message QuestionIdRequest{
 
 message ListQuestionPageVoResponse{
   repeated QuestionVo questionVoList = 1;
+  int64 total = 2;
 }
 
 service QuestionService{

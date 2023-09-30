@@ -15,7 +15,7 @@ require (
 	gorm.io/gorm v1.25.4
 )
 
-require github.com/yimeng436/OJ v0.3.6
+require github.com/yimeng436/OJ v0.3.7
 
 require (
 	github.com/armon/go-metrics v0.4.0 // indirect

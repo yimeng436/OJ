@@ -46,6 +46,7 @@ message QuestionSubmitQueryRequest{
 
 message QuestionSubmitQueryResponse{
   repeated QuestionSubmitVo questionVO = 1;
+  int64 total = 2;
 }
 
 message QuestionSubmitVo{

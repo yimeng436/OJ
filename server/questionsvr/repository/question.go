@@ -41,7 +41,10 @@ func GetQuestionList(question *Question, page, pageSize int) ([]*Question, error
 	db := db.GetDB()
 	query := buildSearchCondition(db, question)
 	var questions []*Question
-	err := query.Limit(pageSize).Offset(page).Find(&questions).Error
+	if page > 0 {
+		page--
+	}
+	err := query.Limit(pageSize).Offset(page * pageSize).Find(&questions).Error
 	if err != nil {
 		return nil, err
 	}
@@ -55,6 +58,7 @@ func buildSearchCondition(db *gorm.DB, question *Question) (tx *gorm.DB) {
 	tags := question.Tags
 	title := question.Title
 	userId := question.UserId
+	level := question.Level
 
 	if content != "" {
 		query = query.Or("content LIKE ?", "%"+content+"%")
@@ -78,6 +82,9 @@ func buildSearchCondition(db *gorm.DB, question *Question) (tx *gorm.DB) {
 		for _, tag := range targetTag {
 			query = query.Or("tags LIKE ?", "%"+tag+"%")
 		}
+	}
+	if level != "" {
+		query = query.Or("level = ?", level)
 	}
 	return query
 }

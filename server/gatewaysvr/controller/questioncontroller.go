@@ -20,7 +20,6 @@ import (
 // @Router			/question/add  [post]
 func AddQuestion(ctx *gin.Context) {
 	var addRequest = new(pb.QuestionAddRequest)
-
 	if err := ctx.ShouldBind(addRequest); err != nil {
 		log.Fatal("参数错误")
 		common.Fail(ctx, "请求参数错误")
@@ -215,7 +214,6 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 // @Router			/question/submit/do [post]
 func DoSubmit(ctx *gin.Context) {
 	request := new(pb.QuestionSubmitAddRequest)
-
 	if err := ctx.ShouldBind(&request); err != nil {
 		log.Fatal("参数错误")
 		common.Fail(ctx, "请求参数错误")

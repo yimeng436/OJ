@@ -11,6 +11,7 @@ type Question struct {
 	Title       string                `gorm:"column:title;comment:'标题'" json:"title,omitempty"`
 	Content     string                `gorm:"column:content;comment:'内容'" json:"content,omitempty"`
 	Tags        string                `gorm:"column:tags;comment:'标签列表（json 数组）'" json:"tags,omitempty"`
+	Level       string                `gorm:"column:level;comment:'难度'" json:"level,omitempty"`
 	Answer      string                `gorm:"column:answer;comment:'题目答案'" json:"answer,omitempty"`
 	SubmitNum   int32                 `gorm:"column:submitNum;default:0;NOT NULL;comment:'题目提交数'" json:"submitNum,omitempty"`
 	AcceptedNum int32                 `gorm:"column:acceptedNum;default:0;NOT NULL;comment:'题目通过数'" json:"acceptedNum,omitempty"`

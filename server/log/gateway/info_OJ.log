@@ -286,3 +286,7 @@
 2023-09-29T22:10:14.025+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
 2023-09-29T22:10:14.026+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
 2023-09-29T22:10:14.026+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-30T14:19:50.090+0800	[34mINFO[0m	gatewaysvr/main.go:49	log init success...
+2023-09-30T14:19:50.104+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-30T14:19:50.104+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
+2023-09-30T14:19:50.104+0800	[34mINFO[0m	rpcservice/rpcservice.go:65	NewSvrConn success
