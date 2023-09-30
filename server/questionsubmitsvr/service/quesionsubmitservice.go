@@ -9,9 +9,10 @@ import (
 	"github.com/yimeng436/OJ/common/enum"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
-	"questionsubmitsvr/middleware/log"
+	mq "questionsubmitsvr/middleware/rabbitmq"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
+	"strconv"
 
 	// 必须要导入这个包，否则grpc会报错
 	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
@@ -34,7 +35,7 @@ func (QuestionSubmitService) GetQuestionSubmitById(ctx context.Context, request 
 	}
 	return p, nil
 }
-func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.QuestionSubmitAddRequest) (*pb.BoolResponse, error) {
+func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.QuestionSubmitAddRequest) (*pb.IdResponse, error) {
 	language := request.Language
 	_, err2 := enum.GetLanguage(language)
 	if err2 != nil {
@@ -53,7 +54,8 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		Id:  request.QuestionId,
 		Ctx: request.Ctx,
 	}
-	question, err := questionSvrClient.GetQuestionById(ctx, questionIdRequest)
+
+	question, err := questionSvrClient.GetQuestionById(context.Background(), questionIdRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -73,18 +75,23 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		return nil, err
 	}
 	questionSubmitId := questionSubmit.Id
-	judgeServiceClient := rpcservice.GetJudgeServiceClient()
-	go func() {
-		defer func() {
-			if r := recover(); r != nil {
-				// 发生 panic，进行恢复处理
-				log.Fatal("Recovered from panic:", r)
-			}
-		}()
-		_, err = judgeServiceClient.DoJudge(ctx, &pb.DoJudgeRequest{Questionsubmitid: questionSubmitId})
-	}()
+	//judgeServiceClient := rpcservice.GetJudgeServiceClient()
+	//go func() {
+	//	defer func() {
+	//		if r := recover(); r != nil {
+	//			// 发生 panic，进行恢复处理
+	//			log.Fatal("Recovered from panic:", r)
+	//		}
+	//	}()
+	//
+	//	_, err = judgeServiceClient.DoJudge(context.Background(), &pb.DoJudgeRequest{Questionsubmitid: questionSubmitId})
+	//	fmt.Println(err)
+	//}()
 
-	return &pb.BoolResponse{Res: true}, nil
+	mqProducer := mq.GetMQ("questionsubmit_exchange", "submit.question")
+	mqProducer.PublishRouting(strconv.FormatInt(questionSubmitId, 10))
+
+	return &pb.IdResponse{Id: questionSubmitId}, nil
 }
 
 func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, request *pb.QuestionSubmitQueryRequest) (*pb.QuestionSubmitQueryResponse, error) {
@@ -118,6 +125,16 @@ func (QuestionSubmitService) GetQuestionSubmitTotal(context.Context, *pb.Empty) 
 		return nil, err
 	}
 	return &pb.TotalResponse{Total: total}, nil
+}
+func (QuestionSubmitService) UpdateQuestionStatusById(ctx context.Context, request *pb.QuestionSubmitInfo) (*pb.BoolResponse, error) {
+	var questionsubmit = new(repository.QuestionSubmit)
+
+	copier.Copy(questionsubmit, request)
+	err := repository.UpdateQuestionSubmit(questionsubmit)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.BoolResponse{Res: true}, nil
 }
 func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
 	vo := new(pb.QuestionSubmitVo)

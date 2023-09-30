@@ -9,6 +9,7 @@ message QuestionInfo {
   string title = 2; // 标题
   string content = 3; // 内容
   string tags = 4; // 标签列表（json 数组）
+  string level = 16; //题目难度
   string answer = 5; // 题目答案
   int32 submitNum = 6; // 题目提交数
   int32 acceptedNum = 7; // 题目通过数
@@ -36,6 +37,7 @@ message QuestionVo {
   string createTime = 13; // 创建时间
   string updateTime = 14; // 更新时间
   UserVo userVo = 15;  //题目创建人的信息
+  string level = 16; //题目难度
 }
 
 message JudgeCase{
@@ -57,6 +59,7 @@ message QuestionAddRequest{
   string answer = 4;
   repeated JudgeCase judgeCase = 5;
   JudgeConfig judgeConfig = 6;
+  string level = 7; //题目难度
 }
 
 message QuestionEditRequest{
@@ -67,6 +70,7 @@ message QuestionEditRequest{
   string answer = 5;
   repeated JudgeCase judgeCase = 6;
   JudgeConfig judgeConfig = 7;
+  string level = 8; //题目难度
 }
 
 
@@ -77,6 +81,7 @@ message QuestionQueryRequests{
   repeated string tags = 4;
   string answer = 5;
   int64 userId = 6;
+  string level = 7; //题目难度
 }
 
 message QuestionUpdateRequest{
@@ -87,6 +92,7 @@ message QuestionUpdateRequest{
   string answer = 5;
   repeated JudgeCase judgeCase = 6;
   JudgeConfig judgeConfig = 7;
+  string level = 8; //题目难度
 }
 message ValidQuestionRequest{
     QuestionInfo questionInfo = 1;

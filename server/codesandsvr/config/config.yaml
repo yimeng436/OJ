@@ -4,7 +4,7 @@ svr_config:
   port: "8004"
   user_svr_name : "usersvr"
   question_svr_name : "questionsvr"
-  implmethod: "normal"    # normal : 测试沙箱  remote : 远程沙箱  thirdpart: 第三方沙箱
+  implmethod: "remote"    # normal : 测试沙箱  remote : 远程沙箱  thirdpart: 第三方沙箱
 
 
 redis:
@@ -34,3 +34,7 @@ consul:
   port: 8500
   tags:
     - "codesandsvr"
+
+codesand:
+  auth_header: "Auth"
+  auth_key: "secretKey"

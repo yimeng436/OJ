@@ -7,10 +7,14 @@ import (
 	"github.com/yimeng436/OJ/pkg/pb"
 )
 
-type DefaultStrategy struct {
+var (
+	Java_Program_Time int64 = 10000
+)
+
+type JavaStrategy struct {
 }
 
-func (DefaultStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
+func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	judgeCaseList := ctx.JudgeCaseList
 	question := ctx.Question
 	judgeInfo := ctx.JudgeInfo
@@ -26,40 +30,42 @@ func (DefaultStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	if len(outputList) != len(inputList) {
 		judgeStatus = enum.GetJudegeInfo(enum.WrongAnswer)
 		judgeInfoResp.Message = judgeStatus
-		return judgeInfoResp, errors.New(judgeStatus)
+		return judgeInfoResp, nil
 	}
 	//校验结果是否正确
 	for i, jude := range judgeCaseList {
 		if jude.Outputs != outputList[i] {
+			judgeStatus = enum.GetJudegeInfo(enum.WrongAnswer)
 			judgeInfoResp.Message = judgeStatus
-			return judgeInfoResp, errors.New(judgeStatus)
+			return judgeInfoResp, nil
 		}
 	}
 	var err error
 	time := judgeInfo.Time
 	memory := judgeInfo.Memory
 	judgeConfigStr := question.JudgeConfig
-	var judgeConfig *pb.JudgeConfig
+	judgeConfig := new(pb.JudgeConfig)
 	err = json.Unmarshal([]byte(judgeConfigStr), judgeConfig)
 	if err != nil {
 		return nil, errors.New("判题配置反序列化异常:" + err.Error())
 	}
 	timeLimit := judgeConfig.TimeLimit
 	memoryLimit := judgeConfig.MemoryLimit
-	if time > timeLimit {
+	if time-Java_Program_Time > timeLimit {
 		judgeStatus = enum.GetJudegeInfo(enum.TimeLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
-		return judgeInfoResp, errors.New(judgeStatus)
+		return judgeInfoResp, nil
 	}
 
-	if memory > memoryLimit {
+	if (memory) > memoryLimit {
 		judgeStatus = enum.GetJudegeInfo(enum.MemoryLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
-		return judgeInfoResp, errors.New(judgeStatus)
+		return judgeInfoResp, nil
 	}
 
 	judgeStatus = enum.GetJudegeInfo(enum.Accept)
 	judgeInfoResp.Message = judgeStatus
+	judgeInfoResp.Time = time
 	return judgeInfoResp, nil
 
 }

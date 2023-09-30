@@ -19,7 +19,10 @@ require (
 	gorm.io/plugin/soft_delete v1.2.1
 )
 
-require github.com/yimeng436/OJ v0.3.5
+require (
+	github.com/streadway/amqp v1.1.0
+	github.com/yimeng436/OJ v0.3.6
+)
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect

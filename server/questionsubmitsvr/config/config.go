@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -10,11 +9,12 @@ import (
 var globalConfig = new(GlobalConfig)
 
 type GlobalConfig struct {
-	*SvrConfig    `mapstructure:"svr_config"`
-	*ConsulConfig `mapstructure:"consul"`
-	*DbConfig     `mapstructure:"mysql"`
-	*RedisConfig  `mapstructure:"redis"`
-	*LogConfig    `mapstructure:"log"`
+	*SvrConfig      `mapstructure:"svr_config"`
+	*ConsulConfig   `mapstructure:"consul"`
+	*DbConfig       `mapstructure:"mysql"`
+	*RedisConfig    `mapstructure:"redis"`
+	*LogConfig      `mapstructure:"log"`
+	*RabbitMQConfig `mapstructure:"rabbitmq"`
 }
 
 type SvrConfig struct {
@@ -23,7 +23,7 @@ type SvrConfig struct {
 	Port            int    `mapstructure:"port"`
 	UserSvrName     string `mapstructure:"user_svr_name"`     // 用户服务name
 	QuestionSvrName string `mapstructure:"question_svr_name"` // 问题服务name
-	JudgeSvrName    string `mapstructure:"judgesvr"`          // 判题服务name
+	JudgeSvrName    string `mapstructure:"judge_svr_name"`    // 判题服务name
 }
 
 type ConsulConfig struct {
@@ -60,6 +60,13 @@ type LogConfig struct {
 	MaxSize    int    `mapstructure:"max_size"`
 	MaxAge     int    `mapstructure:"max_age"`
 	MaxBackups int    `mapstructure:"max_backups"`
+}
+
+type RabbitMQConfig struct {
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
 }
 
 func Init() (err error) {

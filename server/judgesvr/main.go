@@ -10,13 +10,12 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"judgesvr/config"
 	"judgesvr/log"
+	"judgesvr/middleware/consul"
 	"judgesvr/middleware/db"
+	mq "judgesvr/middleware/rabbitmq"
 	"judgesvr/rpcservice"
+	"judgesvr/service"
 	"net"
-	"os"
-	"os/signal"
-
-	"syscall"
 )
 
 func main() {
@@ -49,13 +48,9 @@ func Run() error {
 	}
 
 	server := grpc.NewServer()
-	factory := service.CodeSandFactory{}
-	proxy := service.CodeSandProxy{}
-	codesandserivce := factory.CreateCodeSand(config.GetGlobalConfig().SvrConfig.ImplMethod)
+	judgeserver := &service.JudgeService{}
 
-	pb.RegisterCodeSandServiceServer(server, codesandserivce)
-
-	proxy.CodeSandService = codesandserivce
+	pb.RegisterJudgeServiceServer(server, judgeserver)
 
 	grpc_health_v1.RegisterHealthServer(server, health.NewServer())
 
@@ -79,12 +74,9 @@ func Run() error {
 		}
 	}()
 
-	quit := make(chan os.Signal)
-	//告诉操作系统，当接收到 SIGINT 或 SIGTERM 这个信号时候会将信号传给通道
-	//这样做的好处是可以在操作系统接收到 中断或者关闭时候优雅的执行后续程序
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	//等待接收信号，阻塞
-	<-quit
+	rabbitMQClient := mq.GetMQ("questionsubmit_exchange", "submit.question")
+	rabbitMQClient.RecieveRouting()
+
 	// 服务终止，注销 consul 服务
 	if err = register.DeRegister(serviceID); err != nil {
 		log.Info("注销失败")

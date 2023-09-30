@@ -1,7 +1,7 @@
 package log
 
 import (
-	"codesandsvr/config"
+	"judgesvr/config"
 	"os"
 
 	"go.uber.org/zap"

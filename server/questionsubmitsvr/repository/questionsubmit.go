@@ -39,12 +39,18 @@ func GetTotal() (int64, error) {
 
 func GetById(id int64) (*QuestionSubmit, error) {
 	db := db.GetDB()
-	var questionSubmit *QuestionSubmit
+	var questionSubmit = new(QuestionSubmit)
 	err := db.Model(QuestionSubmit{}).Where("id = ?", id).Find(questionSubmit).Error
 	if err != nil {
 		return nil, err
 	}
 	return questionSubmit, nil
+}
+
+func UpdateQuestionSubmit(questionsubmit *QuestionSubmit) error {
+	db := db.GetDB()
+	err := db.Model(QuestionSubmit{}).Where("id = ?", questionsubmit.Id).Updates(questionsubmit).Error
+	return err
 }
 
 func buildCondition(db *gorm.DB, request *pb.QuestionSubmitQueryRequest) *gorm.DB {

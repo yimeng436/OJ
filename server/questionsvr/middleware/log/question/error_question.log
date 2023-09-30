@@ -1,0 +1,1 @@
+2023-09-29T16:31:34.719+0800	[31mFATAL[0m	rabbitmq/mq.go:48	failed to connect rabbitmq!:dial tcp 127.0.0.1:5627: connectex: No connection could be made because the target machine actively refused it.

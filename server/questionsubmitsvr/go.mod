@@ -19,7 +19,8 @@ require (
 
 require (
 	github.com/mbobakov/grpc-consul-resolver v1.5.2
-	github.com/yimeng436/OJ v0.3.5
+	github.com/streadway/amqp v1.1.0
+	github.com/yimeng436/OJ v0.3.6
 
 )
 

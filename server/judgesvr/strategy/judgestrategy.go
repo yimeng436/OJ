@@ -2,7 +2,7 @@ package strategy
 
 import "github.com/yimeng436/OJ/pkg/pb"
 
-type JudgeContent struct {
+type JudgeContext struct {
 	JudgeInfo      *pb.JudgeInfo          `json:"judgeInfo"`
 	InputList      []string               `json:"inputList"`
 	OutputList     []string               `json:"outputList"`
@@ -12,5 +12,5 @@ type JudgeContent struct {
 }
 
 type JudgeStrategy interface {
-	ExecuteJudge(*JudgeContent) (*pb.JudgeInfo, error)
+	ExecuteJudge(*JudgeContext) (*pb.JudgeInfo, error)
 }

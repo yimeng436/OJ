@@ -175,7 +175,7 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 		common.Fail(ctx, "未登录")
 		return
 	}
-	vo := userState.(pb.UserVo)
+	vo := userState.(*pb.UserVo)
 	serisedVo, err := json.Marshal(vo)
 	if err != nil {
 		log.Fatal("序列化异常")

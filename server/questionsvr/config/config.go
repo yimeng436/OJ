@@ -10,11 +10,12 @@ import (
 var globalConfig = new(GlobalConfig)
 
 type GlobalConfig struct {
-	*SvrConfig    `mapstructure:"svr_config"`
-	*ConsulConfig `mapstructure:"consul"`
-	*DbConfig     `mapstructure:"mysql"`
-	*RedisConfig  `mapstructure:"redis"`
-	*LogConfig    `mapstructure:"log"`
+	*SvrConfig      `mapstructure:"svr_config"`
+	*ConsulConfig   `mapstructure:"consul"`
+	*DbConfig       `mapstructure:"mysql"`
+	*RedisConfig    `mapstructure:"redis"`
+	*LogConfig      `mapstructure:"log"`
+	*RabbitMQConfig `mapstructure:"rabbitmq"`
 }
 
 type SvrConfig struct {
@@ -58,6 +59,13 @@ type LogConfig struct {
 	MaxSize    int    `mapstructure:"max_size"`
 	MaxAge     int    `mapstructure:"max_age"`
 	MaxBackups int    `mapstructure:"max_backups"`
+}
+
+type RabbitMQConfig struct {
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
 }
 
 func Init() (err error) {

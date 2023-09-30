@@ -1,7 +1,7 @@
 package service
 
 import (
-	"codesandsvr/middleware/log"
+	"codesandsvr/log"
 	"context"
 	"github.com/yimeng436/OJ/pkg/pb"
 )

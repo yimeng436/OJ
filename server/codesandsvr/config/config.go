@@ -15,6 +15,7 @@ type GlobalConfig struct {
 	*DbConfig     `mapstructure:"mysql"`
 	*RedisConfig  `mapstructure:"redis"`
 	*LogConfig    `mapstructure:"log"`
+	*CodeSand     `mapstructure:"codesand"`
 }
 
 type SvrConfig struct {
@@ -60,6 +61,11 @@ type LogConfig struct {
 	MaxSize    int    `mapstructure:"max_size"`
 	MaxAge     int    `mapstructure:"max_age"`
 	MaxBackups int    `mapstructure:"max_backups"`
+}
+
+type CodeSand struct {
+	AuthHead string `mapstructure:"auth_header"`
+	AuthKey  string `mapstructure:"auth_key"`
 }
 
 func Init() (err error) {

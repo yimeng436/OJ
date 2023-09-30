@@ -1,9 +1,9 @@
 package db
 
 import (
+	"codesandsvr/config"
 	"fmt"
 	"gorm.io/gorm/logger"
-	"questionsubmitsvr/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

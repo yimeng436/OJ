@@ -1,0 +1,4 @@
+2023-09-29T23:19:01.900+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:158	Recovered from panic:runtime error: invalid memory address or nil pointer dereference
+2023-09-29T23:23:49.213+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:158	Recovered from panic:runtime error: invalid memory address or nil pointer dereference
+2023-09-29T23:29:17.039+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:158	Recovered from panic:runtime error: invalid memory address or nil pointer dereference
+2023-09-30T14:20:54.842+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:147	Recovered from panic:runtime error: invalid memory address or nil pointer dereference

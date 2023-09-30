@@ -3,6 +3,7 @@ package rpcservice
 import (
 	"context"
 	"fmt"
+	_ "github.com/mbobakov/grpc-consul-resolver"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/grpc"
 	"judgesvr/config"
@@ -11,14 +12,12 @@ import (
 )
 
 var (
-	UserSvrClient        pb.UserServiceClient
 	QuestionSvrClient    pb.QuestionServiceClient
 	QuestionSubmitClient pb.QuestionSubmitServiceClient
 	CodeSandSvrClient    pb.CodeSandServiceClient
 )
 
 func InitSvrConn() {
-	UserSvrClient = NewUserSvrClient(config.GetGlobalConfig().SvrConfig.UserSvrName)
 	QuestionSvrClient = NewQuestionSvrClient(config.GetGlobalConfig().SvrConfig.QuestionSvrName)
 	QuestionSubmitClient = NewQuestionSubmitClient(config.GetGlobalConfig().SvrConfig.QuestionSubmitName)
 	CodeSandSvrClient = NewCodeSandSvrClient(config.GetGlobalConfig().SvrConfig.CodeSandsvrName)
@@ -38,14 +37,6 @@ func NewQuestionSubmitClient(svrName string) pb.QuestionSubmitServiceClient {
 		return nil
 	}
 	return pb.NewQuestionSubmitServiceClient(conn)
-}
-
-func NewUserSvrClient(svrName string) pb.UserServiceClient {
-	conn, err := NewSvrConn(svrName)
-	if err != nil {
-		return nil
-	}
-	return pb.NewUserServiceClient(conn)
 }
 
 func NewQuestionSvrClient(svrName string) pb.QuestionServiceClient {
@@ -75,9 +66,6 @@ func NewSvrConn(svrName string) (*grpc.ClientConn, error) {
 	}
 	log.Info("NewSvrConn success")
 	return conn, nil
-}
-func GetUserServiceClient() pb.UserServiceClient {
-	return UserSvrClient
 }
 
 func GetQuestionSvrClient() pb.QuestionServiceClient {
