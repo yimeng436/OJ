@@ -34,10 +34,10 @@ func Judge(ctx context.Context, questionsubmitid int64) (*pb.QuestionSubmitInfo,
 	if err != nil {
 		return nil, err
 	}
-	if quesionsubmit.Status == enum.Running {
+	if quesionsubmit.Status == enum.SubmitRunning {
 		return nil, errors.New("判题中，请等待")
 	}
-	quesionsubmit.Status = enum.Running
+	quesionsubmit.Status = enum.SubmitRunning
 	// TODO 调用questionSubmitClient的跟新状态函数
 	_, err = questionSubmitClient.UpdateQuestionStatusById(context.Background(), quesionsubmit)
 	if err != nil {
@@ -91,7 +91,7 @@ func Judge(ctx context.Context, questionsubmitid int64) (*pb.QuestionSubmitInfo,
 		return nil, errors.New("序列化异常:" + err.Error())
 	}
 	quesionsubmit.JudgeInfo = string(judgeInfoStr)
-	quesionsubmit.Status = enum.Succeed
+	quesionsubmit.Status = enum.SubmitSucceed
 	_, err = questionSubmitClient.UpdateQuestionStatusById(context.Background(), quesionsubmit)
 	if err != nil {
 		return nil, err

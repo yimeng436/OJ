@@ -68,7 +68,7 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	questionSubmit.Code = request.Code
 	questionSubmit.Language = request.Language
 	questionSubmit.UserId = loginUser.Id
-	questionSubmit.Status = enum.Waiting
+	questionSubmit.Status = enum.SubmitWaiting
 	questionSubmit.JudgeInfo = "{}"
 
 	err = repository.Create(questionSubmit)
@@ -117,7 +117,7 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 	}
 	resp := new(pb.QuestionSubmitQueryResponse)
 
-	resp.QuestionVO = voList
+	resp.QuestionSubmitVO = voList
 	resp.Total = total
 	return resp, nil
 }
@@ -141,6 +141,7 @@ func (QuestionSubmitService) UpdateQuestionStatusById(ctx context.Context, reque
 func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
 	vo := new(pb.QuestionSubmitVo)
 	copier.Copy(vo, obj)
+	vo.SubmitStatus = enum.GetValue(int(vo.Status))
 	if obj.JudgeInfo != "" {
 		protojson.Unmarshal([]byte(obj.JudgeInfo), vo.JudgeInfo)
 	}

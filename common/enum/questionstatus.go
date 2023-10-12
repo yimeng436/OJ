@@ -1,19 +1,19 @@
 package enum
 
 const (
-	Waiting = 0
-	Running = 1
-	Succeed = 2
-	Fail    = 3
+	SubmitWaiting = 0
+	SubmitRunning = 1
+	SubmitSucceed = 2
+	SubmitFail    = 3
 )
 
 var StatusMap = make(map[int]string)
 
 func init() {
-	StatusMap[0] = "等待"
-	StatusMap[1] = "运行中"
-	StatusMap[2] = "成功"
-	StatusMap[3] = "失败"
+	StatusMap[SubmitWaiting] = "排队中"
+	StatusMap[SubmitRunning] = "提交中"
+	StatusMap[SubmitSucceed] = "提交成功"
+	StatusMap[SubmitFail] = "提交失败"
 }
 
 func GetValue(code int) string {
