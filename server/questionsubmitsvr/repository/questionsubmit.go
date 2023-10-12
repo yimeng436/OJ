@@ -15,17 +15,26 @@ func Create(submit *QuestionSubmit) error {
 	return nil
 }
 
-func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*QuestionSubmit, error) {
+func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*QuestionSubmit, int64, error) {
 	page := int(request.Page.Page)
 	pageSize := int(request.Page.PageSize)
 	db := db.GetDB()
 	query := buildCondition(db, request)
-	var questionSubmit []*QuestionSubmit
-	err := query.Limit(pageSize).Offset(page).Find(&questionSubmit).Error
+	var total int64
+	err := query.Count(&total).Error
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return questionSubmit, nil
+	if err != nil {
+		return nil, 0, err
+	}
+	var questionSubmit []*QuestionSubmit
+	query = query.Preload("Question").Preload("User")
+	err = query.Limit(pageSize).Offset((page - 1) * pageSize).Find(&questionSubmit).Error
+	if err != nil {
+		return nil, 0, err
+	}
+	return questionSubmit, total, nil
 }
 func GetTotal() (int64, error) {
 	db := db.GetDB()
@@ -59,15 +68,17 @@ func buildCondition(db *gorm.DB, request *pb.QuestionSubmitQueryRequest) *gorm.D
 	questionId := request.QuestionId
 	userId := request.UserId
 	status := request.Status
-	if request.Language != "" {
+	if language != "" {
 		query = query.Where("language = ?", language)
 	}
-	if request.QuestionId != 0 {
+	if questionId != 0 {
 		query = query.Where("questionId = ?", questionId)
 	}
-	if request.UserId != 0 {
+	if userId != 0 {
 		query = query.Where("userId = ?", userId)
 	}
-	query = query.Where("status = ?", status)
+	if status != 0 {
+		query = query.Where("status = ?", status)
+	}
 	return query
 }

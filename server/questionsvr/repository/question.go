@@ -37,18 +37,24 @@ func UpdateQuestionById(question *Question) error {
 	return err
 }
 
-func GetQuestionList(question *Question, page, pageSize int) ([]*Question, error) {
+func GetQuestionList(question *Question, page, pageSize int) ([]*Question, int64, error) {
 	db := db.GetDB()
 	query := buildSearchCondition(db, question)
 	var questions []*Question
 	if page > 0 {
 		page--
 	}
-	err := query.Limit(pageSize).Offset(page * pageSize).Find(&questions).Error
+	var total int64
+	err := query.Count(&total).Error
+	err = query.Limit(pageSize).Offset(page * pageSize).Find(&questions).Error
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return questions, nil
+
+	if err != nil {
+		return nil, 0, err
+	}
+	return questions, total, nil
 }
 
 func buildSearchCondition(db *gorm.DB, question *Question) (tx *gorm.DB) {

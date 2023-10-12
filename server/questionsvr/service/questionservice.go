@@ -66,7 +66,7 @@ func (QuestionService) ListQuestionPage(ctx context.Context, request *pb.GetQues
 	if questionInfo != nil {
 		copier.Copy(question, questionInfo)
 	}
-	questionList, err := repository.GetQuestionList(question, int(page.Page), int(page.PageSize))
+	questionList, total, err := repository.GetQuestionList(question, int(page.Page), int(page.PageSize))
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (QuestionService) ListQuestionPage(ctx context.Context, request *pb.GetQues
 		copier.Copy(resQuestion, q)
 		resp.Question = append(resp.Question, resQuestion)
 	}
-
+	resp.Total = total
 	return resp, nil
 }
 func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddRequest) (*pb.BoolResponse, error) {
@@ -224,7 +224,7 @@ func (QuestionService) ListQuestionVoPage(ctx context.Context, request *pb.GetQu
 		}
 		questionVoList = append(questionVoList, vo)
 	}
-	return &pb.ListQuestionPageVoResponse{QuestionVoList: questionVoList}, nil
+	return &pb.ListQuestionPageVoResponse{QuestionVoList: questionVoList, Total: questionResp.Total}, nil
 }
 
 func toVo(question *pb.QuestionInfo) (*pb.QuestionVo, error) {

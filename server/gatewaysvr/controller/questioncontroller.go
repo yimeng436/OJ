@@ -104,13 +104,8 @@ func ListQuestion(ctx *gin.Context) {
 		common.Fail(ctx, err.Error())
 		return
 	}
-	totalResp, err := questionClient.GetQuestionTotal(ctx, &pb.Empty{})
-	if err != nil {
-		log.Fatal("GetQuestionTotal rpc服务器调用异常：", err.Error())
-		common.Fail(ctx, err.Error())
-		return
-	}
-	common.SuccessWithPage(ctx, resp, "success", int(totalResp.Total))
+
+	common.SuccessWithPage(ctx, resp, "success", int(resp.Total))
 }
 
 // @Summary		分页查询问题（用户）
@@ -145,13 +140,7 @@ func ListQuestionVo(ctx *gin.Context) {
 		common.Fail(ctx, err.Error())
 		return
 	}
-	totalResp, err := questionClient.GetQuestionTotal(ctx, &pb.Empty{})
-	if err != nil {
-		log.Fatal("GetQuestionTotal rpc服务器调用异常：", err.Error())
-		common.Fail(ctx, err.Error())
-		return
-	}
-	common.SuccessWithPage(ctx, resp, "success", int(totalResp.Total))
+	common.SuccessWithPage(ctx, resp, "success", int(resp.Total))
 }
 
 // @Summary		查询问题提交信息
@@ -195,14 +184,7 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 		return
 	}
 
-	totalResp, err := questionSubmitClient.GetQuestionSubmitTotal(ctx, &pb.Empty{})
-	if err != nil {
-		log.Fatal("GetQuestionSubmitTotal rpc服务器调用异常：", err.Error())
-		common.Fail(ctx, err.Error())
-		return
-	}
-
-	common.SuccessWithPage(ctx, resp, "success", int(totalResp.Total))
+	common.SuccessWithPage(ctx, resp, "success", int(resp.Total))
 }
 
 // @Summary		提交问题

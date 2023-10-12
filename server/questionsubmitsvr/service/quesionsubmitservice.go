@@ -10,6 +10,7 @@ import (
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
 	mq "questionsubmitsvr/middleware/rabbitmq"
+	"questionsubmitsvr/remotemodel"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
 	"strconv"
@@ -95,13 +96,13 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 }
 
 func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, request *pb.QuestionSubmitQueryRequest) (*pb.QuestionSubmitQueryResponse, error) {
-	questionSubmitList, err := repository.ListQuestionSubmitByPage(request)
-	if err != nil {
-		return nil, err
-	}
 	userState := request.Ctx.Context[constant.UserLoginState]
 	if userState == "" {
 		return nil, errors.New("请先登录")
+	}
+	questionSubmitList, total, err := repository.ListQuestionSubmitByPage(request)
+	if err != nil {
+		return nil, err
 	}
 	loginUser := new(pb.UserVo)
 	json.Unmarshal([]byte(userState), loginUser)
@@ -117,6 +118,7 @@ func (QuestionSubmitService) ListQuestionSubmitByPage(ctx context.Context, reque
 	resp := new(pb.QuestionSubmitQueryResponse)
 
 	resp.QuestionVO = voList
+	resp.Total = total
 	return resp, nil
 }
 func (QuestionSubmitService) GetQuestionSubmitTotal(context.Context, *pb.Empty) (*pb.TotalResponse, error) {
@@ -142,5 +144,36 @@ func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
 	if obj.JudgeInfo != "" {
 		protojson.Unmarshal([]byte(obj.JudgeInfo), vo.JudgeInfo)
 	}
+	if !obj.Question.IsEmpty() {
+		questionVo, err := toQuestionVo(obj.Question)
+		if err != nil {
+			return nil
+		}
+		vo.QuestionVo = questionVo
+	}
+
+	if !obj.User.IsEmpty() {
+		userVo := new(pb.UserVo)
+		err := copier.Copy(userVo, obj.User)
+		if err != nil {
+			return nil
+		}
+		vo.SubmitUser = userVo
+	}
 	return vo
+}
+
+func toQuestionVo(question remotemodel.Question) (*pb.QuestionVo, error) {
+	questionVo := new(pb.QuestionVo)
+	err := copier.Copy(questionVo, question)
+	if err != nil {
+		return nil, err
+	}
+	if question.Tags != "" {
+		json.Unmarshal([]byte(question.Tags), &questionVo.Tags)
+	}
+	if question.JudgeConfig != "" {
+		json.Unmarshal([]byte(question.JudgeConfig), &questionVo.JudgeConfig)
+	}
+	return questionVo, nil
 }
