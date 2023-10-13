@@ -31,7 +31,7 @@ func (DefaultStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	//校验结果是否正确
 	for i, jude := range judgeCaseList {
 		if jude.Outputs != outputList[i] {
-			judgeInfoResp.Message = judgeStatus
+			judgeInfoResp.Message = enum.GetJudegeInfo(enum.WrongAnswer)
 			return judgeInfoResp, errors.New(judgeStatus)
 		}
 	}
@@ -49,13 +49,13 @@ func (DefaultStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	if time > timeLimit {
 		judgeStatus = enum.GetJudegeInfo(enum.TimeLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
-		return judgeInfoResp, errors.New(judgeStatus)
+		return judgeInfoResp, nil
 	}
 
 	if memory > memoryLimit {
 		judgeStatus = enum.GetJudegeInfo(enum.MemoryLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
-		return judgeInfoResp, errors.New(judgeStatus)
+		return judgeInfoResp, nil
 	}
 
 	judgeStatus = enum.GetJudegeInfo(enum.Accept)

@@ -11,7 +11,7 @@ const (
 var judegeinfoMap = make(map[string]string)
 
 func init() {
-	judegeinfoMap[Accept] = "成功"
+	judegeinfoMap[Accept] = "通过"
 	judegeinfoMap[WrongAnswer] = "答案错误"
 	judegeinfoMap[CompileError] = "编译错误"
 	judegeinfoMap[MemoryLimitExceeded] = "内存溢出"
