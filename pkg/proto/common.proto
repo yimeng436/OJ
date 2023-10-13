@@ -4,6 +4,7 @@ option go_package="../pb;pb";
 message Page{
   int64 page = 1;
   int64 pageSize = 2;
+  string sortField = 3;
 }
 
 message Empty{}

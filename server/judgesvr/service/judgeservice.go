@@ -69,29 +69,37 @@ func Judge(ctx context.Context, questionsubmitid int64) (*pb.QuestionSubmitInfo,
 
 	// 用户代码执行结果
 	outputs := excudeResp.Outputs
+	if outputs != nil {
+		judgeContent := &strategy.JudgeContext{
+			OutputList:     outputs,
+			InputList:      inputlist,
+			JudgeCaseList:  judgeCaseObj,
+			Question:       question,
+			JudgeInfo:      excudeResp.JudgeInfo,
+			QuestionSubmit: quesionsubmit,
+		}
+		strategyManager := manager.StrategyManager{}
+		// 拿到判题信息
+		judgeInfo, err := strategyManager.ExecuteJudge(judgeContent)
+		if err != nil {
+			return nil, err
+		}
 
-	judgeContent := &strategy.JudgeContext{
-		OutputList:     outputs,
-		InputList:      inputlist,
-		JudgeCaseList:  judgeCaseObj,
-		Question:       question,
-		JudgeInfo:      excudeResp.JudgeInfo,
-		QuestionSubmit: quesionsubmit,
+		// 跟新这次提交记录的判题信息和状态
+		judgeInfoStr, err := json.Marshal(judgeInfo)
+		if err != nil {
+			return nil, errors.New("序列化异常:" + err.Error())
+		}
+		quesionsubmit.JudgeInfo = string(judgeInfoStr)
+		quesionsubmit.Status = enum.SubmitSucceed
+	} else {
+		judgeInfo := pb.JudgeInfo{Memory: 0, Time: 0, Message: excudeResp.Message}
+		judgeInfoStr, err := json.Marshal(judgeInfo)
+		if err != nil {
+			return nil, errors.New("序列化异常:" + err.Error())
+		}
+		quesionsubmit.JudgeInfo = string(judgeInfoStr)
 	}
-	strategyManager := manager.StrategyManager{}
-	// 拿到判题信息
-	judgeInfo, err := strategyManager.ExecuteJudge(judgeContent)
-	if err != nil {
-		return nil, err
-	}
-
-	// 跟新这次提交记录的判题信息和状态
-	judgeInfoStr, err := json.Marshal(judgeInfo)
-	if err != nil {
-		return nil, errors.New("序列化异常:" + err.Error())
-	}
-	quesionsubmit.JudgeInfo = string(judgeInfoStr)
-	quesionsubmit.Status = enum.SubmitSucceed
 	_, err = questionSubmitClient.UpdateQuestionStatusById(context.Background(), quesionsubmit)
 	if err != nil {
 		return nil, err

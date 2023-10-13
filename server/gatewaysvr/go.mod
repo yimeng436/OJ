@@ -20,7 +20,7 @@ require (
 	gorm.io/gorm v1.25.4
 )
 
-require github.com/yimeng436/OJ v0.4.1
+require github.com/yimeng436/OJ v0.4.2
 
 require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect
