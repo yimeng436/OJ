@@ -18,6 +18,7 @@ func Create(submit *QuestionSubmit) error {
 func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*QuestionSubmit, int64, error) {
 	page := int(request.Page.Page)
 	pageSize := int(request.Page.PageSize)
+	field := request.Page.SortField
 	db := db.GetDB()
 	query := buildCondition(db, request)
 	var total int64
@@ -30,6 +31,11 @@ func ListQuestionSubmitByPage(request *pb.QuestionSubmitQueryRequest) ([]*Questi
 	}
 	var questionSubmit []*QuestionSubmit
 	query = query.Preload("Question").Preload("User")
+	if field != "" {
+		query = query.Order(field + " desc")
+	} else {
+		query = query.Order("createTime desc")
+	}
 	err = query.Limit(pageSize).Offset((page - 1) * pageSize).Find(&questionSubmit).Error
 	if err != nil {
 		return nil, 0, err

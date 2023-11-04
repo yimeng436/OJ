@@ -14,7 +14,6 @@ import (
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
 	"strconv"
-
 	// 必须要导入这个包，否则grpc会报错
 	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
 )
@@ -141,6 +140,8 @@ func (QuestionSubmitService) UpdateQuestionStatusById(ctx context.Context, reque
 func toVo(obj *repository.QuestionSubmit) *pb.QuestionSubmitVo {
 	vo := new(pb.QuestionSubmitVo)
 	copier.Copy(vo, obj)
+	vo.CreateTime = obj.CreateTime.Format("2006-01-02 15:04:05")
+	vo.UpdateTime = obj.CreateTime.Format("2006-01-02 15:04:05")
 	vo.SubmitStatus = enum.GetValue(int(vo.Status))
 	if obj.JudgeInfo != "" {
 		protojson.Unmarshal([]byte(obj.JudgeInfo), vo.JudgeInfo)

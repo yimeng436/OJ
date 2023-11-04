@@ -134,3 +134,12 @@
 2023-10-12T15:51:26.613+0800	[31mERROR[0m	controller/questioncontroller.go:182	ListQuestionSubmitByPage rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses
 2023-10-12T15:52:20.129+0800	[31mERROR[0m	controller/questioncontroller.go:182	ListQuestionSubmitByPage rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses
 2023-10-12T18:01:44.342+0800	[31mERROR[0m	controller/usercontroller.go:34	rpc error: code = Unknown desc = 账号密码错误
+2023-10-13T22:45:52.574+0800	[31mERROR[0m	controller/questioncontroller.go:157	参数错误
+2023-10-13T22:47:58.036+0800	[31mERROR[0m	controller/questioncontroller.go:157	参数错误
+2023-10-13T22:49:50.304+0800	[31mERROR[0m	controller/questioncontroller.go:157	参数错误
+2023-10-14T16:11:13.199+0800	[31mERROR[0m	controller/questioncontroller.go:182	ListQuestionSubmitByPage rpc服务器调用异常：rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:4766->127.0.0.1:8003: wsarecv: An existing connection was forcibly closed by the remote host.
+2023-10-18T21:07:02.123+0800	[31mERROR[0m	controller/usercontroller.go:34	rpc error: code = Unknown desc = 账号密码错误
+2023-10-18T21:26:37.087+0800	[31mERROR[0m	controller/questioncontroller.go:32	AddQuestion rpc服务器调用异常：rpc error: code = Unknown desc = context、title、answer 不能为空
+2023-10-18T21:27:43.076+0800	[31mERROR[0m	controller/questioncontroller.go:32	AddQuestion rpc服务器调用异常：rpc error: code = Unknown desc = context、title、answer 不能为空
+2023-10-30T21:25:44.694+0800	[31mERROR[0m	controller/questioncontroller.go:225	DoQuestionSubmit rpc服务器调用异常：rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:13184->127.0.0.1:8003: wsarecv: An existing connection was forcibly closed by the remote host.
+2023-10-30T21:25:53.377+0800	[31mERROR[0m	controller/questioncontroller.go:225	DoQuestionSubmit rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses

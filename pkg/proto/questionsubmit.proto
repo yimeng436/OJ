@@ -22,7 +22,7 @@ message QuestionSubmitInfo {
 message JudgeInfo{
   string message = 1;   //提交结果
   int64 time = 2;       //耗费时间
-  int64 memory = 3;     //耗费内存
+  float memory = 3;     //耗费内存
 }
 
 message QuestionSubmitAddRequest{
@@ -40,6 +40,7 @@ message QuestionSubmitQueryRequest{
   int64 userId = 4;
   Page page = 5;
   Context ctx = 6;
+  int64 id = 7;
 }
 
 

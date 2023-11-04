@@ -69,7 +69,7 @@ func Judge(ctx context.Context, questionsubmitid int64) (*pb.QuestionSubmitInfo,
 
 	// 用户代码执行结果
 	outputs := excudeResp.Outputs
-	if outputs != nil {
+	if outputs != nil && len(outputs) == len(inputlist) {
 		judgeContent := &strategy.JudgeContext{
 			OutputList:     outputs,
 			InputList:      inputlist,

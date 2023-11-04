@@ -22,7 +22,7 @@ func (RemoteCodeSandService) ExecuteCode(ctx context.Context, request *pb.Execut
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequest(http.MethodPost, "http://localhost:8080/executeCode", bytes.NewBuffer(requestBody))
+	req, err := http.NewRequest(http.MethodPost, "http://192.168.111.129:8080/executeCode", bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func (RemoteCodeSandService) ExecuteCode(ctx context.Context, request *pb.Execut
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		return nil, errors.New("请求/localhost:8080/executeCode：异常")
+		return nil, errors.New("请求http://192.168.111.129:8080/executeCode：异常")
 	}
 
 	// 把resp的响应体从reader读为 []byte
