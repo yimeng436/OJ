@@ -1141,3 +1141,34 @@ success
 2023-11-04T14:35:39.212+0800	[34mINFO[0m	service/codesandproxy.go:17	after
 2023-11-04T14:37:34.465+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	184%!(EXTRA string=：Judge 调用成功)
 2023-11-04T14:37:35.829+0800	[34mINFO[0m	judgesvr/main.go:85	注销成功
+2023-11-04T14:37:45.861+0800	[34mINFO[0m	judgesvr/main.go:37	config loadding success
+2023-11-04T14:37:45.877+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-04T14:37:45.878+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-04T14:37:45.878+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-04T14:37:45.889+0800	[34mINFO[0m	judgesvr/main.go:66	Init Consul Register success
+2023-11-04T14:37:45.889+0800	[34mINFO[0m	judgesvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8006
+2023-11-04T14:38:21.143+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=185)
+2023-11-04T14:38:21.163+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-04T14:38:25.550+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-04T14:38:25.561+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	185%!(EXTRA string=：Judge 调用成功)
+2023-11-04T14:39:19.813+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=186)
+2023-11-04T14:39:19.828+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-04T14:39:24.081+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-04T14:39:24.091+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	186%!(EXTRA string=：Judge 调用成功)
+2023-11-04T14:40:07.443+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=187)
+2023-11-04T14:40:07.462+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-04T14:40:11.821+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-04T14:46:21.404+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	187%!(EXTRA string=：Judge 调用成功)
+2023-11-04T17:35:53.775+0800	[34mINFO[0m	codesandsvr/main.go:94	注销成功
+2023-11-04T17:35:53.781+0800	[34mINFO[0m	judgesvr/main.go:85	注销成功
+2023-11-04T17:36:04.956+0800	[34mINFO[0m	codesandsvr/main.go:40	config loadding success
+2023-11-04T17:36:04.969+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-11-04T17:36:04.969+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-11-04T17:36:04.978+0800	[34mINFO[0m	codesandsvr/main.go:72	Init Consul Register success
+2023-11-04T17:36:04.978+0800	[34mINFO[0m	codesandsvr/main.go:74	TikTokLite.user_svr listening on 127.0.0.1:8004
+2023-11-04T17:37:57.832+0800	[34mINFO[0m	judgesvr/main.go:37	config loadding success
+2023-11-04T17:37:57.844+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-04T17:37:57.845+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-04T17:37:57.845+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-04T17:37:57.852+0800	[34mINFO[0m	judgesvr/main.go:66	Init Consul Register success
+2023-11-04T17:37:57.852+0800	[34mINFO[0m	judgesvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8006

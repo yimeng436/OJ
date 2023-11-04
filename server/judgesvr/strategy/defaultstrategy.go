@@ -52,7 +52,7 @@ func (DefaultStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 		return judgeInfoResp, nil
 	}
 
-	if memory > memoryLimit {
+	if memory > float32(memoryLimit) {
 		judgeStatus = enum.GetJudegeInfo(enum.MemoryLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
 		return judgeInfoResp, nil

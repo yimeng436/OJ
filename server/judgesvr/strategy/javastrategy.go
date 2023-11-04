@@ -57,7 +57,7 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 		return judgeInfoResp, nil
 	}
 
-	if (memory / (1024 * 1024)) > memoryLimit {
+	if (memory / (1024 * 1024)) > float32(memoryLimit) {
 		judgeStatus = enum.GetJudegeInfo(enum.MemoryLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
 		return judgeInfoResp, nil

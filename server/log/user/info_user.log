@@ -154,3 +154,7 @@
 2023-10-31T14:45:02.519+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
 2023-10-31T14:45:02.520+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
 2023-10-31T22:43:46.246+0800	[34mINFO[0m	usersvr/main.go:88	注销成功
+2023-11-04T14:22:30.398+0800	[34mINFO[0m	usersvr/main.go:37	config loadding success
+2023-11-04T14:22:30.415+0800	[34mINFO[0m	usersvr/main.go:66	Init Consul Register success
+2023-11-04T14:22:30.415+0800	[34mINFO[0m	usersvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8001
+2023-11-04T17:35:53.778+0800	[34mINFO[0m	usersvr/main.go:88	注销成功

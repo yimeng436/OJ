@@ -38,6 +38,7 @@ message QuestionVo {
   string updateTime = 14; // 更新时间
   UserVo userVo = 15;  //题目创建人的信息
   string level = 16; //题目难度
+  JudgeCase partJudgeCase = 17;
 }
 
 message JudgeCase{
