@@ -9,7 +9,7 @@ import (
 // @Description	描述信息
 // @Param			id	path		int		true	"Account ID"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/test/{id} [get]
 func Test(ctx *gin.Context) {
 	ctx.JSON(200, common.Response{

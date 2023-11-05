@@ -20,7 +20,7 @@ require (
 require (
 	github.com/mbobakov/grpc-consul-resolver v1.5.2
 	github.com/streadway/amqp v1.1.0
-	github.com/yimeng436/OJ v0.4.5
+	github.com/yimeng436/OJ v0.4.6
 	gorm.io/plugin/soft_delete v1.2.1
 
 )

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/yimeng436/OJ/common/enum"
 	"github.com/yimeng436/OJ/pkg/pb"
+	"judgesvr/constant"
 )
 
 var (
@@ -34,6 +35,7 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 		errCase.Inputs = inputList[len(inputList)-1]
 		errCase.Outputs = judgeCaseList[len(inputList)-1].Outputs
 		judgeInfoResp.ErrCase = errCase
+		judgeInfoResp.JudgeStatus = constant.Failed
 		return judgeInfoResp, nil
 	}
 	//校验结果是否正确

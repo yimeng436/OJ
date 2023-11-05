@@ -16,7 +16,7 @@ import (
 // @Accept json
 // @Param user body pb.QuestionAddRequest true "question"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/add  [post]
 func AddQuestion(ctx *gin.Context) {
 	var addRequest = new(pb.QuestionAddRequest)
@@ -45,7 +45,7 @@ func AddQuestion(ctx *gin.Context) {
 // @Description	根据id获取题目
 // @Param			id	path		int		true	"Question ID"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/get/{id} [get]
 func GetQuestionByPathId(ctx *gin.Context) {
 	request := new(pb.QuestionIdRequest)
@@ -77,7 +77,7 @@ func GetQuestionByPathId(ctx *gin.Context) {
 // @Accept json
 // @Param user body pb.GetQuestionPageRequest true "QuestionVoPage"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/list  [post]
 func ListQuestion(ctx *gin.Context) {
 	request := new(pb.GetQuestionPageRequest)
@@ -113,7 +113,7 @@ func ListQuestion(ctx *gin.Context) {
 // @Accept json
 // @Param user body pb.GetQuestionPageRequest true "QuestionVoPage"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/list/vo  [post]
 func ListQuestionVo(ctx *gin.Context) {
 	request := new(pb.GetQuestionPageRequest)
@@ -148,7 +148,7 @@ func ListQuestionVo(ctx *gin.Context) {
 // @Accept json
 // @Param user body pb.QuestionSubmitQueryRequest true "QuestionSubmit"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/submit/query [post]
 func QueryQuestionSubmit(ctx *gin.Context) {
 	request := new(pb.QuestionSubmitQueryRequest)
@@ -192,7 +192,7 @@ func QueryQuestionSubmit(ctx *gin.Context) {
 // @Accept json
 // @Param user body pb.QuestionSubmitAddRequest true "QuestionSubmitAddRequest"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/submit/do [post]
 func DoSubmit(ctx *gin.Context) {
 	request := new(pb.QuestionSubmitAddRequest)
@@ -234,7 +234,7 @@ func DoSubmit(ctx *gin.Context) {
 // @Accept json
 // @Produce  json
 // @Param id query int true "数据的ID"
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/get [get]
 func GetQuestion(ctx *gin.Context) {
 	request := new(pb.QuestionIdRequest)
@@ -284,7 +284,7 @@ func GetQuestion(ctx *gin.Context) {
 // @Accept json
 // @Param user body pb.QuestionInfo true "question"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/update  [post]
 func UpdateQuestion(ctx *gin.Context) {
 	var request = new(pb.QuestionInfo)
@@ -314,7 +314,7 @@ func UpdateQuestion(ctx *gin.Context) {
 // @Description	删除题目
 // @Param			id	path		int		true	"Question ID"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/delete/{id} [get]
 func DeleteQuestionById(ctx *gin.Context) {
 	request := new(pb.QuestionIdRequest)
@@ -345,7 +345,7 @@ func DeleteQuestionById(ctx *gin.Context) {
 // @Description	根据Id查询QuestionVO
 // @Param			id	path		int		true	"Question ID"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/question/get/vo/{id} [get]
 func GetQuestionVOById(ctx *gin.Context) {
 	request := new(pb.QuestionIdRequest)

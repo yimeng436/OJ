@@ -1362,3 +1362,66 @@ success
 2023-11-05T15:36:39.656+0800	[34mINFO[0m	codesandsvr/main.go:72	Init Consul Register success
 2023-11-05T15:36:39.656+0800	[34mINFO[0m	codesandsvr/main.go:74	TikTokLite.user_svr listening on 127.0.0.1:8004
 2023-11-05T15:36:44.646+0800	[34mINFO[0m	judgesvr/main.go:85	注销成功
+2023-11-05T15:36:47.316+0800	[34mINFO[0m	judgesvr/main.go:37	config loadding success
+2023-11-05T15:36:47.333+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-05T15:36:47.334+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-05T15:36:47.334+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-05T15:36:47.338+0800	[34mINFO[0m	judgesvr/main.go:66	Init Consul Register success
+2023-11-05T15:36:47.339+0800	[34mINFO[0m	judgesvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8006
+2023-11-05T15:36:52.274+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=230)
+2023-11-05T15:36:52.290+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T15:36:54.485+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T15:36:54.496+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	230%!(EXTRA string=：Judge 调用成功)
+2023-11-05T15:37:34.568+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=231)
+2023-11-05T15:37:34.582+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T15:37:36.786+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T15:37:36.796+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	231%!(EXTRA string=：Judge 调用成功)
+2023-11-05T15:39:27.093+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=232)
+2023-11-05T15:39:27.117+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T15:39:48.243+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T15:39:48.252+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	232%!(EXTRA string=：Judge 调用成功)
+2023-11-05T16:22:12.699+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=233)
+2023-11-05T16:22:12.735+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T16:22:15.352+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T16:22:15.368+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	233%!(EXTRA string=：Judge 调用成功)
+2023-11-05T16:44:30.195+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=234)
+2023-11-05T16:44:30.227+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T16:44:30.767+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T16:44:30.778+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	234%!(EXTRA string=：Judge 调用成功)
+2023-11-05T16:48:15.499+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=235)
+2023-11-05T16:48:15.516+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T16:50:00.386+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T16:50:00.398+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	235%!(EXTRA string=：Judge 调用成功)
+2023-11-05T16:50:50.972+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=236)
+2023-11-05T16:50:50.986+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T17:03:01.142+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T17:03:01.161+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	236%!(EXTRA string=：Judge 调用成功)
+2023-11-05T17:03:45.755+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=237)
+2023-11-05T17:03:45.767+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T17:04:03.046+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T17:04:03.056+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	237%!(EXTRA string=：Judge 调用成功)
+2023-11-05T17:07:08.484+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=238)
+2023-11-05T17:07:08.500+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T17:07:15.969+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T17:07:15.979+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	238%!(EXTRA string=：Judge 调用成功)
+2023-11-05T17:27:13.759+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=239)
+2023-11-05T17:27:13.789+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T17:27:16.336+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T17:27:16.353+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	239%!(EXTRA string=：Judge 调用成功)
+2023-11-05T17:45:58.739+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=240)
+2023-11-05T17:45:58.764+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-05T17:46:01.124+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-05T17:46:01.136+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	240%!(EXTRA string=：Judge 调用成功)
+2023-11-05T19:43:10.141+0800	[34mINFO[0m	judgesvr/main.go:85	注销成功
+2023-11-05T19:43:10.151+0800	[34mINFO[0m	codesandsvr/main.go:94	注销成功
+2023-11-05T19:43:34.593+0800	[34mINFO[0m	judgesvr/main.go:37	config loadding success
+2023-11-05T19:43:34.608+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-05T19:43:34.608+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-05T19:43:34.608+0800	[34mINFO[0m	rpcservice/rpcservice.go:67	NewSvrConn success
+2023-11-05T19:43:34.618+0800	[34mINFO[0m	judgesvr/main.go:66	Init Consul Register success
+2023-11-05T19:43:34.618+0800	[34mINFO[0m	judgesvr/main.go:68	TikTokLite.user_svr listening on 127.0.0.1:8006
+2023-11-05T19:43:55.171+0800	[34mINFO[0m	codesandsvr/main.go:40	config loadding success
+2023-11-05T19:43:55.183+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-11-05T19:43:55.183+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
+2023-11-05T19:43:55.188+0800	[34mINFO[0m	codesandsvr/main.go:72	Init Consul Register success
+2023-11-05T19:43:55.188+0800	[34mINFO[0m	codesandsvr/main.go:74	TikTokLite.user_svr listening on 127.0.0.1:8004

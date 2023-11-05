@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Param user body pb.UserLoginRequest true "user"
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/user/login  [post]
 func Login(ctx *gin.Context) {
 	var request pb.UserLoginRequest
@@ -47,7 +47,7 @@ func Login(ctx *gin.Context) {
 // @Summary		获取登录用户
 // @Description	获取登录用户
 // @Produce  json
-// @Success		200	{object}	common.Response
+// @Success		200	{object}	constant.Response
 // @Router			/user/getLoginUser  [get]
 func GetLoginUser(ctx *gin.Context) {
 	CheckLogin(ctx)

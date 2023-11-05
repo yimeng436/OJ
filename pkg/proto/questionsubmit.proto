@@ -15,6 +15,7 @@ message QuestionSubmitInfo {
   string createTime = 8; // 创建时间
   string updateTime = 9; // 更新时间
   int32 isDelete = 10; // 是否删除
+  int32 judgeStatus = 11;
 }
 
 
