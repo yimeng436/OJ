@@ -30,6 +30,10 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	if len(outputList) != len(inputList) {
 		judgeStatus = enum.GetJudegeInfo(enum.WrongAnswer)
 		judgeInfoResp.Message = judgeStatus
+		errCase := new(pb.JudgeCase)
+		errCase.Inputs = inputList[len(inputList)-1]
+		errCase.Outputs = judgeCaseList[len(inputList)-1].Outputs
+		judgeInfoResp.ErrCase = errCase
 		return judgeInfoResp, nil
 	}
 	//校验结果是否正确
@@ -37,6 +41,10 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 		if jude.Outputs != outputList[i] {
 			judgeStatus = enum.GetJudegeInfo(enum.WrongAnswer)
 			judgeInfoResp.Message = judgeStatus
+			errCase := new(pb.JudgeCase)
+			errCase.Inputs = jude.Inputs
+			errCase.Outputs = jude.Outputs
+			judgeInfoResp.ErrCase = errCase
 			return judgeInfoResp, nil
 		}
 	}

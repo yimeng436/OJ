@@ -146,6 +146,12 @@ func (QuestionService) GetQuestionVoById(ctx context.Context, request *pb.Questi
 	if questionInfo.JudgeConfig != "" {
 		err = json.Unmarshal([]byte(questionInfo.JudgeConfig), questionVo.JudgeConfig)
 	}
+	if questionInfo.JudgeCase != "" {
+		var partJudgeCase []*pb.JudgeCase
+
+		err = json.Unmarshal([]byte(questionInfo.JudgeCase), &partJudgeCase)
+		questionVo.PartJudgeCase = partJudgeCase[0]
+	}
 	if err != nil {
 		return nil, err
 	}

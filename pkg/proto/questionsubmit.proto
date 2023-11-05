@@ -24,6 +24,7 @@ message JudgeInfo{
   int64 time = 2;       //耗费时间
   float memory = 3;     //耗费内存
   JudgeCase errCase = 4;
+  int32 judgeStatus = 5;
 }
 
 message QuestionSubmitAddRequest{

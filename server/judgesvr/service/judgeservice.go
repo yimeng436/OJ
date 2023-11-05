@@ -99,6 +99,7 @@ func Judge(ctx context.Context, questionsubmitid int64) (*pb.QuestionSubmitInfo,
 			return nil, errors.New("序列化异常:" + err.Error())
 		}
 		quesionsubmit.JudgeInfo = string(judgeInfoStr)
+		quesionsubmit.Status = 2
 	}
 	_, err = questionSubmitClient.UpdateQuestionStatusById(context.Background(), quesionsubmit)
 	if err != nil {
