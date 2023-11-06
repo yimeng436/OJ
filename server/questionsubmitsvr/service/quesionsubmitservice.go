@@ -17,6 +17,7 @@ import (
 	"strconv"
 	// 必须要导入这个包，否则grpc会报错
 	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
+	redis "github.com/redis/go-redis/v9"
 )
 
 type QuestionSubmitService struct {
@@ -57,7 +58,11 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	}
 
 	redisCli := rediscli.GetRedisCli()
-	redisCli.Get(context.Background(), constant.QuestionKey)
+	questionStr, err := redisCli.Get(context.Background(), constant.QuestionKey).Result()
+	switch err {
+	case redis.Nil:
+
+	}
 	question, err := questionSvrClient.GetQuestionById(context.Background(), questionIdRequest)
 	if err != nil {
 		return nil, err

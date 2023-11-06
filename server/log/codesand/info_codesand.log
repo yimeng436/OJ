@@ -1536,3 +1536,7 @@ success
 2023-11-06T21:07:41.544+0800	[34mINFO[0m	rpcservice/rpcservice.go:55	NewSvrConn success
 2023-11-06T21:07:41.549+0800	[34mINFO[0m	codesandsvr/main.go:72	Init Consul Register success
 2023-11-06T21:07:41.549+0800	[34mINFO[0m	codesandsvr/main.go:74	TikTokLite.user_svr listening on 127.0.0.1:8004
+2023-11-06T21:35:41.458+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:180	收到提交Id：%!(EXTRA string=254)
+2023-11-06T21:35:41.500+0800	[34mINFO[0m	service/codesandproxy.go:15	before
+2023-11-06T21:35:52.796+0800	[34mINFO[0m	service/codesandproxy.go:17	after
+2023-11-06T21:37:57.623+0800	[34mINFO[0m	rabbitmq/rabbitmq.go:191	254%!(EXTRA string=：Judge 调用成功)

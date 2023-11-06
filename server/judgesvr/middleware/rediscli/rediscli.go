@@ -3,8 +3,8 @@ package rediscli
 import (
 	"fmt"
 	redis "github.com/redis/go-redis/v9"
-	"questionsubmitsvr/config"
-	"questionsubmitsvr/log"
+	"judgesvr/config"
+	"judgesvr/log"
 	"sync"
 	"time"
 )
