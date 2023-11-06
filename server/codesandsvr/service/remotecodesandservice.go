@@ -54,12 +54,14 @@ func (RemoteCodeSandService) ExecuteCode(ctx context.Context, request *pb.Execut
 		executeResp.Status = baseResp.Message
 		executeResp.Message = baseResp.Message
 		executeResp.JudgeInfo = &pb.JudgeInfo{
-			Message: baseResp.Message,
-			Time:    0,
-			Memory:  0,
+			Message:     baseResp.Message,
+			Time:        0,
+			Memory:      0,
+			JudgeStatus: 2,
 		}
 	} else {
 		executeResp = &baseResp.Data
+		executeResp.JudgeInfo.JudgeStatus = 1
 	}
 	return executeResp, nil
 }

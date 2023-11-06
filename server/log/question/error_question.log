@@ -8,3 +8,4 @@
 2023-09-28T16:08:14.942+0800	[31mFATAL[0m	questionsvr/main.go:46	端口监听异常%!(EXTRA *net.OpError=listen tcp 127.0.0.1:8002: bind: An attempt was made to access a socket in a way forbidden by its access permissions.)
 2023-09-29T22:19:33.854+0800	[31mFATAL[0m	rabbitmq/mq.go:48	failed to connect rabbitmq!:dial tcp 127.0.0.1:5627: connectex: No connection could be made because the target machine actively refused it.
 2023-10-30T21:25:44.680+0800	[31mFATAL[0m	rabbitmq/mq.go:48	Failed to declare an exchange:write tcp 127.0.0.1:1936->127.0.0.1:5672: wsasend: An existing connection was forcibly closed by the remote host.
+2023-11-05T20:40:43.239+0800	[31mFATAL[0m	rabbitmq/mq.go:48	Failed to declare an exchange:Exception (504) Reason: "channel/connection is not open"

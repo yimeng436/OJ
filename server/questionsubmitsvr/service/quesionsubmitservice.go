@@ -10,6 +10,7 @@ import (
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
 	mq "questionsubmitsvr/middleware/rabbitmq"
+	"questionsubmitsvr/middleware/rediscli"
 	"questionsubmitsvr/remotemodel"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
@@ -55,6 +56,8 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		Ctx: request.Ctx,
 	}
 
+	redisCli := rediscli.GetRedisCli()
+	redisCli.Get(context.Background(), constant.QuestionKey)
 	question, err := questionSvrClient.GetQuestionById(context.Background(), questionIdRequest)
 	if err != nil {
 		return nil, err
@@ -75,18 +78,6 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		return nil, err
 	}
 	questionSubmitId := questionSubmit.Id
-	//judgeServiceClient := rpcservice.GetJudgeServiceClient()
-	//go func() {
-	//	defer func() {
-	//		if r := recover(); r != nil {
-	//			// 发生 panic，进行恢复处理
-	//			log.Fatal("Recovered from panic:", r)
-	//		}
-	//	}()
-	//
-	//	_, err = judgeServiceClient.DoJudge(context.Background(), &pb.DoJudgeRequest{Questionsubmitid: questionSubmitId})
-	//	fmt.Println(err)
-	//}()
 
 	mqProducer := mq.GetMQ("questionsubmit_exchange", "submit.question")
 	mqProducer.PublishRouting(strconv.FormatInt(questionSubmitId, 10))

@@ -389,3 +389,6 @@
 2023-11-04T20:35:21.524+0800	[31mERROR[0m	controller/usercontroller.go:34	rpc error: code = Unknown desc = 账号密码错误
 2023-11-04T21:21:04.654+0800	[31mERROR[0m	controller/questioncontroller.go:368	GetQuestionVoById rpc服务器调用异常：rpc error: code = Unknown desc = json: cannot unmarshal array into Go value of type pb.JudgeCase
 2023-11-04T21:21:27.802+0800	[31mERROR[0m	controller/questioncontroller.go:139	ListQuestionVoPage rpc服务器调用异常：rpc error: code = Unavailable desc = last resolver error: produced zero addresses
+2023-11-05T20:30:59.973+0800	[31mERROR[0m	controller/questioncontroller.go:225	DoQuestionSubmit rpc服务器调用异常：rpc error: code = Unknown desc = Error 1054 (42S22): Unknown column 'judgeStatus' in 'field list'
+2023-11-05T20:40:43.251+0800	[31mERROR[0m	controller/questioncontroller.go:225	DoQuestionSubmit rpc服务器调用异常：rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:9540->127.0.0.1:8003: wsarecv: An existing connection was forcibly closed by the remote host.
+2023-11-05T21:08:04.480+0800	[31mERROR[0m	controller/usercontroller.go:34	rpc error: code = Unknown desc = 账号密码错误

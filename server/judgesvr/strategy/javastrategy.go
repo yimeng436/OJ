@@ -23,9 +23,10 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	outputList := ctx.OutputList
 	judgeStatus := enum.GetJudegeInfo(enum.Accept)
 	judgeInfoResp := &pb.JudgeInfo{
-		Message: judgeStatus,
-		Memory:  0,
-		Time:    0,
+		Message:     judgeStatus,
+		Memory:      0,
+		Time:        0,
+		JudgeStatus: constant.Success,
 	}
 
 	if len(outputList) != len(inputList) {
@@ -47,6 +48,7 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 			errCase.Inputs = jude.Inputs
 			errCase.Outputs = jude.Outputs
 			judgeInfoResp.ErrCase = errCase
+			judgeInfoResp.JudgeStatus = constant.Failed
 			return judgeInfoResp, nil
 		}
 	}
@@ -64,12 +66,14 @@ func (JavaStrategy) ExecuteJudge(ctx *JudgeContext) (*pb.JudgeInfo, error) {
 	if time-Java_Program_Time > timeLimit {
 		judgeStatus = enum.GetJudegeInfo(enum.TimeLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
+		judgeInfoResp.JudgeStatus = constant.Failed
 		return judgeInfoResp, nil
 	}
 
 	if (memory / (1024 * 1024)) > float32(memoryLimit) {
 		judgeStatus = enum.GetJudegeInfo(enum.MemoryLimitExceeded)
 		judgeInfoResp.Message = judgeStatus
+		judgeInfoResp.JudgeStatus = constant.Failed
 		return judgeInfoResp, nil
 	}
 

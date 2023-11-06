@@ -6,7 +6,9 @@ import (
 	"errors"
 	"github.com/yimeng436/OJ/common/enum"
 	"github.com/yimeng436/OJ/pkg/pb"
+	"judgesvr/constant"
 	"judgesvr/manager"
+	"judgesvr/middleware/db"
 	"judgesvr/rpcservice"
 	"judgesvr/strategy"
 	// 必须要导入这个包，否则grpc会报错
@@ -92,18 +94,32 @@ func Judge(ctx context.Context, questionsubmitid int64) (*pb.QuestionSubmitInfo,
 		}
 		quesionsubmit.JudgeInfo = string(judgeInfoStr)
 		quesionsubmit.Status = enum.SubmitSucceed
+		quesionsubmit.JudgeStatus = judgeInfo.JudgeStatus
 	} else {
-		judgeInfo := pb.JudgeInfo{Memory: 0, Time: 0, Message: excudeResp.Message}
+		judgeInfo := pb.JudgeInfo{Memory: 0, Time: 0, Message: excudeResp.Message, JudgeStatus: excudeResp.JudgeInfo.JudgeStatus}
 		judgeInfoStr, err := json.Marshal(judgeInfo)
 		if err != nil {
 			return nil, errors.New("序列化异常:" + err.Error())
 		}
 		quesionsubmit.JudgeInfo = string(judgeInfoStr)
 		quesionsubmit.Status = 2
+		quesionsubmit.JudgeStatus = constant.Failed
 	}
+	Db := db.GetDB()
+	tx := Db.Begin()
+
 	_, err = questionSubmitClient.UpdateQuestionStatusById(context.Background(), quesionsubmit)
 	if err != nil {
+		tx.Rollback()
 		return nil, err
+	}
+	if quesionsubmit.JudgeStatus == constant.Success {
+		question.AcceptedNum++
+		resp, err := questionClient.UpdateQuestion(context.Background(), question)
+		if err != nil || !resp.Res {
+			tx.Rollback()
+			return nil, err
+		}
 	}
 
 	return quesionsubmit, nil

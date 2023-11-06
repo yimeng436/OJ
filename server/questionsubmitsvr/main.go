@@ -15,6 +15,7 @@ import (
 	"questionsubmitsvr/log"
 	"questionsubmitsvr/middleware/consul"
 	"questionsubmitsvr/middleware/db"
+	"questionsubmitsvr/middleware/rediscli"
 	"questionsubmitsvr/rpcservice"
 	"questionsubmitsvr/service"
 	"syscall"
@@ -25,6 +26,7 @@ func main() {
 	rpcservice.InitSvrConn()
 	defer log.Sync()
 	defer db.CloseDB()
+	defer rediscli.CloseRedis()
 	if err := Run(); err != nil {
 		log.Errorf("UserSvr run err:%v", err)
 	}
