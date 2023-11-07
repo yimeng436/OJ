@@ -6,7 +6,6 @@ import (
 	"codesandsvr/model"
 	"context"
 	"encoding/json"
-	"errors"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"io"
 	"net/http"
@@ -36,7 +35,13 @@ func (RemoteCodeSandService) ExecuteCode(ctx context.Context, request *pb.Execut
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		return nil, errors.New("请求http://192.168.111.129:8080/executeCode：异常")
+		return &pb.ExecuteCodeResponse{
+			Message:      "",
+			Outputs:      nil,
+			JudgeInfo:    nil,
+			ErrorMessage: "系统错误",
+			Status:       "2",
+		}, nil
 	}
 
 	// 把resp的响应体从reader读为 []byte

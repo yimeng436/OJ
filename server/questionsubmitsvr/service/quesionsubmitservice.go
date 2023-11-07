@@ -79,6 +79,8 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 	mqProducer := mq.GetMQ("questionsubmit_exchange", "submit.question")
 	mqProducer.PublishRouting(strconv.FormatInt(questionSubmitId, 10))
 
+	questionIdStr := strconv.FormatInt(question.Id, 10)
+
 	return &pb.IdResponse{Id: questionSubmitId}, nil
 }
 

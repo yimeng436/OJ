@@ -16,3 +16,13 @@
 2023-10-30T18:58:36.503+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
 2023-10-31T16:28:40.690+0800	[31mFATAL[0m	rabbitmq/rabbitmq.go:55	Failed to declare an exchange:Exception (504) Reason: "channel/connection is not open"
 2023-11-05T15:28:55.731+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T16:57:46.579+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T17:03:24.690+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T17:39:56.814+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T17:41:54.607+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T17:45:04.954+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T17:49:13.213+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T20:20:03.733+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T20:20:19.152+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T20:21:56.740+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
+2023-11-07T20:28:40.751+0800	[31mERROR[0m	rabbitmq/rabbitmq.go:172	Panic occurred while processing message: runtime error: invalid memory address or nil pointer dereference
