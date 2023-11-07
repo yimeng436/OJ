@@ -5,11 +5,15 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/jinzhu/copier"
+	"github.com/redis/go-redis/v9"
 	"github.com/yimeng436/OJ/common/constant"
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
+	"questionsvr/middleware/rediscli"
 	"questionsvr/repository"
 	"questionsvr/utils"
+	"strconv"
+	"time"
 )
 
 var questionService QuestionService
@@ -19,7 +23,30 @@ type QuestionService struct {
 }
 
 func (QuestionService) GetById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionInfo, error) {
-	questionInfo, err := repository.GetQuestionById(request.Id)
+	var questionInfo *repository.Question
+	rdb := rediscli.GetRedisCli()
+	questionId := strconv.FormatInt(request.Id, 10)
+	questionStr, err := rdb.Get(context.Background(), constant.QuestionKey+questionId).Result()
+	if err != nil {
+		if err == redis.Nil || questionStr == "" {
+			questionInfo, err = repository.GetQuestionById(request.Id)
+			if err != nil {
+				return nil, err
+			}
+
+			err := rdb.Set(context.Background(),
+				constant.QuestionKey+questionId,
+				questionInfo,
+				time.Hour*time.Duration(constant.QuestionExitTime)).Err()
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			return nil, err
+		}
+	}
+	questionInfo = &repository.Question{}
+	err = questionInfo.UnmarshalBinary([]byte(questionStr))
 	if err != nil {
 		return nil, err
 	}
@@ -126,19 +153,19 @@ func (QuestionService) AddQuestion(ctx context.Context, request *pb.QuestionAddR
 	return &pb.BoolResponse{Res: true}, nil
 
 }
-func (QuestionService) GetQuestionVoById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionVo, error) {
+func (this *QuestionService) GetQuestionVoById(ctx context.Context, request *pb.QuestionIdRequest) (*pb.QuestionVo, error) {
 	if request.Id == 0 {
 		return nil, errors.New("id 不能为空")
 	}
-	questionInfo, err := repository.GetQuestionById(request.Id)
+	questionInfo, err := this.GetById(context.Background(), request)
 	if err != nil {
 		return nil, err
 	}
 	quetionTem := new(pb.QuestionInfo)
 	copier.Copy(quetionTem, questionInfo)
 	questionVo, err := questionService.GetQuestionVo(ctx, quetionTem)
-	questionVo.CreateTime = questionInfo.CreateTime.String()
-	questionVo.UpdateTime = questionInfo.UpdateTime.String()
+	questionVo.CreateTime = questionInfo.CreateTime
+	questionVo.UpdateTime = questionInfo.UpdateTime
 	if questionInfo.Tags != "" {
 		err = json.Unmarshal([]byte(questionInfo.Tags), &questionVo.Tags)
 

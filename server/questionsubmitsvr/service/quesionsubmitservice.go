@@ -10,14 +10,12 @@ import (
 	"github.com/yimeng436/OJ/pkg/pb"
 	"google.golang.org/protobuf/encoding/protojson"
 	mq "questionsubmitsvr/middleware/rabbitmq"
-	"questionsubmitsvr/middleware/rediscli"
 	"questionsubmitsvr/remotemodel"
 	"questionsubmitsvr/repository"
 	"questionsubmitsvr/rpcservice"
 	"strconv"
 	// 必须要导入这个包，否则grpc会报错
 	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
-	redis "github.com/redis/go-redis/v9"
 )
 
 type QuestionSubmitService struct {
@@ -57,13 +55,7 @@ func (QuestionSubmitService) DoQuestionSubmit(ctx context.Context, request *pb.Q
 		Ctx: request.Ctx,
 	}
 
-	redisCli := rediscli.GetRedisCli()
-	questionStr, err := redisCli.Get(context.Background(), constant.QuestionKey).Result()
-	switch err {
-	case redis.Nil:
-
-	}
-	question, err := questionSvrClient.GetQuestionById(context.Background(), questionIdRequest)
+	question, err := questionSvrClient.GetById(context.Background(), questionIdRequest)
 	if err != nil {
 		return nil, err
 	}

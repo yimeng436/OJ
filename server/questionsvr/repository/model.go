@@ -1,10 +1,15 @@
 package repository
 
 import (
+	"encoding"
+	"encoding/json"
 	"gorm.io/gorm"
 	"gorm.io/plugin/soft_delete"
 	"time"
 )
+
+var _ encoding.BinaryMarshaler = new(Question)
+var _ encoding.BinaryUnmarshaler = new(Question)
 
 type Question struct {
 	Id          int64                 `gorm:"column:id;primary_key;AUTO_INCREMENT;comment:'id'" json:"id,omitempty"`
@@ -32,4 +37,12 @@ func (q *Question) TableName() string {
 func (q *Question) BeforeUpdate(tx *gorm.DB) error {
 	q.UpdateTime = time.Now()
 	return nil
+}
+
+func (q *Question) MarshalBinary() ([]byte, error) {
+	return json.Marshal(q)
+}
+
+func (q *Question) UnmarshalBinary(data []byte) error {
+	return json.Unmarshal(data, q)
 }
